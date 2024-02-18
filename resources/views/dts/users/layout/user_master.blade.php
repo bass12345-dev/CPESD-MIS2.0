@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	@include('dts.includes.meta')
+	@include('global_includes.meta')
 	@include('dts.includes.css')
 </head>
 <body>
@@ -17,7 +17,7 @@
 		</div>
 	</div>
 </body>
-@include('dts.includes.js')
+@include('global_includes.js')
 @yield('js')
 
 </html>

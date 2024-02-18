@@ -7,7 +7,7 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="col mt-0">
-                           <h5 class="card-title">All Documents</h5>
+                           <h5 class="card-title text-black">My Documents</h5>
                         </div>
                         <div class="col-auto">
                            <div class="stat text-primary">
@@ -24,15 +24,15 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="col mt-0">
-                           <h5 class="card-title">Offices</h5>
+                           <h5 class="card-title text-black">Forwarded</h5>
                         </div>
                         <div class="col-auto">
                            <div class="stat text-primary">
-                              <i class="fas fa-building align-middle" ></i>
+                              <i class="align-middle" data-feather="arrow-up"></i>
                            </div>
                         </div>
                      </div>
-                     <h1 class="mt-1 mb-3">{{$count['count_document_types']}}</h1>
+                     <h1 class="mt-1 mb-3">{{$count['forwarded']}}</h1>
                   </div>
                </div>
             </div>
@@ -41,15 +41,15 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="col mt-0">
-                           <h5 class="card-title">Document Types</h5>
+                           <h5 class="card-title text-black">Received</h5>
                         </div>
                         <div class="col-auto">
                            <div class="stat text-primary">
-                              <i class="fas fa-file-text align-middle" ></i>
+                              <i class="align-middle" data-feather="arrow-down"></i>
                            </div>
                         </div>
                      </div>
-                     <h1 class="mt-1 mb-3">{{$count['count_offices']}}</h1>
+                     <h1 class="mt-1 mb-3">{{$count['received']}}</h1>
                   </div>
                </div>
             </div>
@@ -58,15 +58,15 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="col mt-0">
-                           <h5 class="card-title">Users</h5>
+                           <h5 class="card-title text-black">Incoming</h5>
                         </div>
                         <div class="col-auto">
                            <div class="stat text-primary">
-                              <i class="align-middle" data-feather="users"></i>
+                              <i class="align-middle" data-feather="arrow-left"></i>
                            </div>
                         </div>
                      </div>
-                     <h1 class="mt-1 mb-3">{{$count['count_users']}}</h1>
+                     <h1 class="mt-1 mb-3">{{$count['incoming']}}</h1>
                   </div>
                </div>
             </div>

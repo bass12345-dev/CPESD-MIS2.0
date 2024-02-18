@@ -119,11 +119,11 @@ error: function () {
 
 }
 
-function delete_item(id,url,button_text = ''){
+function delete_item(id,url,button_text = '',text = ''){
 
 Swal.fire({
   title: "Are you sure?",
-  text: "",
+  text: text !='' ? text : "",
   icon: "warning",
   showCancelButton: true,
   confirmButtonColor: "#3085d6",
@@ -133,7 +133,6 @@ Swal.fire({
   if (result.isConfirmed) {
 
        $.ajax({
-
       method: 'POST',
       url: base_url + url,
       data : {id : id},

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	@include('global_includes.meta')
-	@include('watchlisted.includes.css')
+	@include('dts.includes.css')
 </head>
 <body>
 	<div class="wrapper">

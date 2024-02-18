@@ -100,12 +100,12 @@
 https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js
 "></script>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 
 $('#login_form').on('submit', function (e) {
    e.preventDefault();
    $.ajax({
-      url: base_url + '/web/verify-user',
+      url: base_url + '/v-u',
       method: 'POST',
       data: $(this).serialize(),
       dataType: 'json',
@@ -141,6 +141,6 @@ $('#login_form').on('submit', function (e) {
    });
 });
 	
-</script> -->
+</script>
 
 </html>

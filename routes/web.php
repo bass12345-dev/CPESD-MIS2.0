@@ -18,11 +18,11 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dts', [App\Http\Controllers\dts\auth\AuthController::class, 'index']);
+Route::get('/dts', [App\Http\Controllers\dts\auth\AuthController::class, 'index'])->middleware(['UsersCheck']);
 Route::get('/watchlisted', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'index'])->middleware(['WatchLoginCheck']);
 
 //ADMIN ROUTES//
-Route::prefix('dts/admin')->group(function  () {
+Route::middleware(['SessionGuard','IsAdmin'])->prefix('dts/admin')->group(function  () {
     Route::get('/dashboard', [App\Http\Controllers\dts\admin\DashboardController::class, 'index']);
     Route::get('/all-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'index']);
     Route::get('/offices', [App\Http\Controllers\dts\admin\OfficesController::class, 'index']);\
@@ -50,15 +50,37 @@ Route::prefix('dts')->group(function  () {
     Route::post('/update-action', [App\Http\Controllers\dts\admin\FinalActionsController::class, 'update']);
     Route::post('/delete-action', [App\Http\Controllers\dts\admin\FinalActionsController::class, 'delete']);
     
-
-
 }); 
 
 
 
 //USER ROUTES//
-Route::prefix('dts/user')->group(function  () {
+Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
     Route::get('/dashboard', [App\Http\Controllers\dts\user\DashboardController::class, 'index']);  
+    Route::get('/my-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'index']);
+    Route::get('/add-document', [App\Http\Controllers\dts\user\AddDocumentController::class, 'index']);
+    Route::get('/incoming', [App\Http\Controllers\dts\user\IncomingController::class, 'index']);
+    Route::get('/received', [App\Http\Controllers\dts\user\ReceivedController::class, 'index']);
+    Route::get('/forwarded', [App\Http\Controllers\dts\user\ForwardedController::class, 'index']);
+    Route::get('/view', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'index']);
+    Route::get('/track', function () {
+     $data['title'] = 'Search';
+     return view('user.contents.search.search')->with($data);
+    });
+}); 
+
+//USER ACTIONS//
+Route::prefix('dts/us/')->group(function  () {
+    
+    //My Documents
+    Route::post('/update-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update']);
+    Route::post('/delete-my-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'delete']);
+    Route::post('/add-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'store']);
+
+    Route::post('/receive-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive']);
+    Route::post('/forward-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'forward']);
+    
+    
 }); 
 
 
@@ -108,7 +130,7 @@ Route::prefix('wl')->group(function  () {
     Route::post('/change-code', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'change_code']);
 
 }); 
-
+Route::post('/v-u', [App\Http\Controllers\dts\auth\AuthController::class, 'verify_user']);
 Route::post('/v-c', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'verify_code']);
 
 Route::get('/dts_logout', [App\Http\Controllers\dts\auth\AuthController::class, 'dts_logout']);
