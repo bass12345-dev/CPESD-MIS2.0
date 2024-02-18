@@ -1,8 +1,8 @@
-@extends('user.layout.user_master')
+@extends('dts.users.layout.user_master')
 @section('title', $title)
 @section('content')
 
-@include('includes.title')
+@include('global_includes.title')
 <div class="container">
                     <div class="row height d-flex justify-content-center ">
 

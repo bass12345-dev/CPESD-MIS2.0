@@ -65,7 +65,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
     Route::get('/view', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'index']);
     Route::get('/track', function () {
      $data['title'] = 'Search';
-     return view('user.contents.search.search')->with($data);
+     return view('dts.users.contents.search.search')->with($data);
     });
 }); 
 

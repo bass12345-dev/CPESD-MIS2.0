@@ -135,7 +135,7 @@ $('#login_form').on('submit', function (e) {
          }
       },
       error: function () {
-
+		alert('Something Wrong!')
       }
 
    });
