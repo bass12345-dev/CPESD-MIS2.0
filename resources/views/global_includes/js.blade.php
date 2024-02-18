@@ -119,7 +119,7 @@ error: function () {
 
 }
 
-function delete_item(id,url){
+function delete_item(id,url,button_text = ''){
 
 Swal.fire({
   title: "Are you sure?",
@@ -128,7 +128,7 @@ Swal.fire({
   showCancelButton: true,
   confirmButtonColor: "#3085d6",
   cancelButtonColor: "#d33",
-  confirmButtonText: "Yes, delete it!"
+  confirmButtonText: button_text !='' ? button_text : "Yes, delete it!",
 }).then((result) => {
   if (result.isConfirmed) {
 

@@ -16,8 +16,16 @@ class CustomModel extends Model
         return DB::table($table);
     }
 
+    public static function q_get_order($table,$order_key,$order_by){
+        return DB::table($table)->orderBy($order_key, $order_by);
+    }
+
     public static function q_get_where($table,$where){
         return DB::table($table)->where($where);
+    }
+
+    public static function q_get_where_order($table,$where,$order_key,$order_by){
+        return DB::table($table)->where($where)->orderBy($order_key, $order_by);
     }
 
     //INSERT ITEMS

@@ -6,9 +6,9 @@
 </head>
 <body>
 	<div class="wrapper">
-		@include('dts.admin.layout.admin_includes.admin_sidebar')
+		@include('watchlisted.admin.layout.watchlisted_includes.watchlisted_sidebar')
 		<div class="main">
-			@include('dts.admin.layout.admin_includes.admin_topbar')
+			@include('watchlisted.admin.layout.watchlisted_includes.watchlisted_topbar')
 			<main class="content">
 				<div class="container-fluid p-0">
 					@yield('content')

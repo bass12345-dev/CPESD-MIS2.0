@@ -20,7 +20,9 @@ class ViewDocumentController extends Controller
             $data['title']      = 'Document #'.$tn ;
             $data['doc_data']   = $this->get_document_data($tn);
             $data['history']    = $this->get_history($tn);
-            return view('dts.admin.contents.view.view')->with($data);
+
+            print_r($data['doc_data']);
+            // return view('dts.admin.contents.view.view')->with($data);
         }else {
          
          return redirect('/dts/admin/all-documents');
@@ -40,7 +42,7 @@ class ViewDocumentController extends Controller
                     'type_id'           => $row->type_id,
                     'description'       => $row->document_description,
                     'qr'                => env('APP_URL').'/storage/app/img/qr-code/'.$row->tracking_number.'.png',
-                    'is'                => CustomModel::q_get_where($this->history_table,array('t_number' =>$row->tracking_number,'status' => 'completed' ))->count() == 1 ? true : false
+                    'is'                => CustomModel::q_get_where($this->history_table,array('t_number' =>$tn,'status' => 'completed' ))->count() == 1 ? true : false
         );
 
         return $data;
