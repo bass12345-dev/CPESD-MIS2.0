@@ -44,7 +44,8 @@
 								<a href="{{url('/')}}"><i class="fas fa-arrow-left"></i></a>
 								<div class="text-center mt-4">
 									<h1 class="h2 text-black">Welcome back!!</h1>
-									
+									<!-- asset('assets/img/peso_logo.png') -->
+									<img src="{{asset('assets/img/icons8-eye.gif')}}">
 								</div>
 								<div class="m-sm-3">
 									<form id="login_form">
