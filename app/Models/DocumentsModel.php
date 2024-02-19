@@ -93,7 +93,7 @@ class DocumentsModel extends Model
         return $rows;
     }
 
-    public function get_incoming_documents(){
+    public static function get_incoming_documents(){
 
         $rows = DB::table('history as history')
             ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
