@@ -19,6 +19,7 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
+Route::get('/dts/register', [App\Http\Controllers\dts\auth\AuthController::class, 'register']);
 
 Route::get('/dts', [App\Http\Controllers\dts\auth\AuthController::class, 'index'])->middleware(['UsersCheck']);
 Route::get('/watchlisted', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'index'])->middleware(['WatchLoginCheck']);
@@ -55,6 +56,7 @@ Route::prefix('dts')->group(function  () {
     //Manage Users
     Route::post('/c-u-s', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'change_user_status']);
     Route::post('/delete-user', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'delete_user']);
+    Route::post('/c-p-t-u', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'change_p_t_u']);
 
     //Documents
     Route::post('/delete-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'delete']);
@@ -164,6 +166,8 @@ Route::prefix('wl')->group(function  () {
     Route::post('/change-code', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'change_code']);
 
 }); 
+
+Route::post('/r-u', [App\Http\Controllers\dts\auth\AuthController::class, 'register_user']);
 Route::post('/v-u', [App\Http\Controllers\dts\auth\AuthController::class, 'verify_user']);
 Route::post('/v-c', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'verify_code']);
 

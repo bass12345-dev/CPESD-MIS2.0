@@ -16,6 +16,23 @@ class ManageUsersController extends Controller
         return view('dts.admin.contents.manage_users.manage_users')->with($data);
     }
 
+    public function change_p_t_u(Request $request){
+        $id =  $request->input('id');
+        $key =  CustomModel::q_get_where($this->users_table, array('user_id' => $id));
+        if ($key->count() > 0) {
+            $update = CustomModel::update_item($this->users_table, array('user_id' => $id), array('password'=> password_hash($key->first()->username, PASSWORD_DEFAULT)));
+            if ($update) {    
+                $data = array('message' => 'Updated Successfully' , 'response' => true );
+              }else {
+                $data = array('message' => 'Something Wrong' , 'response' => false );
+              }
+        }else {
+            $data = ['message'=>'Invalid Old Security Code','response'=> false];
+      }
+
+      return response()->json($data);
+    }
+
     public function change_user_status(Request $request)
     {
 

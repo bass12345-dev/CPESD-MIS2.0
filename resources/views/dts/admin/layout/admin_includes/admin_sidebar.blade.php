@@ -46,12 +46,12 @@
                 </a>
             </li>
 
-            <li class="sidebar-item <?= $segments[2] == 'back-up' ? 'active' : '' ?>">
+            <!-- <li class="sidebar-item <?= $segments[2] == 'back-up' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/admin/back-up')}}">
                     <i class="align-middle" data-feather="database"></i> <span class="align-middle">Back Up
                         Database</span>
                 </a>
-            </li>
+            </li> -->
 
 
         </ul>

@@ -32,6 +32,12 @@ var url = '/dts/delete-user';
 delete_item(id,url)
 });
 
+$('a.update-username').on('click', function(){
+   var id = $(this).data('id');
+   var url = '/dts/c-p-t-u';
+   delete_item(id,url,button_text = 'Change',text = 'Change password same as username ? ')
+});
+
 
 
 </script>

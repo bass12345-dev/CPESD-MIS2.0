@@ -36,7 +36,7 @@
                      <td><?php echo $status ?></td>
                      <td >
                         <?php echo $button1; ?>
-                        <a class="btn btn-primary"><i  class="fas fa-key" ></i></a>
+                        <a class="btn btn-primary update-username" data-id="{{$row->user_id}}" ><i  class="fas fa-key" ></i></a>
                         <?php echo $button3; ?>
                      </td>
                   </tr>
