@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    return redirect('http://cpesd-infosys.wuaze.com/');
+    // return view('welcome');
 });
 
 
@@ -25,7 +27,7 @@ Route::get('/watchlisted', [App\Http\Controllers\watchlisted\auth\AuthController
 Route::middleware(['SessionGuard','IsAdmin'])->prefix('dts/admin')->group(function  () {
     Route::get('/dashboard', [App\Http\Controllers\dts\admin\DashboardController::class, 'index']);
     Route::get('/all-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'index']);
-    Route::get('/offices', [App\Http\Controllers\dts\admin\OfficesController::class, 'index']);\
+    Route::get('/offices', [App\Http\Controllers\dts\admin\OfficesController::class, 'index']);
     Route::get('/doc-types', [App\Http\Controllers\dts\admin\DocTypesController::class, 'index']);
     Route::get('/final-actions', [App\Http\Controllers\dts\admin\FinalActionsController::class, 'index']);
     Route::get('/manage-users', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'index']);
