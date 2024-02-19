@@ -16,7 +16,7 @@ $('button#remove').on('click', function(){
         items.push($(this).val());
     });
 
-    var url = '/wl/ch-stat/';
+    var url = '/wl/ch-stat';
     var data = {
                 id : items,
                 status : 'inactive'

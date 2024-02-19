@@ -49,6 +49,9 @@ Route::prefix('dts')->group(function  () {
     Route::post('/add-action', [App\Http\Controllers\dts\admin\FinalActionsController::class, 'store']);
     Route::post('/update-action', [App\Http\Controllers\dts\admin\FinalActionsController::class, 'update']);
     Route::post('/delete-action', [App\Http\Controllers\dts\admin\FinalActionsController::class, 'delete']);
+
+    //Manage Users
+    Route::post('/c-u-s', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'change_user_status']);
     
 }); 
 
@@ -80,6 +83,7 @@ Route::prefix('dts/us/')->group(function  () {
     Route::post('/receive-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive']);
     Route::post('/forward-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'forward']);
     
+
     
 }); 
 

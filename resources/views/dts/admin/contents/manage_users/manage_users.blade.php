@@ -12,6 +12,25 @@
 @section('js')
 
 <script>
+$('a.set-inactive').on('click', function(){
+var id = $(this).data('id');
+let data = {id:id,status: 'inactive'}
+var url = '/dts/c-u-s';
+update_item(id,data,url);
+});
+
+$('a.set-active').on('click', function(){
+var id = $(this).data('id');
+let data = {id:id,status: 'active'}
+var url = '/dts/c-u-s';
+update_item(id,data,url);
+});
+
+$('a.delete').on('click', function(){
+var id = $(this).data('id');
+var url = '/api/delete-user';
+delete_item(id,url)
+});
 
 </script>
 

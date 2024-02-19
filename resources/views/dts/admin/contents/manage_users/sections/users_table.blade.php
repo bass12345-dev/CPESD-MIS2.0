@@ -8,7 +8,7 @@
                 
                   <th >#</th>
                   <th >Name</th>
-                
+                  <th >Username</th>
                   <th >Address</th>
                   <th >Email</th>
                   <th >Phone Number</th>
@@ -27,7 +27,9 @@
                 ?>
                   <tr>
                      <td>{{$i++}}</td>
+                     
                      <td>{{$row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension}}</td>
+                     <td>{{$row->username}}</td>
                      <td>{{$row->address}}</td>
                      <td>{{$row->email_address}}</td>
                      <td>{{$row->contact_number}}</td>

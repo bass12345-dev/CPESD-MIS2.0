@@ -17,7 +17,7 @@ $('button#delete').on('click', function(){
         items.push($(this).val());
     });
 
-    var url = '/wl/delete/';
+    var url = '/wl/delete';
     var data = {
                 id : items,
   
@@ -35,7 +35,7 @@ $('button#restore').on('click', function(){
         items.push($(this).val());
     });
 
-    var url = '/wl/ch-stat/';
+    var url = '/wl/ch-stat';
     var data = {
                 id : items,
                 status : 'active'

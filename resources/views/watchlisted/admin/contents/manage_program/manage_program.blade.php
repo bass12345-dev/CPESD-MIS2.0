@@ -17,7 +17,7 @@
 <script>
 $('a#remove').on('click', function(){
    var id = $(this).data('id');
-   var url = '/wl/delete-program/';
+   var url = '/wl/delete-program';
    delete_item(id,url);
 });
 
@@ -55,7 +55,7 @@ $('#add_form').on('submit', function (e) {
      var url = '/wl/add-program';
      add_item(form,url);
    }else {
-      var url = '/wl/update-program/';
+      var url = '/wl/update-program';
       update_item(id,form,url);
       
    }

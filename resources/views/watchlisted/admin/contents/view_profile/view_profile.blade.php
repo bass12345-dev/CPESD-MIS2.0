@@ -28,7 +28,7 @@
 <script>
 $('a#remove').on('click', function(e){
 	var id = $(this).data('id');
-	var url = '/wl/delete-record/';
+	var url = '/wl/delete-record';
 	delete_item(id,url);
 });
 
@@ -59,11 +59,11 @@ $('#add_form').on('submit', function (e) {
    var person_id = $('input[name=person_id]').val();
 
    if (!id) {
-   		var url = '/wl/add-record/';
+   		var url = '/wl/add-record';
          add_item(form,url);
    		// add_record(url,form,person_id);
    }else {
-      var url = '/wl/update-record/';
+      var url = '/wl/update-record';
       update_item(id,form,url);
       
    }
@@ -83,7 +83,7 @@ $('#program_form').on('submit', function(e){
 		
 	});
 	 var person_id = $('input[name=person_id]').val();
-	var url = '/wl/s-p-p/';
+	var url = '/wl/s-p-p';
 	var data = {
 				id : items,
 				person_id : person_id
