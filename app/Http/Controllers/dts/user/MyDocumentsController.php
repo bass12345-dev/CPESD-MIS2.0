@@ -15,11 +15,12 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MyDocumentsController extends Controller
 {
-    public $history_table = "history";
-    public $document_types_table = "document_types";
-    public $documents_table = "documents";
-    public $users_table = "users";
-    public $now;
+    public  $history_table        = "history";
+    public  $document_types_table        = "document_types";
+    public  $documents_table      = 'documents';
+    public  $users_table          = "users";
+    public  $final_actions_table = "final_actions";
+    public  $now;
     public function __construct()
     {
         $this->now = new \DateTime();
@@ -289,6 +290,13 @@ class MyDocumentsController extends Controller
         return response()->json($data);
 
     }
+
+    function get_receiver(){
+
+        $items = CustomModel::q_get_where($this->users_table,array('user_status' => 'active', 'is_receiver' => 'yes'))->first();
+        return $items->user_id;
+
+   }
 
     
 }

@@ -83,9 +83,8 @@ function update_item(id,data,url){
 $.ajax({
 url: base_url + url,
 method: 'POST',
-data: data,
-dataType: 'json',
 data : data,
+dataType: 'json',
 beforeSend: function () {
    Swal.showLoading()
 },

@@ -28,9 +28,11 @@ update_item(id,data,url);
 
 $('a.delete').on('click', function(){
 var id = $(this).data('id');
-var url = '/api/delete-user';
+var url = '/dts/delete-user';
 delete_item(id,url)
 });
+
+
 
 </script>
 

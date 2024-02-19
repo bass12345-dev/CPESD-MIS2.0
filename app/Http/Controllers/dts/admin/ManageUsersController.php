@@ -37,4 +37,20 @@ class ManageUsersController extends Controller
 
         return response()->json($data);
     }
+
+    public function delete_user(Request $request){
+
+        $id = $request->input('id');
+        $delete = CustomModel::delete_item($this->users_table,array('user_id' => $id));
+
+        if($delete) {
+
+            $data = array('message' => 'Deleted Succesfully' , 'response' => true );
+
+        }else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+
+        return response()->json($data);
+    }
 }

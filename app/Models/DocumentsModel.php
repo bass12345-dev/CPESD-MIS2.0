@@ -158,4 +158,50 @@ class DocumentsModel extends Model
 
         return $row;
     }
+
+
+
+    public static function get_receiver_incoming_documents(){
+        $row = DB::table('history as history')
+            ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
+            ->leftJoin('users as users', 'users.user_id', '=', 'history.user1')
+            ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
+            ->select('documents.tracking_number as tracking_number','documents.document_name as document_name',
+                     'documents.document_id as document_id','users.user_type as user_type',
+                     'document_types.type_name as type_name', 'history.release_date as release_date',
+                     'history.history_id as history_id','history.remarks as remarks', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension',
+                     DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+            ->where('user2', session('_id'))
+            ->where('received_status', NULL)
+            ->where('status', 'torec')
+            ->where('to_receiver', 'yes')
+            ->where('release_status',NULL )
+            ->orderBy('received_date', 'desc')->get();
+
+            return $row;
+    }
+
+    public static function get_receiver_received_documents(){
+
+        $rows = DB::table('history as history')
+        ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
+        ->leftJoin('users as users', 'users.user_id', '=', 'history.user2')
+        ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
+        ->select('documents.tracking_number as tracking_number','documents.document_name as document_name',
+                 'documents.document_id as document_id','users.user_type as user_type',
+                 'document_types.type_name as type_name', 'history.received_date as received_date',
+                 'history.history_id as history_id','history.remarks as remarks')
+        ->where('user2', session('_id'))
+        ->where('received_status', 1)
+        ->where('release_status',NULL )
+        ->where('status' , 'received')
+        ->where('to_receiver','yes')
+        // ->where('documents.destination_type', 'simple')
+        ->orderBy('received_date', 'desc')->get();
+
+        return $rows;
+
+    }
+
+
 }

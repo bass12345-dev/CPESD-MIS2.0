@@ -52,6 +52,10 @@ Route::prefix('dts')->group(function  () {
 
     //Manage Users
     Route::post('/c-u-s', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'change_user_status']);
+    Route::post('/delete-user', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'delete_user']);
+
+    //Documents
+    Route::post('/delete-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'delete']);
     
 }); 
 
@@ -86,6 +90,30 @@ Route::prefix('dts/us/')->group(function  () {
 
     
 }); 
+
+
+//Receiver ROUTES//
+Route::middleware(['SessionGuard','IsReceiver'])->prefix('dts/receiver')->group(function  () {
+    Route::get('/dashboard', [App\Http\Controllers\dts\receiver\DashboardController::class, 'index']);
+    // Route::get('/pending', [App\Http\Controllers\dts\receiver\PendingController::class, 'index']);
+    Route::get('/all-documents', [App\Http\Controllers\dts\receiver\ReceivedDocumentsController::class, 'index']);
+    Route::get('/incoming', [App\Http\Controllers\dts\receiver\IncomingController::class, 'index']);
+    Route::get('/received', [App\Http\Controllers\dts\receiver\ReceivedController::class, 'index']);
+    
+}); 
+
+
+//USER ACTIONS//
+Route::prefix('dts/r')->group(function  () {
+    
+    //My Documents
+    Route::post('/complete-document', [App\Http\Controllers\dts\receiver\ReceivedController::class, 'complete']);
+   
+    
+
+    
+}); 
+
 
 
 
