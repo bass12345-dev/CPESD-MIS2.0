@@ -147,7 +147,7 @@ Route::prefix('wl')->group(function  () {
 
     //Add List
     Route::post('/add', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'store']); 
-
+    Route::post('/update', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'update_information']); 
     //Search
     Route::post('/search-query', [App\Http\Controllers\watchlisted\admin\SearchController::class, 'search']); 
 

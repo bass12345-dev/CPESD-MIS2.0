@@ -27,6 +27,7 @@ class ViewProfileController extends Controller
         $data['programs']           = $this->get_programs();
         $data['person_programs']    = $this->get_person_programs($data['programs']);   
         $data['records']            = $this->get_records();
+        $data['barangay']           = config('app.barangay');
         return view('watchlisted.admin.contents.view_profile.view_profile')->with($data);
     }
 

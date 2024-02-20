@@ -21,7 +21,7 @@
 	</div>
 </div>
 @include('watchlisted.admin.contents.view_profile.sections.off_canvas')
-
+@include('watchlisted.admin.contents.view_profile.sections.update_canvas')
 @endsection
 
 @section('js')
@@ -92,6 +92,24 @@ $('#program_form').on('submit', function(e){
 
     $('#program_form').find('button').attr('disabled',true);
 
-})
+});
+
+$('button.update_information_button').on('click', function(e){
+	var name = $('td.name').text();
+	$('.update-information').html('Update ' + '<span class="text-danger">"' + name + '"</span>' + ' Information');
+});
+
+
+$('#update_information').on('submit', function(e){
+	e.preventDefault();
+
+		var url = '/wl/update';
+		var form = $('#update_information').serialize();
+		update_item(id='',form,url);
+		$('#update_information').find('button').attr('disabled',true);
+		
+});
+
+
 </script>
 @endsection

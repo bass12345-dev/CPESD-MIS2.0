@@ -27,7 +27,7 @@
                      <tr>
                         <td><input type="checkbox" name="person_id" value="{{$row->person_id}}"></td>
                         <td><?php echo $i++; ?></td>
-                        <td><?php echo $row->first_name; ?></td>
+                        <td><?php echo $row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension; ?></td>
                         <td><?php echo $row->age; ?></td>
                         <td><?php echo $row->address; ?></td>
                         <td><?php echo $row->email_address; ?></td>

@@ -51,6 +51,31 @@ class ActiveListController extends Controller
         return response()->json($data);
 
     }
+
+    public function update_information(Request $request){
+
+        $items = array(
+
+            'first_name'        => $request->input('firstName'),
+            'middle_name'       => $request->input('middleName'),
+            'last_name'         => $request->input('lastName'),
+            'extension'         => $request->input('extension'),
+            'phone_number'      => $request->input('phoneNumber'),
+            'address'           => $request->input('address'),
+            'email_address'     => $request->input('emailAddress'),
+            'age'               => $request->input('age')
+        );
+        $id = $request->input('person_id');
+        $update = CustomModel::update_item($this->person_table, array('person_id' => $id), $items);
+        if ($update) {
+            $data = array('message' => 'Updated Successfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Something Wrong/Data is not updated', 'response' => false);
+        }
+        return response()->json($data);
+
+        
+    }
     public function change_status(Request $request)
     {
         $request = $request->input('id');

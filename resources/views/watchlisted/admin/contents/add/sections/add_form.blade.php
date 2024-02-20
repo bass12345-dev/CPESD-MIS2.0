@@ -45,7 +45,7 @@
              </div>
              <div class="form-group col-md-12 mb-3">
                 <label for="inputEmail4">Email Address</label>
-                <input type="email" name="document_name" class="form-control">
+                <input type="email" name="emailAddress" class="form-control">
              </div>
              <div class="form-group col-md-12 mb-3">
                 <label for="inputEmail4">Age</label>
