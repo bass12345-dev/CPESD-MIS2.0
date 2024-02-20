@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public $person_table = 'persons';
+    public $programs_table = "programs";
     public function index(){
-        $data['title'] = 'Watchlisted Dashboard';
-        $data['count_active'] = $this->count_all();
+        $data['title']          = 'Watchlisted Dashboard';
+        $data['count_active']   = $this->count_all();
+        $data['count_programs']   = CustomModel::q_get($this->programs_table)->count();
         return view('watchlisted.admin.contents.dashboard.dashboard')->with($data);
     }
 

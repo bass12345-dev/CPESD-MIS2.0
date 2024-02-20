@@ -37,7 +37,7 @@ Route::middleware(['SessionGuard','IsAdmin'])->prefix('dts/admin')->group(functi
 
 
 //ADMIN ACTIONS//
-Route::prefix('dts')->group(function  () {
+Route::middleware(['SessionGuard'])->prefix('dts')->group(function  () {
     //Office
     Route::post('/add-office', [App\Http\Controllers\dts\admin\OfficesController::class, 'store']);
     Route::post('/update-office', [App\Http\Controllers\dts\admin\OfficesController::class, 'update']);
@@ -81,7 +81,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
 }); 
 
 //USER ACTIONS//
-Route::prefix('dts/us/')->group(function  () {
+Route::middleware(['SessionGuard'])->prefix('dts/us/')->group(function  () {
     
     //My Documents
     Route::post('/update-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update']);
@@ -108,7 +108,7 @@ Route::middleware(['SessionGuard','IsReceiver'])->prefix('dts/receiver')->group(
 
 
 //USER ACTIONS//
-Route::prefix('dts/r')->group(function  () {
+Route::middleware(['SessionGuard'])->prefix('dts/r')->group(function  () {
     
     //My Documents
     Route::post('/complete-document', [App\Http\Controllers\dts\receiver\ReceivedController::class, 'complete']);
@@ -134,7 +134,7 @@ Route::middleware(['WatchAdminCheck'])->prefix('watchlisted/admin')->group(funct
 }); 
 
 //WATCHLISTED ACTIONS//
-Route::prefix('wl')->group(function  () {
+Route::middleware(['WatchAdminCheck'])->prefix('wl')->group(function  () {
 
     
 
