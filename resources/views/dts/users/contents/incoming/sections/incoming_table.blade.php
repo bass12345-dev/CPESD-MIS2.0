@@ -23,7 +23,7 @@
                   <td>{{$row['document_name']}}</td>
                   <td>{{$row['from']}}</td>
                   <td>{{$row['type_name']}}</td>
-                  <td><a href="javascript:;" >View Remarks</a></td>
+                  <td><a href="javascript:;" id="view_remarks" data-remarks="{{$row['remarks']}}">View Remarks</a></td>
                   <td>{{$row['released_date']}}</td>
                   <td>    
                            <div class="btn-group dropstart">

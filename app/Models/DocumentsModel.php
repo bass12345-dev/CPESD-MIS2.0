@@ -34,7 +34,7 @@ class DocumentsModel extends Model
         ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
         ->select('documents.created as created','documents.tracking_number as tracking_number', 
                  'documents.document_name as   document_name', 'documents.document_id as document_id', 
-                 'document_types.type_name', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension', DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+                 'document_types.type_name', 'documents.doc_status as doc_status', 'documents.u_id as u_id', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension', DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
         ->orderBy('documents.document_id', 'desc')->get();
 
         return $rows;
@@ -131,6 +131,7 @@ class DocumentsModel extends Model
             ->where('received_status', 1)
             ->where('release_status',NULL )
             ->where('status' , 'received')
+            
             ->where('documents.destination_type', 'complex')
             ->where('to_receiver' , 'no')
             ->orderBy('received_date', 'desc')->get();

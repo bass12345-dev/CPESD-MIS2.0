@@ -1,3 +1,4 @@
+@include('global_includes.modals.view_remarks')
 <script type="text/javascript"> var base_url = '<?php echo url('/'); ?>';  </script>
 <script src=" {{ asset('assets/js/app.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
@@ -12,9 +13,15 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
 
 <script>
+   
 function reload_page() {
    location.reload();
 }
+
+$('a#view_remarks').on('click', function(){
+   $('#staticBackdrop').modal('show');
+   $('.remarks').text($(this).data('remarks'));
+});
     document.addEventListener("DOMContentLoaded", function () {
         // Datatables with Buttons
         var datatablesButtons = $("#datatables-buttons").DataTable({

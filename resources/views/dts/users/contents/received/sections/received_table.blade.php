@@ -20,7 +20,7 @@
                   <td>{{$row['tracking_number']}}</td>
                   <td>{{$row['document_name']}}</td>
                   <td>{{$row['type_name']}}</td>
-                  <td><a href="javascript:;" id="view_remarks" data-remarks="{{$row['remarks']}}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View Remarks</a></td>
+                  <td><a href="javascript:;" id="view_remarks" data-remarks="{{$row['remarks']}}" >View Remarks</a></td>
                   <td>{{$row['received_date']}}</td>
                  <td>    
                            <div class="btn-group dropstart">

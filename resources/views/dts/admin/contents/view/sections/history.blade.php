@@ -25,7 +25,7 @@
                   <td>{{$row['date_received']}}</td>
                   <td>{{$row['user2']}}</td>
                   <td>{{$row['duration']}}</td>
-                  <td><a href="javascript:;">View Remarks</a></td>
+                  <td><a href="javascript:;" id="view_remarks" data-remarks="{{$row['remarks']}}">View Remarks</a></td>
                   <td><?php echo $row['final_action_taken'] == NULL ? ' - ' : '<span class="badge p-2 bg-primary">'.$row['final_action_taken'].'</span>'  ?></td>
                </tr>
             <?php endforeach; ?>

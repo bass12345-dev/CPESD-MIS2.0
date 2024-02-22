@@ -32,8 +32,11 @@
                         <td><?php echo $row['created']; ?></td>
                         <td><?php echo $row['is'] == 'Pending' ? '<span class="badge p-2 bg-danger">Pending</span>' : '<span class="badge p-2 bg-success">Completed</span>'; ?></td>
                         <td> 
-                           <a href="{{url('/dts/admin/view?tn='.$row['tracking_number'])}}" ><i class="fas fa-eye"></i></a>   
                            
+                           <a href="{{url('/dts/admin/view?tn='.$row['tracking_number'])}}" class="m-2"><i class="fas fa-eye"></i></a>   
+                           <!-- <?php if($row['history_status'] != 'completed' ) { ?>
+                           <a id="forward_icon" href="#" data-history-id="{{$row['history_id']}}" data-tracking-number="{{$row['tracking_number']}}"  data- data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" ><i class="fas fa-check text-success"></i></a>   
+                           <?php } ?> -->
                         </td>
                      </tr>
                 <?php endforeach; ?>    

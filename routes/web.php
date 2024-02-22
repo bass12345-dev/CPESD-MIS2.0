@@ -60,6 +60,8 @@ Route::middleware(['SessionGuard'])->prefix('dts')->group(function  () {
 
     //Documents
     Route::post('/delete-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'delete']);
+
+    Route::post('/complete-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'complete']);
     
 }); 
 
