@@ -103,6 +103,7 @@ $('#login_form').on('submit', function (e) {
          }
       },
       error: function () {
+		Swal.close();
 		alert('Something Wrong!')
       }
 

@@ -68,7 +68,8 @@ class DocumentsModel extends Model
     public static function get_history($tn){
         $row = DB::table('history')
         ->where('t_number',$tn)
-        ->leftJoin('final_actions', 'final_actions.action_id', '=', 'history.final_action_taken');
+        ->leftJoin('final_actions', 'final_actions.action_id', '=', 'history.final_action_taken')
+        ->orderBy('history.history_id','asc');
         return $row;
     }
 

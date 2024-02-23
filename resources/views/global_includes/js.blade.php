@@ -26,6 +26,7 @@ $('a#view_remarks').on('click', function(){
         // Datatables with Buttons
         var datatablesButtons = $("#datatables-buttons").DataTable({
             responsive: false,
+            ordering: false,
             lengthChange: !1,
 
             buttons: [

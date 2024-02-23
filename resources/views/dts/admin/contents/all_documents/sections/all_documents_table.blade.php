@@ -34,9 +34,9 @@
                         <td> 
                            
                            <a href="{{url('/dts/admin/view?tn='.$row['tracking_number'])}}" class="m-2"><i class="fas fa-eye"></i></a>   
-                           <!-- <?php if($row['history_status'] != 'completed' ) { ?>
+                           <?php if($row['history_status'] != 'completed' ) { ?>
                            <a id="forward_icon" href="#" data-history-id="{{$row['history_id']}}" data-tracking-number="{{$row['tracking_number']}}"  data- data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" ><i class="fas fa-check text-success"></i></a>   
-                           <?php } ?> -->
+                           <?php } ?>
                         </td>
                      </tr>
                 <?php endforeach; ?>    

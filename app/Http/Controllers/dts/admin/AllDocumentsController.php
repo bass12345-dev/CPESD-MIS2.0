@@ -14,6 +14,13 @@ class AllDocumentsController extends Controller
     public $history_table = "history";
     public $documents_table = "documents";
     public $final_actions_table = "final_actions";
+
+    public $now;
+    public function __construct()
+    {
+        $this->now = new \DateTime();
+        $this->now->setTimezone(new \DateTimezone('Asia/Manila'));
+    }
     public function index()
     {
 
@@ -119,32 +126,42 @@ class AllDocumentsController extends Controller
     public function complete(Request $request)
     {
 
-        $id = $request->input('id');
-        $tracking_number = $request->input('t_number');
+        $id                 = $request->input('id');
+        $tracking_number    = $request->input('t_number');
+        $hs                 = CustomModel::q_get_where_order($this->history_table,array('history_id' => $id),'history_id','desc')->first();
+        $user_row           = CustomModel::q_get_where('users', array('user_type' => 'admin'))->first();
 
 
-        $where      = array('history_id' => $id);
-        $data       = array('status' => 'to-complete');
-        $update     = CustomModel::update_item($this->history_table,$where,$data);
+        $where              = array('history_id' => $id);
+        $data               = array(
+                            // 'user2'             => $hs->user2 == NULL ? $user_row->user_id : $hs->user2,
+                            // 'office2'           => $hs->office2 == NULL ? $user_row->off_id : $hs->office2,
+                            'status'            => 'received',
+                            'received_status'   => 1,
+                            'received_date'     =>  $hs->received_date == NULL ?   $this->now->format('Y-m-d H:i:s') : $hs->received_date,
+                            'release_status'    => 1,
+                            'release_date'      =>  $hs->release_date == NULL ?   $this->now->format('Y-m-d H:i:s') : $hs->release_date,
+        );
+        $update             = CustomModel::update_item($this->history_table,$where,$data);
 
         if($update){
 
-            $user_row = CustomModel::q_get_where('users', array('user_type' => 'admin'))->first();
+           
 
         $info = array(
-            't_number' => $tracking_number,
-            'user1' => $user_row->user_id,
-            'office1' => $user_row->off_id,
-            'user2' => $user_row->user_id,
-            'office2' => $user_row->off_id,
-            'received_status' => 1,
-            'received_date' => date('Y-m-d H:i:s', time()),
-            'release_status' => NULL,
-            'to_receiver' => 'no',
-            'release_date' => NULL,
-            'status' => 'completed',
-            'final_action_taken' => $request->input('final_action_taken'),
-            'remarks' => $request->input('remarks1')
+            't_number'              => $tracking_number,
+            'user1'                 => $user_row->user_id,
+            'office1'               => $user_row->off_id,
+            'user2'                 => $user_row->user_id,
+            'office2'               => $user_row->off_id,
+            'received_status'       => 1,
+            'received_date'         => date('Y-m-d H:i:s', time()),
+            'release_status'        => NULL,
+            'to_receiver'           => 'no',
+            'release_date'          => date('Y-m-d H:i:s', time()),
+            'status'                => 'completed',
+            'final_action_taken'    => $request->input('final_action_taken'),
+            'remarks'               => $request->input('remarks1')
 
         );
 
