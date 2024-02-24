@@ -1,4 +1,5 @@
 @include('global_includes.modals.view_remarks')
+
 <script type="text/javascript"> var base_url = '<?php echo url('/'); ?>';  </script>
 <script src=" {{ asset('assets/js/app.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"

@@ -30,11 +30,11 @@
 									<form id="login_form">
 										<div class="mb-3">
 											<label class="form-label">Username</label>
-											<input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your Username" />
+											<input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your Username" required />
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Password</label>
-											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" autocomplete />
+											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" autocomplete required />
 										</div>
 										
 										<div class="d-grid gap-2 mt-3">

@@ -76,6 +76,8 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
     Route::get('/received', [App\Http\Controllers\dts\user\ReceivedController::class, 'index']);
     Route::get('/forwarded', [App\Http\Controllers\dts\user\ForwardedController::class, 'index']);
     Route::get('/view', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'index']);
+
+    Route::get('/my-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'index']);
     Route::get('/track', function () {
      $data['title'] = 'Search';
      return view('dts.users.contents.search.search')->with($data);
@@ -92,7 +94,9 @@ Route::middleware(['SessionGuard'])->prefix('dts/us/')->group(function  () {
 
     Route::post('/receive-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive']);
     Route::post('/forward-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'forward']);
-    
+    Route::post('/update-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'update']);
+    Route::post('/ck', [App\Http\Controllers\dts\user\ProfileController::class, 'check']);
+    Route::post('/u-p', [App\Http\Controllers\dts\user\ProfileController::class, 'update_password']);
 
     
 }); 

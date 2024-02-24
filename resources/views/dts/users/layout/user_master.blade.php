@@ -17,6 +17,7 @@
 		</div>
 	</div>
 </body>
+
 @include('global_includes.js')
 @yield('js')
 

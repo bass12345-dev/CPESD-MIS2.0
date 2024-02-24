@@ -6,7 +6,9 @@
     <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
         <span class="text-dark">{{session('name')}}</span>
     </a>
+    
     <div class="dropdown-menu dropdown-menu-end">
+        <a class="dropdown-item text-primary"  href="{{url('/dts/user/my-profile?u_id='.session('_id'))}}">My Profile</a>
         <a class="dropdown-item text-danger" href="{{url('/dts_logout')}}">Log out</a>
     </div>
 </li>

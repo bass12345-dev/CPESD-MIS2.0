@@ -36,13 +36,15 @@ class AuthController extends Controller
             'contact_number'    => $request->input('contact_number'),
             'email_address'     => $request->input('email'),
             'username'          => $request->input('user_name'),
-            'password'          => $request->input('password'),
+            'password'          => password_hash($request->input('password'), PASSWORD_DEFAULT), 
             'off_id'            => $request->input('office'),
             'user_created'      => $now->format('Y-m-d H:i:s'),
-            'user_status'       => 'active',
+            'user_status'       => 'inactive',
             'work_status'       => NULL,
             'user_type'         => 'user',
             'is_receiver'       => 'no'
+
+            
         );
 
         if ($items['password'] == $request->input('confirm_password')) {
