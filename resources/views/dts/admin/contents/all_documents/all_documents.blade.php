@@ -38,5 +38,24 @@ $('#forward_form').on('submit', function (e) {
    add_item(form,url);
 
 });
+
+$('input[name="dates"]').daterangepicker();
+
+$('button#filter').on('click', function(){
+   var dates = $('input[name="dates"]').val();
+   var document_type = $('select[name="select_document_types"]').val();
+   var date = dates.split(' - ');
+   var from = date[0];
+   var to = date[1];
+   
+   if(!document_type){
+    window.location.href = base_url + '/dts/admin/all-documents?from='+from+'&&to='+to;
+   }else {
+    window.location.href = base_url + '/dts/admin/all-documents?from='+from+'&&to='+to+'&&type='+document_type;
+   }
+
+   
+
+})
 </script>
 @endsection

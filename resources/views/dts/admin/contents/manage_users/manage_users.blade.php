@@ -12,27 +12,27 @@
 @section('js')
 
 <script>
-$('a.set-inactive').on('click', function(){
+$('li.set-inactive').on('click', function(){
 var id = $(this).data('id');
 let data = {id:id,status: 'inactive'}
 var url = '/dts/c-u-s';
 update_item(id,data,url);
 });
 
-$('a.set-active').on('click', function(){
+$('li.set-active').on('click', function(){
 var id = $(this).data('id');
 let data = {id:id,status: 'active'}
 var url = '/dts/c-u-s';
 update_item(id,data,url);
 });
 
-$('a.delete').on('click', function(){
+$('li.delete').on('click', function(){
 var id = $(this).data('id');
 var url = '/dts/delete-user';
 delete_item(id,url)
 });
 
-$('a.update-username').on('click', function(){
+$('li.update-username').on('click', function(){
    var id = $(this).data('id');
    var url = '/dts/c-p-t-u';
    delete_item(id,url,button_text = 'Change',text = 'Change password same as username ? ')

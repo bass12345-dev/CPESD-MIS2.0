@@ -12,6 +12,7 @@ class DashboardController extends Controller
     public $office_table            = "offices";
     public $document_types_table    = "document_types";
     public $users_table             = "users";
+    public $final_actions_table = "final_actions";
     public function index()
     {
         $data['title'] = 'Admin Dashboard';
@@ -25,8 +26,10 @@ class DashboardController extends Controller
 
             'count_documents'       => CustomModel::q_get($this->document_table)->count(),
             'count_offices'         => CustomModel::q_get_where($this->office_table,array('office_status' => 'active'))->count(),
-            'count_document_types'  =>  CustomModel::q_get($this->document_types_table)->count(),
-            'count_users'           => CustomModel::q_get_where($this->users_table,array('user_status'=>'active'))->count()
+            'count_document_types'  => CustomModel::q_get($this->document_types_table)->count(),
+            'count_users'           => CustomModel::q_get_where($this->users_table,array('user_status'=>'active'))->count(),
+            'final_actions'         => CustomModel::q_get($this->final_actions_table)->count(),
+            'pending'               => CustomModel::q_get_where($this->document_table,array('doc_status' => 'pending'))->count(),
         );
 
         return $data;

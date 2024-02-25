@@ -35,8 +35,13 @@
 
             <li class="sidebar-item <?= $segments[2] == 'final-actions' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/admin/final-actions')}}">
-                    <i class="align-middle" data-feather="plus"></i> <span class="align-middle">Final Action
-                        Taken</span>
+                    <i class="align-middle" data-feather="plus"></i> <span class="align-middle">Final Actions</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item <?= $segments[2] == 'manage-receiver' ? 'active' : '' ?>">
+                <a class="sidebar-link" href="{{url('/dts/admin/manage-receiver')}}">
+                    <i class="align-middle fas fa-hand" ></i> <span class="align-middle">Manage Receiver</span>
                 </a>
             </li>
 

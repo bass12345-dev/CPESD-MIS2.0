@@ -12,6 +12,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src=" {{ asset('assets/js/datatables.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script>
    
