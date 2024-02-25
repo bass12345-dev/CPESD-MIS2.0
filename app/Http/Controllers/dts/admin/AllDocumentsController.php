@@ -33,49 +33,51 @@ class AllDocumentsController extends Controller
 
 
        
-        if(isset($_GET['from']) && isset($_GET['to'] )){
+        // if(isset($_GET['from']) && isset($_GET['to'] )){
 
-            echo 1;
+        //     echo 1;
 
-            // $start_date          =  date('Y-m-d', strtotime($_GET['from']));
-            // $end_date            =  date('Y-m-d', strtotime($_GET['to']));
-
-            
-
-            // $data['documents']   =  $this->get_all_documents($start_date,$end_date,$type_id="");
-
-        }else if(isset($_GET['from']) != '' && isset($_GET['to']) != '' && isset($_GET['type']) != ''){
-            
-            echo 2;
-            // $start_date          =  date('Y-m-d', strtotime($_GET['from']));
-            // $end_date            =  date('Y-m-d', strtotime($_GET['to']));
-            // $type_id             = $_GET['type'];
-            // $data['documents']   = $this->get_all_documents($start_date,$end_date,$type_id);
+        //     $start_date          =  date('Y-m-d', strtotime($_GET['from']));
+        //     $end_date            =  date('Y-m-d', strtotime($_GET['to']));
 
             
-        }else{
-            echo 3;
-            // $data['documents']   = $this->get_all_documents($start_date="",$end_date="",$type_id="");
-        }
+
+        //     $data['documents']   =  $this->get_all_documents($start_date,$end_date,$type_id="");
+
+        // }else if(isset($_GET['from']) != '' && isset($_GET['to']) != '' && isset($_GET['type']) != ''){
+            
+        //     echo 2;
+        //     $start_date          =  date('Y-m-d', strtotime($_GET['from']));
+        //     $end_date            =  date('Y-m-d', strtotime($_GET['to']));
+        //     $type_id             = $_GET['type'];
+        //     $data['documents']   = $this->get_all_documents($start_date,$end_date,$type_id);
+
+            
+        // }else{
+        //     echo 3;
+        //     $data['documents']   = $this->get_all_documents($start_date="",$end_date="",$type_id="");
+        // }
         
         
-        // echo $end_date;
+      
+
+        $data['documents']   = $this->get_all_documents($start_date="",$end_date="",$type_id="");
        
-        // return view('dts.admin.contents.all_documents.all_documents')->with($data);
+        return view('dts.admin.contents.all_documents.all_documents')->with($data);
     }
 
 
     public function get_all_documents($start,$end,$type)
     {
-
-        if($start == '' && $end == '' && $type == ''){
-            $rows = DocumentsModel::get_all_documents();
-        }else if($start != '' && $end != '' && $type == ''){
-            $rows =  DocumentsModel::filter_date_documents($start,$end);
-        }else if($start != '' && $end != '' && $type != ''){
-            $where = array('doc_type' => $type);
-            $rows =  DocumentsModel::filter_date_documents_where($start,$end,$where);
-        }
+        $rows = DocumentsModel::get_all_documents();
+        // if($start == '' && $end == '' && $type == ''){
+        //     $rows = DocumentsModel::get_all_documents();
+        // }else if($start != '' && $end != '' && $type == ''){
+        //     $rows =  DocumentsModel::filter_date_documents($start,$end);
+        // }else if($start != '' && $end != '' && $type != ''){
+        //     $where = array('doc_type' => $type);
+        //     $rows =  DocumentsModel::filter_date_documents_where($start,$end,$where);
+        // }
 
         
         $data = [];
