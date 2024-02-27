@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class ViewProfileController extends Controller
 {
-    public $person_table = 'persons';
-    public $programs_table = 'programs';
-    public $programs_block_table = 'program_block';
-    public $records_table = 'records';
+    public $person_table            = 'persons';
+    public $programs_table          = 'programs';
+    public $programs_block_table    = 'program_block';
+    public $records_table           = 'records';
     public $now;
     public function __construct()
     {
@@ -51,20 +51,21 @@ class ViewProfileController extends Controller
      public function get_programs(){
 
 
-        $items = CustomModel::q_get_order($this->programs_table,'program','asc')->get();
-        $person_id = $_GET['id'];
+        $items              = CustomModel::q_get_order($this->programs_table,'program','asc')->get();
+        $person_id          = $_GET['id'];
 
-        $data = [];
+        $data               = [];
+
         foreach ($items as $row) {
 
-            $program_id = $row->program_id;
+            $program_id     = $row->program_id;
 
             $x = CustomModel::q_get_where($this->programs_block_table,array('person_id' => $person_id,'program_id' => $program_id))->count();
-            $data[] = array(
+            $data[]         = array(
 
-                    'program' => $row->program,
-                    'program_id'   => $row->program_id,
-                    'x' => $x == 1 ? true : null
+                                    'program'       => $row->program,
+                                    'program_id'    => $row->program_id,
+                                    'x'             => $x == 1 ? true : null
             );
         }
 

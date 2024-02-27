@@ -20,7 +20,7 @@
 
 $('#add_document').on('submit', function (e) {
    e.preventDefault();
-   var url = '/dts/us/add-document';
+   var url = '/dts/us/add-d';
    var form = $(this).serialize();
 
 

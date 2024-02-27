@@ -15,7 +15,7 @@
 <script>
    $('a#remove_office').on('click', function () {
       var id = $(this).data('id');
-      var url = '/dts/delete-office/';
+      var url = '/dts/delete-office';
       delete_item(id, url);
    });
 
@@ -46,7 +46,7 @@
          var url = '/dts/add-office';
          add_item(form, url);
       } else {
-         var url = '/dts/update-office/';
+         var url = '/dts/update-office';
          update_item(id, form, url);
 
       }

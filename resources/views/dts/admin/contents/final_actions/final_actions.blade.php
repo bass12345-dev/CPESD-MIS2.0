@@ -46,7 +46,7 @@ $('#add_form').on('submit', function (e) {
      var url = '/dts/add-action';
      add_item(form,url);
    }else {
-      var url = '/dts/update-action/';
+      var url = '/dts/update-action';
       update_item(id,form,url);
    }
 

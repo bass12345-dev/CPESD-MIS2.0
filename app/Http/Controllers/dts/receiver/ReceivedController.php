@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\DB;
 
 class ReceivedController extends Controller
 {
-    public  $users_table          = "users";
-    public  $final_actions_table          = "final_actions";
+    public  $users_table                    = "users";
+    public  $final_actions_table            = "final_actions";
     public function index(){
-        $data['title'] = 'Received Documents';
-        $user = DB::table('users')->where('user_id', session('_id'))->get()[0];
-        $data['user_data'] = array('user_id' => session('_id'), 'office_id' => $user->off_id );
-        $data['received_documents'] = $this->get_received_documents();
-        $data['users'] = $this->get_users();
-        $data['final_actions'] = $this->get_final_actions();
+        $data['title']                      = 'Received Documents';
+        $user                               = DB::table('users')->where('user_id', session('_id'))->get()[0];
+        $data['user_data']                  = array('user_id' => session('_id'), 'office_id' => $user->off_id );
+        $data['received_documents']         = $this->get_received_documents();
+        $data['users']                      = $this->get_users();
+        $data['final_actions']              = $this->get_final_actions();
         return view('dts.receiver.contents.received.received')->with($data);
     }
 

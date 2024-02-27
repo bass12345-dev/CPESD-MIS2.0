@@ -18,7 +18,7 @@
 <script>
    $('a#remove').on('click', function () {
       var id = $(this).data('id');
-      var url = '/dts/delete-type/';
+      var url = '/dts/delete-type';
       delete_item(id, url);
    });
 
@@ -49,7 +49,7 @@
          var url = '/dts/add-document-type';
          add_item(form, url);
       } else {
-         var url = '/dts/update-type/';
+         var url = '/dts/update-type';
          update_item(id, form, url);
 
       }

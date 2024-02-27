@@ -24,6 +24,17 @@
 });
 
 
+$('input[name=check_all]').on('change', function(){
+
+   var check = $('input[name=check_all]:checked').val();
+   if(check == 'true'){
+      $('input[name=document_id]').prop('checked', true);
+   }else {
+      $('input[name=document_id]').prop('checked', false);
+   } 
+});
+
+
 $('a#forward_icon').on('click', function(){
    $('input[name=id]').val($(this).data('history-id'));
    $('input[name=t_number]').val($(this).data('tracking-number'));

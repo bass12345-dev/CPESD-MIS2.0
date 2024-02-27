@@ -8,6 +8,17 @@
 @section('js')
 <script>
 
+
+$('input[name=check_all]').on('change', function(){
+
+var check = $('input[name=check_all]:checked').val();
+if(check == 'true'){
+   $('input[name=person_id]').prop('checked', true);
+}else {
+   $('input[name=person_id]').prop('checked', false);
+} 
+});
+
 $('button#remove').on('click', function(){
     let items = [];
     var button_text = 'Remove selected items';

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ProgramController;
+use Carbon\Carbon;
 
 class ManageProgramController extends Controller
 {
@@ -30,7 +31,7 @@ class ManageProgramController extends Controller
 
             'program'                   => $request->input('program'),
             'program_description'       => $request->input('program_description'),
-            'created'                   =>  $this->now->format('Y-m-d H:i:s')
+            'created'                   => Carbon::now()->format('Y-m-d H:i:s') ,
         );
 
         

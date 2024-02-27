@@ -9,7 +9,7 @@
          <table class="table table-hover table-striped " id="datatables-buttons" style="width: 100%; "  >
             <thead>
                <tr>
-                  <th></th>
+                  <th class=""><input type="checkbox" name="check_all" value="true"></th>
                   <th>#</th>
                   <th>Name</th>
                   <th>Age</th>

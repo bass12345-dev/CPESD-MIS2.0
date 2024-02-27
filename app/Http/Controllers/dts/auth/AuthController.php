@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dts\auth;
 use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -38,7 +39,7 @@ class AuthController extends Controller
             'username'          => $request->input('user_name'),
             'password'          => password_hash($request->input('password'), PASSWORD_DEFAULT), 
             'off_id'            => $request->input('office'),
-            'user_created'      => $now->format('Y-m-d H:i:s'),
+            'user_created'      =>  Carbon::now()->format('Y-m-d H:i:s') ,
             'user_status'       => 'inactive',
             'work_status'       => NULL,
             'user_type'         => 'user',

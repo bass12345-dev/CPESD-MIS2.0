@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dts\admin;
 use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DocTypesController extends Controller
 {   
@@ -26,8 +27,8 @@ class DocTypesController extends Controller
     public function store(Request $request){
 
         $items = array(
-            'type_name'    => $request->input('type'),
-            'created'       =>  $this->now->format('Y-m-d H:i:s')
+            'type_name'     => $request->input('type'),
+            'created'       => Carbon::now()->format('Y-m-d H:i:s') ,
         );
 
         if(!empty($items['type_name'])) {

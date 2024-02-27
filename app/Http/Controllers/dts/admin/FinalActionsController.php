@@ -4,6 +4,7 @@ namespace App\Http\Controllers\dts\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FinalActionsController extends Controller
@@ -26,7 +27,7 @@ class FinalActionsController extends Controller
     public function store(Request $request){
         $items = array(
             'action_name'    => $request->input('type'),
-            'created'       =>  $this->now->format('Y-m-d H:i:s')
+            'created'        =>  Carbon::now()->format('Y-m-d H:i:s') ,
         );
         if(!empty($items['action_name'])) {
         $add = CustomModel::insert_item($this->final_actions_table,$items);

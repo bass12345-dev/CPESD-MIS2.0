@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ActiveListController extends Controller
 {
@@ -31,16 +32,16 @@ class ActiveListController extends Controller
 
         $items = array(
 
-            'first_name' => $request->input('firstName'),
-            'middle_name' => $request->input('middleName'),
-            'last_name' => $request->input('lastName'),
-            'extension' => $request->input('extension'),
-            'phone_number' => $request->input('phoneNumber'),
-            'address' => $request->input('address'),
-            'email_address' => $request->input('emailAddress'),
-            'created_at' => $this->now->format('Y-m-d H:i:s'),
-            'status' => 'active',
-            'age' => $request->input('age')
+            'first_name'                => $request->input('firstName'),
+            'middle_name'               => $request->input('middleName'),
+            'last_name'                 => $request->input('lastName'),
+            'extension'                 => $request->input('extension'),
+            'phone_number'              => $request->input('phoneNumber'),
+            'address'                   => $request->input('address'),
+            'email_address'             => $request->input('emailAddress'),
+            'created_at'                => Carbon::now()->format('Y-m-d H:i:s') ,
+            'status'                    => 'active',
+            'age'                       => $request->input('age')
         );
         $add = CustomModel::insert_item($this->person_table, $items);
         if ($add) {
@@ -104,9 +105,9 @@ class ActiveListController extends Controller
     public function add_record(Request $request)
     {
         $items = array(
-            'record_description' => $request->input('record_description'),
-            'p_id' => $request->input('person_id'),
-            'created_at' => $this->now->format('Y-m-d H:i:s')
+            'record_description'    => $request->input('record_description'),
+            'p_id'                  => $request->input('person_id'),
+            'created_at'            => Carbon::now()->format('Y-m-d H:i:s') ,
         );
         $add = CustomModel::insert_item($this->records_table, $items);
         if ($add) {
@@ -153,7 +154,7 @@ class ActiveListController extends Controller
 
                     'person_id' => $person_id,
                     'program_id' => $row,
-                    'created' => date('Y-m-d H:i:s', time())
+                    'created' => Carbon::now()->format('Y-m-d H:i:s') ,
                 );
                 $add = CustomModel::insert_item($this->programs_block_table,$item);
             }

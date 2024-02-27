@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dts\admin;
 use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class OfficesController extends Controller
 {   
@@ -31,7 +32,7 @@ class OfficesController extends Controller
         $items = array(
             'office'        => $request->input('office'),
             'office_status' => 'active', 
-            'created'       =>  $this->now->format('Y-m-d H:i:s')
+            'created'       =>  Carbon::now()->format('Y-m-d H:i:s') ,
         );
 
         if(!empty($items['office'])) {

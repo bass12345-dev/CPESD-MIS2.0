@@ -7,13 +7,14 @@ use App\Models\CustomModel;
 use App\Models\DocumentsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AllDocumentsController extends Controller
 {
-    public $document_type_table = "document_types";
-    public $history_table = "history";
-    public $documents_table = "documents";
-    public $final_actions_table = "final_actions";
+    public $document_type_table     = "document_types";
+    public $history_table           = "history";
+    public $documents_table         = "documents";
+    public $final_actions_table     = "final_actions";
 
     public $now;
     public function __construct()
@@ -84,25 +85,25 @@ class AllDocumentsController extends Controller
         $i = 1;
 
         foreach ($rows as $value => $key) {
-            $where = array('t_number' => $key->tracking_number);
-            $delete_button = CustomModel::q_get_where($this->history_table, $where)->count() > 1 ? true : false;
-            $status = $key->doc_status == 'completed' ? 'Completed' : 'Pending';
-            $history = CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0];
+            $where                          = array('t_number' => $key->tracking_number);
+            $delete_button                  = CustomModel::q_get_where($this->history_table, $where)->count() > 1 ? true : false;
+            $status                         = $key->doc_status == 'completed' ? 'Completed' : 'Pending';
+            $history                        = CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0];
 
 
             $data[] = array(
-                'number' => $i++,
-                'tracking_number' => $key->tracking_number,
-                'document_name' => $key->document_name,
-                'type_name' => $key->type_name,
-                'created' => $key->created,
-                'a' => $delete_button,
-                'document_id' => $key->document_id,
-                'history_id' => $history->history_id,
-                'user_id' => $key->u_id,
-                'created_by' => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
-                'is' => $status,
-                'history_status' => $key->doc_status
+                'number'                    => $i++,
+                'tracking_number'           => $key->tracking_number,
+                'document_name'             => $key->document_name,
+                'type_name'                 => $key->type_name,
+                'created'                   => date('M d Y - h:i a', strtotime($key->created)),
+                'a'                         => $delete_button,
+                'document_id'               => $key->document_id,
+                'history_id'                => $history->history_id,
+                'user_id'                   => $key->u_id,
+                'created_by'                => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
+                'is'                        => $status,
+                'history_status'            => $key->doc_status
             );
         }
 
@@ -120,8 +121,8 @@ class AllDocumentsController extends Controller
 
         if (is_array($id)) {
             foreach ($id as $row) {
-                $delete = CustomModel::q_get_where($this->documents_table, array('document_id' => $row));
-                $tracking_number = $delete->get()[0]->tracking_number;
+                $delete                   = CustomModel::q_get_where($this->documents_table, array('document_id' => $row));
+                $tracking_number          = $delete->get()[0]->tracking_number;
                 $delete->delete();
                 CustomModel::delete_item($this->history_table, array('t_number' => $tracking_number));
             }
@@ -180,9 +181,9 @@ class AllDocumentsController extends Controller
                             // 'office2'           => $hs->office2 == NULL ? $user_row->off_id : $hs->office2,
                             'status'            => 'received',
                             'received_status'   => 1,
-                            'received_date'     =>  $hs->received_date == NULL ?   $this->now->format('Y-m-d H:i:s') : $hs->received_date,
+                            'received_date'     =>  $hs->received_date == NULL ?   Carbon::now()->format('Y-m-d H:i:s') : $hs->received_date,
                             'release_status'    => 1,
-                            'release_date'      =>  $hs->release_date == NULL ?   $this->now->format('Y-m-d H:i:s') : $hs->release_date,
+                            'release_date'      =>  $hs->release_date == NULL ?   Carbon::now()->format('Y-m-d H:i:s')  : $hs->release_date,
         );
         $update             = CustomModel::update_item($this->history_table,$where,$data);
 
@@ -197,10 +198,10 @@ class AllDocumentsController extends Controller
             'user2'                 => $user_row->user_id,
             'office2'               => $user_row->off_id,
             'received_status'       => 1,
-            'received_date'         => date('Y-m-d H:i:s', time()),
+            'received_date'         => Carbon::now()->format('Y-m-d H:i:s') ,
             'release_status'        => NULL,
             'to_receiver'           => 'no',
-            'release_date'          => date('Y-m-d H:i:s', time()),
+            'release_date'          => Carbon::now()->format('Y-m-d H:i:s') ,
             'status'                => 'completed',
             'final_action_taken'    => $request->input('final_action_taken'),
             'remarks'               => $request->input('remarks1')
