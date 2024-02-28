@@ -32,9 +32,22 @@ class DocumentsModel extends Model
         $rows = DB::table('documents as documents')
         ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
         ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
-        ->select('documents.created as created','documents.tracking_number as tracking_number', 
-                 'documents.document_name as   document_name', 'documents.document_id as document_id', 
-                 'document_types.type_name', 'documents.doc_status as doc_status', 'documents.u_id as u_id', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension', DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+        ->select(    //Documents
+                    'documents.created as created', 
+                    'documents.doc_status as doc_status',  
+                    'documents.tracking_number as tracking_number', 
+                    'documents.document_name as   document_name', 
+                    'documents.document_id as document_id', 
+                    'documents.doc_status as doc_status',
+                    'documents.u_id as u_id',
+                    //Document Types
+                    'document_types.type_name',  
+                    //User
+                    'users.first_name as first_name', 
+                    'users.middle_name as middle_name', 
+                    'users.last_name as last_name', 
+                    'users.extension as extension', 
+                    DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
         ->orderBy('documents.document_id', 'desc')->get();
 
         return $rows;
@@ -44,9 +57,19 @@ class DocumentsModel extends Model
         $rows = DB::table('documents as documents')
         ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
         ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
-        ->select('documents.created as created','documents.tracking_number as tracking_number', 
-                 'documents.document_name as   document_name', 'documents.document_id as document_id', 
-                 'document_types.type_name', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension', DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+        ->select(   //Documents
+                    'documents.created as created',
+                    'documents.tracking_number as tracking_number', 
+                    'documents.document_name as document_name', 
+                    'documents.document_id as document_id', 
+                    //Document Types
+                    'document_types.type_name', 
+                    //User
+                    'users.first_name as first_name', 
+                    'users.middle_name as middle_name', 
+                    'users.last_name as last_name', 
+                    'users.extension as extension', 
+                    DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
         ->orderBy('documents.document_id', 'desc')->limit($limit)->get();
         return $rows;
         
@@ -86,9 +109,20 @@ class DocumentsModel extends Model
         $rows = DB::table('documents as documents')
         ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
         ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
-        ->select('documents.created as created','documents.tracking_number as tracking_number', 
-                 'documents.document_name as   document_name', 'documents.document_id as document_id', 
-                 'document_types.type_name', 'documents.doc_status as doc_status', 'documents.u_id as u_id', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension', DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+        ->select(   //Documents
+                    'documents.created as created',
+                    'documents.tracking_number as tracking_number', 
+                    'documents.document_name as   document_name', 
+                    'documents.document_id as document_id', 
+                    'document_types.type_name', 
+                    'documents.doc_status as doc_status', 
+                    'documents.u_id as u_id', 
+                    //User
+                    'users.first_name as first_name', 
+                    'users.middle_name as middle_name', 
+                    'users.last_name as last_name', 
+                    'users.extension as extension', 
+                    DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
         ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') >= '".$start."' "))
         ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') <= '".$end."' "))
         ->orderBy('documents.document_id', 'desc')->get();
@@ -117,12 +151,14 @@ class DocumentsModel extends Model
     public static function get_my_documents(){
         $rows = DB::table('documents as documents')
         ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
-        ->select('documents.created as d_created','documents.tracking_number as tracking_number', 'documents.document_name as document_name', 'documents.document_id as document_id', 'documents.doc_type as doc_type', 'documents.document_description as document_description', 'documents.destination_type as destination_type','document_types.type_name')
+        ->select('documents.created as d_created', 'documents.doc_status as doc_status','documents.tracking_number as tracking_number', 'documents.document_name as document_name', 'documents.document_id as document_id', 'documents.doc_type as doc_type', 'documents.document_description as document_description', 'documents.destination_type as destination_type','document_types.type_name')
         ->where('u_id', session('_id'))
         ->orderBy('documents.document_id', 'desc')
         ->get();
         return $rows;
     }
+
+
 
     public static function get_incoming_documents(){
 
@@ -130,12 +166,26 @@ class DocumentsModel extends Model
             ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
             ->leftJoin('users as users', 'users.user_id', '=', 'history.user1')
             ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
-            ->select('documents.tracking_number as tracking_number','documents.document_name as document_name',
-                     'documents.document_id as document_id','users.user_type as user_type',
-                     'document_types.type_name as type_name', 'history.release_date as release_date',
-                     'history.history_id as history_id','history.remarks as remarks', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension',
-                     DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+            ->select(   //Document
+                        'documents.tracking_number as tracking_number',
+                        'documents.document_name as document_name', 
+                        'documents.doc_status as doc_status' ,
+                        'documents.document_id as document_id',
+                        //Document Type
+                        'document_types.type_name as type_name',
+                        //History
+                        'history.release_date as release_date',
+                        'history.history_id as history_id',
+                        'history.remarks as remarks', 
+                         //User
+                        'users.user_type as user_type',
+                        'users.first_name as first_name', 
+                        'users.middle_name as middle_name', 
+                        'users.last_name as last_name', 
+                        'users.extension as extension',
+                        DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
             ->where('user2', session('_id'))
+            ->where('doc_status'  ,'!=', 'cancelled')
             ->where('received_status', NULL)
             ->where('status', 'torec')
             ->where('to_receiver', 'no')
@@ -154,15 +204,23 @@ class DocumentsModel extends Model
             ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
             ->leftJoin('users as users', 'users.user_id', '=', 'history.user2')
             ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
-            ->select('documents.tracking_number as tracking_number','documents.document_name as document_name',
-                     'documents.document_id as document_id','users.user_type as user_type',
-                     'document_types.type_name as type_name', 'history.received_date as received_date',
-                     'history.history_id as history_id','history.remarks as remarks')
+            ->select(   //Document
+                        'documents.tracking_number as tracking_number',
+                        'documents.doc_status as doc_status' ,
+                        'documents.document_name as document_name',
+                        'documents.document_id as document_id',
+                        //Document Type
+                        'document_types.type_name as type_name',
+                        //User
+                        'users.user_type as user_type',
+                        //History
+                        'history.received_date as received_date',
+                        'history.history_id as history_id','history.remarks as remarks')
             ->where('user2', session('_id'))
             ->where('received_status', 1)
             ->where('release_status',NULL )
             ->where('status' , 'received')
-            
+            ->where('doc_status'  ,'!=', 'cancelled')
             ->where('documents.destination_type', 'complex')
             ->where('to_receiver' , 'no')
             ->orderBy('received_date', 'desc')->get();
@@ -177,12 +235,30 @@ class DocumentsModel extends Model
              ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
              ->leftJoin('users as users', 'users.user_id', '=', 'history.user2')
              ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
-             ->select('documents.tracking_number as tracking_number','documents.document_name as document_name',
-                      'documents.document_id as document_id','users.user_type as user_type',
-                      'document_types.type_name as type_name', 'history.release_date as release_date',
-                      'history.history_id as history_id','history.remarks as remarks','users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension',
-                      DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+             ->select(  //Document
+                        'documents.tracking_number as tracking_number',
+                        'documents.doc_status as doc_status' ,
+                        'documents.document_name as document_name',
+                        'documents.document_id as document_id',
+                        //Documen Type
+                        'document_types.type_name as type_name',
+                        //History
+                        'history.release_date as release_date',
+                        'history.history_id as history_id',
+                        'history.remarks as remarks',
+                        //User
+                        'users.user_type as user_type',
+                        'users.first_name as first_name', 
+                        'users.middle_name as middle_name', 
+                        'users.last_name as last_name', 
+                        'users.extension as extension',
+                        DB::Raw("CONCAT(
+                                        users.first_name, ' ', 
+                                        users.middle_name , ' ', 
+                                        users.last_name,' ',
+                                        users.extension) as name"))
              ->where('user1', session('_id'))
+             ->where('doc_status'  ,'!=', 'cancelled')
              ->where('received_status', NULL)
              ->where('status', 'torec')
              ->where('release_status',NULL )
@@ -192,7 +268,7 @@ class DocumentsModel extends Model
     }
 
 
-
+    //FINAL RECEIVER QUERY
     public static function get_receiver_incoming_documents(){
         $row = DB::table('history as history')
             ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')

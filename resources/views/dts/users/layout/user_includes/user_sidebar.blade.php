@@ -23,6 +23,8 @@
                 </a>
             </li>
 
+
+
             <li class="sidebar-item <?= $segments[2] == 'add-document' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/user/add-document')}}">
                     <i class="align-middle" data-feather="plus"></i> <span class="align-middle">Add Documents</span>
@@ -52,7 +54,7 @@
                     <i class="align-middle" data-feather="arrow-up-right"></i> <span class="align-middle">Outgoing</span>
                 </a>
             </li> -->
-
+     
 
             <li class="sidebar-item <?= $segments[2] == 'track' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/user/track')}}">

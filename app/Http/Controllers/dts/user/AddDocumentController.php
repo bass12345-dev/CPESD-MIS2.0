@@ -7,6 +7,7 @@ use App\Models\CustomModel;
 use App\Models\DocumentsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AddDocumentController extends Controller
 {
@@ -14,6 +15,8 @@ class AddDocumentController extends Controller
     public $user_table = "users";
     public $office_table = "offices";
     public function index(){
+
+     
         $data['title']          = 'Add Document';
         $data['document_types'] = CustomModel::q_get_order($this->document_types_table,'type_name','asc')->get(); 
         $data['user_data']      = CustomModel::q_get_where($this->user_table,array('user_id' => session('_id')))->first();
@@ -28,18 +31,23 @@ class AddDocumentController extends Controller
 
         $l = '';
         $verify = DB::table('documents')->count();
+        $current_year = Carbon::now()->format('Y');
+        
+
         if($verify) {
 
-            if(date('Y', time()) > date('Y', strtotime( DB::table('documents')->orderBy('created', 'desc')->get()[0]->created)))
+            $last_created = date('Y', strtotime( DB::table('documents')->orderBy('created', 'desc')->get()[0]->created));
+
+            if($current_year > $last_created )
                 {      
                      $l = date('Ymd', time()).'001';
 
-                }else if (date('Y', time()) < date('Y', strtotime( DB::table('documents')->orderBy('created', 'desc')->get()[0]->created))) {
+                }else if ($current_year < $last_created) {
 
                     $l = DB::table('documents')->whereRaw("YEAR(documents.created) = '".date('Y-m-d', time())."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
-                    // $l = $this->put_zeros($x);
+                   
                     
-                }else if (date('Y', time()) === date('Y', strtotime( DB::table('documents')->orderBy('created', 'desc')->get()[0]->created))){
+                }else if (date('Y', time()) === $last_created){
 
                     $x = DB::table('documents')->whereRaw("YEAR(documents.created) = '".date('Y', time())."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
                     $l = $this->put_zeros($x);

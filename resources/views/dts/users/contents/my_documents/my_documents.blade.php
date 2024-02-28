@@ -41,6 +41,32 @@ var url = '/dts/us/delete-my-document';
 delete_item(form,url,button_text = 'Remove Document',text = "Document #" + t)
 
 });
+
+$('a.cancel_document').on('click', function(){
+var id = $(this).data('id');
+var t = $(this).data('track');
+
+
+let form = {id : id}
+var url = '/dts/us/c-doc';
+
+
+Swal.fire({
+     title: "Are you sure?",
+     text: "",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Cancel Document #" + t
+   }).then((result) => {
+     if (result.isConfirmed) {
+      add_item(form,url);
+      
+     }
+});
+
+});
 </script>
 
 @endsection

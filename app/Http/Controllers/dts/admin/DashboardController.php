@@ -30,6 +30,8 @@ class DashboardController extends Controller
             'count_users'           => CustomModel::q_get_where($this->users_table,array('user_status'=>'active'))->count(),
             'final_actions'         => CustomModel::q_get($this->final_actions_table)->count(),
             'pending'               => CustomModel::q_get_where($this->document_table,array('doc_status' => 'pending'))->count(),
+            'completed'             => CustomModel::q_get_where($this->document_table,array('doc_status' => 'completed'))->count(),
+            'cancelled'             => CustomModel::q_get_where($this->document_table,array('doc_status' => 'cancelled'))->count(),
         );
 
         return $data;

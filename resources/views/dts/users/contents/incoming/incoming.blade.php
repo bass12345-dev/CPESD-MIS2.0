@@ -18,9 +18,10 @@
 $('a.received_document').on('click', function(){
 
    var id = $(this).data('id');
+   var t = $(this).data('track');
    Swal.fire({
      title: "Are you sure?",
-     text: "",
+     text: 'Click "RECEIVE BUTTON" if the document is on your table',
      icon: "warning",
      showCancelButton: true,
      confirmButtonColor: "#3085d6",
@@ -29,14 +30,15 @@ $('a.received_document').on('click', function(){
    }).then((result) => {
      if (result.isConfirmed) {
       
-       received_document(id);
+       received_document(id,t);
      }
    });
 });
 
-function received_document(id){
+function received_document(id,t){
       let form = {
-                  id : id
+                  id : id,
+                  tracking_number : t
                   }
       var url = '/dts/us/receive-document';
       add_item(form,url);

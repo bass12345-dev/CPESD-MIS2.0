@@ -22,12 +22,13 @@ class DashboardController extends Controller
         $id = session('_id');
         $data = array(
 
-                'count_documents'    => CustomModel::q_get_where($this->documents_table,array('u_id' => $id))->count(),
+                'count_documents'   => CustomModel::q_get_where($this->documents_table,array('u_id' => $id))->count(),
                 'incoming'          => CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => NULL,'status' => 'torec','release_status' => NULL,'to_receiver'=> 'no'))->count(),
                 'received'          =>  CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => 1,'status' => 'received','release_status' => NULL,'to_receiver'=> 'no'))->count(),           
                 'forwarded'         => CustomModel::q_get_where($this->history_table,array('user1' => $id,'received_status' => NULL,'status' => 'torec','release_status' => NULL))->count(),
-                'pending'               => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'pending','u_id'=> session('_id')))->count(),
-
+                'pending'           => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'pending','u_id'=> session('_id')))->count(),
+                'completed'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'completed','u_id'=> session('_id')))->count(),
+                'cancelled'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'cancelled','u_id'=> session('_id')))->count(),
         );
 
         return $data;

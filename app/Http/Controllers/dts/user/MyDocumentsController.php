@@ -28,11 +28,10 @@ class MyDocumentsController extends Controller
     }
     public function index()
     {
-        $data['title'] = 'My Documents';
-        $data['documents'] = $this->get_all_documents();
-        $data['document_types'] = CustomModel::q_get_order($this->document_types_table, 'type_name', 'asc')->get();
+        $data['title']              = 'My Documents';
+        $data['documents']          = $this->get_all_documents();
+        $data['document_types']     = CustomModel::q_get_order($this->document_types_table, 'type_name', 'asc')->get();
         return view('dts.users.contents.my_documents.my_documents')->with($data);
-
     }
 
     function get_all_documents()
@@ -44,7 +43,7 @@ class MyDocumentsController extends Controller
         foreach ($rows as $value => $key) {
 
             $delete_button  = CustomModel::q_get_where($this->history_table, array('t_number' => $key->tracking_number))->count() > 1 ? true : false;
-            $status         = (CustomModel::q_get_where($this->history_table, array('t_number' => $key->tracking_number, 'status' => 'completed'))->count() == 1) ? '<span class="badge p-2 bg-success">Completed</span>' : '<span class="badge p-2 bg-danger">Pending</span>';
+            $status         = $this->check_status($key->doc_status);
 
             $data[] = array(
                 'number'                       => $i++,
@@ -57,16 +56,41 @@ class MyDocumentsController extends Controller
                 'is'                           => $status,
                 'doc_type'                     => $key->doc_type,
                 'description'                  => $key->document_description,
-                'destination_type'             => $key->destination_type
+                'destination_type'             => $key->destination_type,
+                'doc_status'                   => $key->doc_status
             );
         }
         return $data;
     }
 
+    public static function check_status($doc_status)
+    {
+        $status         = '';
+
+        switch ($doc_status) {
+            case 'completed':
+                $status = '<span class="badge p-2 bg-success">Completed</span>';
+                break;
+            case 'pending':
+                $status = '<span class="badge p-2 bg-danger">Pending</span>';
+                break;
+
+            case 'cancelled':
+                $status = '<span class="badge p-2 bg-warning">Canceled</span>';
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        return $status;
+    }
+
     public function store(Request $request)
     {
 
-       
+
         $items = array(
 
             'tracking_number'                   => $request->input('tracking_number'),
@@ -75,14 +99,14 @@ class MyDocumentsController extends Controller
             'offi_id'                           => $request->input('office_id'),
             'doc_type'                          => $request->input('document_type'),
             'document_description'              => $request->input('description'),
-            'created'                           => Carbon::now()->format('Y-m-d H:i:s') ,
+            'created'                           => Carbon::now()->format('Y-m-d H:i:s'),
             'doc_status'                        => 'pending',
             'destination_type'                  => $request->input('type'),
         );
 
 
 
-        
+
 
         $add = CustomModel::insert_item($this->documents_table, $items);
 
@@ -99,7 +123,7 @@ class MyDocumentsController extends Controller
                 'office2'                      => $row->offi_id,
                 'status'                       => 'received',
                 'received_status'              => '1',
-                'received_date'                => Carbon::now()->format('Y-m-d H:i:s') ,
+                'received_date'                => Carbon::now()->format('Y-m-d H:i:s'),
                 'release_status'               => NULL,
                 'to_receiver'                  => 'no',
                 'release_date'                 => NULL,
@@ -118,7 +142,7 @@ class MyDocumentsController extends Controller
                 'received_date'                => NULL,
                 'release_status'               => NULL,
                 'to_receiver'                  => 'yes',
-                'release_date'                 =>  Carbon::now()->format('Y-m-d H:i:s') ,
+                'release_date'                 =>  Carbon::now()->format('Y-m-d H:i:s'),
                 'remarks'                      => ''
 
             );
@@ -135,23 +159,16 @@ class MyDocumentsController extends Controller
                 $this->create_qr_code($items['tracking_number']);
 
                 $data = array('message' => 'Added Successfully', 'response' => true);
-
             } else {
 
                 $data = array('message' => 'Something Wrong', 'response' => false);
             }
-
-
-
         } else {
 
             $data = array('message' => 'Something Wrong', 'response' => false);
-
-
         }
 
         return response()->json($data);
-
     }
 
 
@@ -177,8 +194,6 @@ class MyDocumentsController extends Controller
 
         $output_file = $path . $tracking_number . '.png';
         Storage::disk('local')->put($output_file, $image);
-
-
     }
 
     public function update(Request $request)
@@ -197,12 +212,9 @@ class MyDocumentsController extends Controller
 
 
             $data = array('message' => 'updated Succesfully', 'response' => true);
-
-
         } else {
 
             $data = array('message' => 'Something Wrong/No Changes Apply ', 'response' => false);
-
         }
         return response()->json($data);
     }
@@ -213,7 +225,7 @@ class MyDocumentsController extends Controller
         $id                 = $request->input('id')['id'];
         $delete             = CustomModel::q_get_where($this->documents_table, array('document_id' => $id));
         $tracking_number    = $delete->get()[0]->tracking_number;
-        
+
         if ($delete->delete()) {
             CustomModel::delete_item($this->history_table, array('t_number' => $tracking_number));
             $data = array('message' => 'Deleted Succesfully', 'response' => true);
@@ -226,19 +238,29 @@ class MyDocumentsController extends Controller
     }
 
 
-    public function receive(Request $request){
-        $id     = $request->input('id');
+    public function receive(Request $request)
+    {
+        $id                  = $request->input('id');
+        $tracking_number     = $request->input('tracking_number');
         $items  = array(
-            
+
             'status'            => 'received',
-            'received_status'   => 1, 
+            'received_status'   => 1,
             'received_date'     => Carbon::now()->format('Y-m-d H:i:s')
         );
-        $update_receive = CustomModel::update_item($this->history_table,array('history_id' => $id),$items);
-         if($update_receive) {
-            $data = array('message' => 'Received Succesfully' , 'response' => true );
-        }else {
-            $data = array('message' => 'Something Wrong' , 'response' => false );
+
+        $check_cancelled    = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tracking_number, 'doc_status' => 'cancelled'))->count();
+
+        if ($check_cancelled < 1) {
+
+            $update_receive = CustomModel::update_item($this->history_table, array('history_id' => $id), $items);
+            if ($update_receive) {
+                $data = array('message' => 'Received Succesfully', 'response' => true);
+            } else {
+                $data = array('message' => 'Something Wrong', 'response' => false);
+            }
+        } else {
+            $data = array('message' => 'This Document is cancelled', 'response' => false);
         }
         return response()->json($data);
     }
@@ -258,92 +280,115 @@ class MyDocumentsController extends Controller
         $user_row           = CustomModel::q_get_where($this->users_table, array('user_id' => $user_id))->get();
         $forward_user_row   = CustomModel::q_get_where($this->users_table, array('user_id' => $forward_to))->get();
         $count              = CustomModel::q_get_where($this->history_table, array('t_number' => $tracking_number))->count();
-        $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id, 'received_status' => 1), array('release_status' => 1));
-
-        if ($update_release) {
 
 
-            $info = array(
-                't_number'                  => $tracking_number,
-                'user1'                     => $user_id,
-                'office1'                   => $user_row[0]->off_id,
-                'user2'                     => $forward_to,
-                'office2'                   => $forward_user_row[0]->off_id,
-                'status'                    => 'torec',
-                'received_status'           => NULL,
-                'received_date'             => NULL,
-                'release_status'            => NULL,
-                'to_receiver'               => $f == 'fr' ? 'yes' : 'no',
-                'release_date'              => Carbon::now()->format('Y-m-d H:i:s') ,
-                'remarks'                   => $remarks
+        $check_cancelled    = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tracking_number, 'doc_status' => 'cancelled'))->count();
 
-            );
+        if ($check_cancelled < 1) {
+
+            $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id, 'received_status' => 1), array('release_status' => 1));
+
+            if ($update_release) {
 
 
-            $add1 = CustomModel::insert_item($this->history_table, $info);
-            
-            if ($add1) {
+                $info = array(
+                    't_number'                  => $tracking_number,
+                    'user1'                     => $user_id,
+                    'office1'                   => $user_row[0]->off_id,
+                    'user2'                     => $forward_to,
+                    'office2'                   => $forward_user_row[0]->off_id,
+                    'status'                    => 'torec',
+                    'received_status'           => NULL,
+                    'received_date'             => NULL,
+                    'release_status'            => NULL,
+                    'to_receiver'               => $f == 'fr' ? 'yes' : 'no',
+                    'release_date'              => Carbon::now()->format('Y-m-d H:i:s'),
+                    'remarks'                   => $remarks
 
-                $data = array('message' => 'Forwarded Successfully', 'response' => true);
+                );
 
+
+                $add1 = CustomModel::insert_item($this->history_table, $info);
+
+                if ($add1) {
+
+                    $data = array('message' => 'Forwarded Successfully', 'response' => true);
+                } else {
+
+                    $data = array('message' => 'Something Wrong', 'response' => false);
+                }
             } else {
 
                 $data = array('message' => 'Something Wrong', 'response' => false);
             }
-
         } else {
-
-            $data = array('message' => 'Something Wrong', 'response' => false);
-
+            $data = array('message' => 'This Document is cancelled', 'response' => false);
         }
 
         return response()->json($data);
-
     }
-    
-    public function update_forwarded(Request $request){
+
+    public function update_forwarded(Request $request)
+    {
 
         $id                 = $request->input('history_id');
         $forward_to         = $request->input('forward') == 'fr' ? $this->get_receiver() : $request->input('forward');
 
 
 
-        $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id), array('user2'=> $forward_to));
-    
+        $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id), array('user2' => $forward_to));
+
         if ($update_release) {
-                $data = array('message' => 'Updated Successfully', 'response' => true);   
+            $data = array('message' => 'Updated Successfully', 'response' => true);
         } else {
             $data = array('message' => 'Something Wrong', 'response' => false);
         }
         return response()->json($data);
-
     }
 
 
-    public function update_remarks(Request $request){
+    public function update_remarks(Request $request)
+    {
 
         $id                 = $request->input('history_id');
         $remarks            = $request->input('remarks_update');
 
 
 
-        $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id), array('remarks'=> $remarks));
-    
+        $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id), array('remarks' => $remarks));
+
         if ($update_release) {
-                $data = array('message' => 'Remarks Updated Successfully', 'response' => true);   
+            $data = array('message' => 'Remarks Updated Successfully', 'response' => true);
         } else {
             $data = array('message' => 'Something Wrong | Remarks is not updated', 'response' => false);
         }
         return response()->json($data);
-
     }
 
-    function get_receiver(){
+    function get_receiver()
+    {
 
-        $items = CustomModel::q_get_where($this->users_table,array('user_status' => 'active', 'is_receiver' => 'yes'))->first();
+        $items = CustomModel::q_get_where($this->users_table, array('user_status' => 'active', 'is_receiver' => 'yes'))->first();
         return $items->user_id;
+    }
 
-   }
+    public function cancel_document(Request $request)
+    {
 
-    
+
+        $id = $request->input('id');
+        $items = array(
+            'doc_status'         => 'cancelled',
+        );
+        $update = CustomModel::update_item($this->documents_table, array('document_id' => $id), $items);
+        if ($update) {
+
+
+            $data = array('message' => 'Cancelled Succesfully', 'response' => true);
+        } else {
+
+            $data = array('message' => 'Something Wrong/No Changes Apply ', 'response' => false);
+        }
+        return response()->json($data);
+    }
 }

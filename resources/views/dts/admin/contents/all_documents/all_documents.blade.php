@@ -64,9 +64,54 @@ $('button#filter').on('click', function(){
    }else {
     window.location.href = base_url + '/dts/admin/all-documents?from='+from+'&&to='+to+'&&type='+document_type;
    }
+});
 
-   
 
-})
+$('a#cancel_document').on('click', function(){
+var t = $(this).data('tracking-number');
+
+let form = {t : t}
+var url = '/dts/cancel-document';
+
+Swal.fire({
+     title: "Are you sure?",
+     text: "",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Cancel Document #" + t
+   }).then((result) => {
+     if (result.isConfirmed) {
+      add_item(form,url);
+      
+     }
+});
+
+});
+
+
+$('a#revert_document').on('click', function(){
+var t = $(this).data('tracking-number');
+
+let form = {t : t}
+var url = '/dts/revert-document';
+
+Swal.fire({
+     title: "Are you sure?",
+     text: "",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Revert Document #" + t
+   }).then((result) => {
+     if (result.isConfirmed) {
+      add_item(form,url);
+      
+     }
+});
+
+});
 </script>
 @endsection

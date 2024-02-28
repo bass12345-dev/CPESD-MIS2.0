@@ -64,20 +64,36 @@
                <?php echo $row['created']; ?>
             </td>
             <td>
-               <?php echo $row['is'] == 'Pending' ? '<span class="badge p-2 bg-danger">Pending</span>' : '<span class="badge p-2 bg-success">Completed</span>'; ?>
+               <?php echo $row['is'] ?>
             </td>
-            <td>
-               <a href="{{url('/dts/admin/view?tn='.$row['tracking_number'])}}" class="m-2"><i
-                  class="fas fa-eye"></i></a>
-               <?php if($row['history_status'] != 'completed' ) { ?>
-               <a id="forward_icon" href="#" data-history-id="{{$row['history_id']}}"
-                  data-tracking-number="{{$row['tracking_number']}}" data- data-bs-toggle="offcanvas"
-                  data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i
-                  class="fas fa-check text-success"></i></a>
-               <?php } ?>
+
+            <td>    
+               <div class="btn-group dropstart">
+                  <i class="fa fa-ellipsis-v " class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false"></i>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}">View </a></li>
+                     <?php if($row['history_status'] == 'pending') : ?>
+                     <li><a class="dropdown-item" id="cancel_document" href="#" data-history-id="{{$row['history_id']}}"
+                  data-tracking-number="{{$row['tracking_number']}}">Cancel Document</a></li>
+                     <?php endif; ?>
+
+                     <?php if($row['history_status'] != 'pending' AND $row['history_status'] == 'cancelled' ) : ?>
+                     <li><a class="dropdown-item" id="revert_document" href="#" data-history-id="{{$row['history_id']}}"
+                  data-tracking-number="{{$row['tracking_number']}}">Revert</a></li>
+                     <?php endif; ?>
+                     <?php if($row['history_status'] != 'completed' AND $row['history_status'] == 'pending' AND $row['history_status'] != 'cancelled' ) : ?>
+                     
+                     <li><a class="dropdown-item" id="forward_icon" href="#" data-history-id="{{$row['history_id']}}"
+                  data-tracking-number="{{$row['tracking_number']}}"data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Complete Document</a></li>
+                      <?php endif; ?>
+                  </ul>               
+               </div>      
             </td>
+           
          </tr>
          <?php endforeach; ?>
       </tbody>
    </table>
 </div>
+

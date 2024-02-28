@@ -32,6 +32,12 @@
                              <i class="fa fa-ellipsis-v " class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false"></i>
                              <ul class="dropdown-menu">
                                   <li><a class="dropdown-item" href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}">View </a></li>
+                                  <!-- <?php 
+                                       if($row['doc_status'] != 'cancelled'){
+                                             echo ' <li><a class="dropdown-item cancel_document" href="javascript:;" data-id="'.$row['document_id'].'" data-track="'.$row['tracking_number'].'" >Cancel</a></li>';
+                                       }
+                                  ?> -->
+                                 
                                   <li><a class="dropdown-item update_document" 
                                      data-tracking-number="<?php echo $row['tracking_number']  ?>" 
                                      data-name="<?php echo $row['document_name']  ?>" 

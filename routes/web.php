@@ -24,6 +24,8 @@ Route::get('/dts/print/routing_slip', function () {
     return view('dts/print/routing_slip');
 });
 
+Route::get('/dts/print', [App\Http\Controllers\dts\auth\AuthController::class, 'print']);
+
 Route::get('/dts/register', [App\Http\Controllers\dts\auth\AuthController::class, 'register']);
 
 Route::get('/dts', [App\Http\Controllers\dts\auth\AuthController::class, 'index'])->middleware(['UsersCheck']);
@@ -70,7 +72,9 @@ Route::middleware(['SessionGuard'])->prefix('dts')->group(function  () {
     Route::post('/delete-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'delete']);
 
     Route::post('/complete-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'complete']);
-    
+
+    Route::post('/cancel-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'cancel_document']);
+    Route::post('/revert-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'revert_document']);
 }); 
 
 
@@ -84,6 +88,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
     Route::get('/received', [App\Http\Controllers\dts\user\ReceivedController::class, 'index']);
     Route::get('/forwarded', [App\Http\Controllers\dts\user\ForwardedController::class, 'index']);
     Route::get('/view', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'index']);
+
 
     Route::get('/my-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'index']);
     Route::get('/track', function () {
@@ -104,10 +109,14 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function  () {
     Route::post('/forward-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'forward']);
     Route::post('/update-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'update']);
     Route::post('/ck', [App\Http\Controllers\dts\user\ProfileController::class, 'check']);
+    //Update User Password
     Route::post('/u-p', [App\Http\Controllers\dts\user\ProfileController::class, 'update_password']);
+    //Update Forward
     Route::post('/u-f-d', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_forwarded']);
-
+    //Update Remarks
     Route::post('/u-f-r', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_remarks']);
+    //Cancel Document
+    Route::post('/c-doc', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'cancel_document']);
 
     
 }); 

@@ -73,13 +73,14 @@ success: function (data) {
          showConfirmButton: false,
          timer: 1500
       });
-      setTimeout(reload_page, 2000)
-
+     
    } else {
 
       alert(data.message)
-
+   
    }
+
+   setTimeout(reload_page, 2000)
 },
 error: function () {
    alert('something Wrong');
@@ -115,13 +116,14 @@ success: function (data) {
          showConfirmButton: false,
          timer: 1500
       });
-      setTimeout(reload_page, 2000)
-
+     
    } else {
 
       alert(data.message)
 
    }
+
+   setTimeout(reload_page, 2000)
 },
 error: function () {
    alert('something Wrong');
@@ -167,13 +169,15 @@ Swal.fire({
                showConfirmButton: false,
                timer: 1500
             });
-            setTimeout(reload_page, 2000)
+           
 
          } else {
 
             alert(data.message)
 
          }
+
+         setTimeout(reload_page, 2000)
       },
       error: function () {
          alert('something Wrong');

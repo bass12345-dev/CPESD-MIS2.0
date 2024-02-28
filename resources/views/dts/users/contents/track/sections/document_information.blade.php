@@ -1,5 +1,3 @@
-
-
 <div class="card flex-fill p-3">
          <div class="card-header">
             <h5 class="card-title mb-0">Information</h5>
@@ -35,7 +33,7 @@
       </tr>
        <tr>
          <td>Status</td>
-         <td><span class="{{$doc_data['is'] == true ? 'bg-success' : 'bg-danger' }} p-2 text-black badge " style="font-size: 17px;">{{ $doc_data['is'] == true? 'Completed' : 'Pending' }}</span></td>
+         <td><?php echo $doc_data['status'] ?></td>
       </tr>
 
 

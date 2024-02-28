@@ -87,7 +87,7 @@ class AllDocumentsController extends Controller
         foreach ($rows as $value => $key) {
             $where                          = array('t_number' => $key->tracking_number);
             $delete_button                  = CustomModel::q_get_where($this->history_table, $where)->count() > 1 ? true : false;
-            $status                         = $key->doc_status == 'completed' ? 'Completed' : 'Pending';
+            $status                         = $this->check_status($key->doc_status);
             $history                        = CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0];
 
 
@@ -110,6 +110,30 @@ class AllDocumentsController extends Controller
 
         return $data;
 
+    }
+
+
+    public static function check_status($doc_status){
+        $status         = '';
+
+        switch ($doc_status) {
+            case 'completed':
+                                $status = '<span class="badge p-2 bg-success">Completed</span>';
+                break;
+            case 'pending': 
+                                $status = '<span class="badge p-2 bg-danger">Pending</span>';
+                break;
+
+            case 'cancelled': 
+                    $status = '<span class="badge p-2 bg-warning">Canceled</span>';
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        return $status;
     }
 
 
@@ -162,6 +186,44 @@ class AllDocumentsController extends Controller
 
 
 
+
+    }
+
+    public function cancel_document(Request $request){
+
+        $tracking_number = $request->input('t');
+        $items = array(
+            'doc_status'         => 'cancelled',
+        );
+        $update = CustomModel::update_item($this->documents_table, array('tracking_number' => $tracking_number), $items);
+        if ($update) {
+
+
+            $data = array('message' => 'Canceled Succesfully', 'response' => true);
+        } else {
+
+            $data = array('message' => 'Something Wrong/No Changes Apply ', 'response' => false);
+        }
+        return response()->json($data);
+
+    }
+
+    public function revert_document(Request $request){
+
+        $tracking_number = $request->input('t');
+        $items = array(
+            'doc_status'         => 'pending',
+        );
+        $update = CustomModel::update_item($this->documents_table, array('tracking_number' => $tracking_number), $items);
+        if ($update) {
+
+
+            $data = array('message' => 'Reverted Succesfully', 'response' => true);
+        } else {
+
+            $data = array('message' => 'Something Wrong/No Changes Apply ', 'response' => false);
+        }
+        return response()->json($data);
 
     }
 

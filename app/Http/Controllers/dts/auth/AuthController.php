@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Exception;
+use PDF;
 
 class AuthController extends Controller
 {
@@ -117,5 +119,87 @@ class AuthController extends Controller
     {
         $request->session()->flush();
         return redirect('/dts');
+    }
+
+
+    public function print(){
+        
+       
+
+
+
+
+// set some language-dependent strings (optional)
+if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+    require_once(dirname(__FILE__).'/lang/eng.php');
+    PDF::setLanguageArray($l);
+}
+
+// ---------------------------------------------------------
+
+// set font
+PDF::SetFont('helvetica', 'B', 20);
+
+// add a page
+PDF::AddPage();
+
+PDF::Write(20, 'OCM-CPESD DTS', '', 0, 'C', true, 0, false, false, 0);
+
+PDF::SetFont('helvetica', '', 8);
+
+
+// -----------------------------------------------------------------------------
+
+
+
+
+
+// -----------------------------------------------------------------------------
+
+// NON-BREAKING ROWS (nobr="true")
+
+$tbl = <<<EOF
+<table border="1" >
+ <tr nobr="true">
+  <th colspan="4" style="text-align:center;font-size: 18px;font-family: 'Times New Roman', Times, serif; font-weight: bold;">Document Routing Slip</th>
+ </tr>
+ <tr>
+				<th colspan="4" style="text-align:center; font-family: 'Times New Roman', Times, serif; font-style: italic;">Impt:All Simple transactions must be acted within 48 hours only</th>
+
+			</tr>
+ <tr nobr="true"  >
+  <td colspan="2" height="40"   >
+  
+    <label style="font-size:10px;">Document Name : </label>____________________________________<br>
+    <label style="font-size:10px;">Document No : </label>_____________<label style="font-size:10px;">Origin : </label>______________<br>
+    <label style="font-size:10px;">Document Type : </label>_____________<label style="font-size:10px;">Date Received : </label>__________<br>
+  </td>
+  <td colspan="2">
+  <label style="font-size:10px;">Encoded By : </label>____________________________________<br>
+  <label style="font-size:10px;">Office : </label>_________________________________
+ 
+</td>
+
+ </tr>
+
+ <tr nobr="true"  >
+ 
+  <td colspan="4" height="70">
+    <h3 align="center">Description</h3>
+    <span align="center"> &nbsp;  sadsad asdsadsa sadsad asdsa sadsadsadsadsadsadsadsa asdsadsadsad asdsad asdsad</p>
+  </td>
+
+ </tr>
+
+</table>
+EOF;
+PDF::writeHTML($tbl, true, false, true, false, '');
+
+
+
+PDF::Output('example_048.pdf', 'I');
+// -----------------------------------------------------------------------------
+
+//Close and output PDF documentPDF::Output('example_048.pdf', 'I');
     }
 }
