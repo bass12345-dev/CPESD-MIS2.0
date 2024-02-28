@@ -22,7 +22,7 @@ $('#add_document').on('submit', function (e) {
    e.preventDefault();
    var url = '/dts/us/add-d';
    var form = $(this).serialize();
-
+   
 
       Swal.fire({
      title: "Review First Before Submitting",

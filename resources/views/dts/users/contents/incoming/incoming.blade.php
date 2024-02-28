@@ -28,6 +28,7 @@ $('a.received_document').on('click', function(){
      confirmButtonText: "Received Document"
    }).then((result) => {
      if (result.isConfirmed) {
+      
        received_document(id);
      }
    });

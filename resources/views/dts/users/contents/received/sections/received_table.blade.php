@@ -22,15 +22,15 @@
                   <td>{{$row['type_name']}}</td>
                   <td><a href="javascript:;" id="view_remarks" data-remarks="{{$row['remarks']}}" >View Remarks</a></td>
                   <td>{{$row['received_date']}}</td>
-                 <td>    
-                           <div class="btn-group dropstart">
+                  <td>    
+                           <div class="btn-group dropstart" >
                              <i class="fa fa-ellipsis-v " class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false"></i>
-                             <ul class="dropdown-menu">
+                             <ul class="dropdown-menu" >
                                   <li><a class="dropdown-item" href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}">View</a></li>
-                                  <li><a class="dropdown-item" id="forward_icon" href="#" data-history-id="{{$row['history_id']}}" data-tracking-number="{{$row['tracking_number']}}"  data- data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Forward</a></li>
+                                  <li><a class="dropdown-item" id="forward_icon" href="#" data-history-id="{{$row['history_id']}}" data-tracking-number="{{$row['tracking_number']}}"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Forward</a></li>
                                 </ul>
                            </div>
-                        </td>
+                  </td>
                 </tr>
              <?php endforeach; ?>
             </tbody>

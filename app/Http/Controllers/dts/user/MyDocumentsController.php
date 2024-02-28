@@ -284,7 +284,7 @@ class MyDocumentsController extends Controller
             
             if ($add1) {
 
-                $data = array('message' => 'Forward Successfully', 'response' => true);
+                $data = array('message' => 'Forwarded Successfully', 'response' => true);
 
             } else {
 
@@ -297,6 +297,43 @@ class MyDocumentsController extends Controller
 
         }
 
+        return response()->json($data);
+
+    }
+    
+    public function update_forwarded(Request $request){
+
+        $id                 = $request->input('history_id');
+        $forward_to         = $request->input('forward') == 'fr' ? $this->get_receiver() : $request->input('forward');
+
+
+
+        $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id), array('user2'=> $forward_to));
+    
+        if ($update_release) {
+                $data = array('message' => 'Updated Successfully', 'response' => true);   
+        } else {
+            $data = array('message' => 'Something Wrong', 'response' => false);
+        }
+        return response()->json($data);
+
+    }
+
+
+    public function update_remarks(Request $request){
+
+        $id                 = $request->input('history_id');
+        $remarks            = $request->input('remarks_update');
+
+
+
+        $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id), array('remarks'=> $remarks));
+    
+        if ($update_release) {
+                $data = array('message' => 'Remarks Updated Successfully', 'response' => true);   
+        } else {
+            $data = array('message' => 'Something Wrong | Remarks is not updated', 'response' => false);
+        }
         return response()->json($data);
 
     }

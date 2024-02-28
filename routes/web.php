@@ -88,7 +88,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
 }); 
 
 //USER ACTIONS//
-Route::middleware(['SessionGuard'])->prefix('dts/us/')->group(function  () {
+Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function  () {
     
     //My Documents
     Route::post('/update-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update']);
@@ -100,6 +100,9 @@ Route::middleware(['SessionGuard'])->prefix('dts/us/')->group(function  () {
     Route::post('/update-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'update']);
     Route::post('/ck', [App\Http\Controllers\dts\user\ProfileController::class, 'check']);
     Route::post('/u-p', [App\Http\Controllers\dts\user\ProfileController::class, 'update_password']);
+    Route::post('/u-f-d', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_forwarded']);
+
+    Route::post('/u-f-r', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_remarks']);
 
     
 }); 

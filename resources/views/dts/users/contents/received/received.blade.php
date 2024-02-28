@@ -17,15 +17,30 @@
 $('a#forward_icon').on('click', function(){
    $('input[name=history_id]').val($(this).data('history-id'));
    $('input[name=tracking_number]').val($(this).data('tracking-number'));
-   $('.offcanvas-title').text('Forward Document #' +$(this).data('tracking-number') )
+   $('.offcanvas-title').text('Forward Document #' +$(this).data('tracking-number') );
+
 })
 
 $('#forward_form').on('submit', function (e) {
    e.preventDefault();
    var url = '/dts/us/forward-document';
    var form = $(this).serialize();
-   add_item(form,url);
-    $('#forward_form').find('button').attr('disabled',true);
+
+   Swal.fire({
+     title: "Are you sure?",
+     text: "",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Foward Document"
+   }).then((result) => {
+     if (result.isConfirmed) {
+      add_item(form,url);
+      $('#forward_form').find('button').attr('disabled',true);
+     }
+   });
+ 
 });
 
 

@@ -12,6 +12,7 @@
                   <th class="">Document Type</th>
                   <th class="">Remarks</th>
                   <th class="">Released Date - Time</th>
+                  <th>Actions</th>
                </tr>
             </thead>
             <tbody>
@@ -22,8 +23,22 @@
                   <td>{{$row['document_name']}}</td>
                   <td>{{$row['forwarded_to']}}</td>
                   <td>{{$row['type_name']}}</td>
-                  <td><a href="javascript:;" id="view_remarks" data-remarks="{{$row['remarks']}}" >View Remarks</a></td>
+                  <td><a href="javascript:;" id="view_remarks"   data-remarks="{{$row['remarks']}}" >View Remarks</a><br> 
+                     <a href="javascript:;" id="update_remarks" class="text-success" data-history-id="{{$row['history_id']}}" data-remarks="{{$row['remarks']}}" >Update Remarks</a>
+                  </td>
                   <td>{{$row['released_date']}}</td>
+                  <!-- <td><a href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}" class="m-2"><i
+                  class="fas fa-eye"></i></a></td> -->
+                  <td>    
+                           <div class="btn-group dropstart">
+                             <i class="fa fa-ellipsis-v " class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false"></i>
+                             <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item " id="forward_icon" data-remarks="{{$row['remarks']}}" data-history-id="{{$row['history_id']}}" data-tracking-number="{{$row['tracking_number']}}"  href="javascript:;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" >Update Forward To</a></li>
+                                  <li><a class="dropdown-item" href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}">View Information</a></li>
+                                </ul>
+                           </div>
+                        </td>
+                 
                 </tr>
               <?php endforeach; ?> 
             </tbody>

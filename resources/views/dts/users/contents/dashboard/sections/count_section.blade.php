@@ -1,4 +1,24 @@
 <div class="row">
+   <div class="col-sm-6">
+      <div class="card">
+         <div class="card-body l-bg-cherry ">
+            <div class="row">
+               <div class="col mt-0">
+                  <h5 class="card-title text-white">Pending Documents</h5>
+               </div>
+               <div class="col-auto">
+                  <div class="stat text-primary">
+                     <i class="fas fa-file align-middle"></i>
+                  </div>
+               </div>
+            </div>
+            <h1 class="mt-1 mb-3 text-white">{{$count['pending']}}</h1>
+         </div>
+      </div>
+   </div>
+ 
+</div>
+<div class="row">
    <div class="col-xl-12 col-xxl-12 d-flex">
       <div class="w-100">
          <div class="row">

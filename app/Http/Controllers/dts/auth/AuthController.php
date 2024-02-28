@@ -48,7 +48,8 @@ class AuthController extends Controller
             
         );
 
-        if ($items['password'] == $request->input('confirm_password')) {
+
+        if ($request->input('password') == $request->input('confirm_password')) {
 
             $check = CustomModel::q_get_where('users', array('username' => $items['username']))->count();
             if ($check) {

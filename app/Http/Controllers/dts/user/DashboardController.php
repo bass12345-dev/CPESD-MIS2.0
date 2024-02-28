@@ -26,6 +26,7 @@ class DashboardController extends Controller
                 'incoming'          => CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => NULL,'status' => 'torec','release_status' => NULL,'to_receiver'=> 'no'))->count(),
                 'received'          =>  CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => 1,'status' => 'received','release_status' => NULL,'to_receiver'=> 'no'))->count(),           
                 'forwarded'         => CustomModel::q_get_where($this->history_table,array('user1' => $id,'received_status' => NULL,'status' => 'torec','release_status' => NULL))->count(),
+                'pending'               => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'pending','u_id'=> session('_id')))->count(),
 
         );
 

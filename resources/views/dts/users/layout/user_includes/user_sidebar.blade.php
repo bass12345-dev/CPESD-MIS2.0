@@ -47,6 +47,13 @@
                 </a>
             </li>
 
+            <!-- <li class="sidebar-item <?= $segments[2] == 'outgoing' ? 'active' : '' ?>">
+                <a class="sidebar-link" href="{{url('/dts/user/forwarded')}}">
+                    <i class="align-middle" data-feather="arrow-up-right"></i> <span class="align-middle">Outgoing</span>
+                </a>
+            </li> -->
+
+
             <li class="sidebar-item <?= $segments[2] == 'track' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/user/track')}}">
                     <i class="align-middle" data-feather="search"></i> <span class="align-middle">Track Documents</span>

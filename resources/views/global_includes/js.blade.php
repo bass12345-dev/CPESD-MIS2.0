@@ -28,9 +28,9 @@ $('a#view_remarks').on('click', function(){
     document.addEventListener("DOMContentLoaded", function () {
         // Datatables with Buttons
         var datatablesButtons = $("#datatables-buttons").DataTable({
-            responsive: false,
+            responsive: true,
             ordering: false,
-            lengthChange: !1,
+            
 
             buttons: [
                 {
@@ -42,21 +42,22 @@ $('a#view_remarks').on('click', function(){
                 }
 
             ],
-            scrollX: true
+            // scrollX: true
         });
         datatablesButtons.buttons().container().appendTo("#datatables-buttons_wrapper .col-md-6:eq(0)");
     });
 
 
 function add_item(data,url){
-
+   Swal.showLoading();
 $.ajax({
 url: base_url + url,
 method: 'POST',
 data: data,
 dataType: 'json',
 beforeSend: function () {
-   Swal.showLoading()
+   
+   
 },
 headers: {
    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -81,7 +82,8 @@ success: function (data) {
    }
 },
 error: function () {
-   alert('something Wrong')
+   alert('something Wrong');
+   // location.reload();
 }
 
 });
@@ -122,7 +124,8 @@ success: function (data) {
    }
 },
 error: function () {
-   alert('something Wrong')
+   alert('something Wrong');
+
 }
 
 });
@@ -173,7 +176,8 @@ Swal.fire({
          }
       },
       error: function () {
-         alert('something Wrong')
+         alert('something Wrong');
+         
       }
 
    });
