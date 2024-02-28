@@ -19,6 +19,11 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
+
+Route::get('/dts/print/routing_slip', function () {
+    return view('dts/print/routing_slip');
+});
+
 Route::get('/dts/register', [App\Http\Controllers\dts\auth\AuthController::class, 'register']);
 
 Route::get('/dts', [App\Http\Controllers\dts\auth\AuthController::class, 'index'])->middleware(['UsersCheck']);
