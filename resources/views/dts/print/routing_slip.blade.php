@@ -296,12 +296,12 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/aadel112/googoose@master/jquery.googoose.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		var o = {
-			filename: 'test.doc'
-		};
-		$(document).googoose(o);
-	});
+	// $(document).ready(function() {
+	// 	var o = {
+	// 		filename: 'test.doc'
+	// 	};
+	// 	$(document).googoose(o);
+	// });
 </script>
 
 </html>
