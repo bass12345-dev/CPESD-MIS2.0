@@ -20,9 +20,9 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dts/print/routing_slip', function () {
-    return view('dts/print/routing_slip');
-});
+// Route::get('/dts/print/routing_slip', function () {
+//     return view('dts/print/routing_slip');
+// });
 
 Route::get('/dts/print', [App\Http\Controllers\dts\auth\AuthController::class, 'print']);
 
@@ -91,6 +91,10 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
 
 
     Route::get('/my-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'index']);
+
+    Route::get('/print-slip', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'print_slip']);
+
+
     Route::get('/track', function () {
      $data['title'] = 'Search';
      return view('dts.users.contents.search.search')->with($data);
@@ -117,6 +121,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function  () {
     Route::post('/u-f-r', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_remarks']);
     //Cancel Document
     Route::post('/c-doc', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'cancel_document']);
+    
 
     
 }); 

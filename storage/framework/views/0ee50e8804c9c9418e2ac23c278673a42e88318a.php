@@ -49,6 +49,11 @@
                                      echo '
                                        <li><a class="dropdown-item remove_document" href="javascript:;" data-id="'.$row['document_id'].'" data-track="'.$row['tracking_number'].'"  >Remove</a></li>';
                                   } ?>
+
+                                    <li><a class="dropdown-item print_document" 
+                                     data-id="<?php echo $row['document_id']  ?>" 
+                                     data-track="<?php echo $row['tracking_number']  ?>" 
+                                     href="javascript:;" >Print Tracking Slip</a></li>
                                   
                                   
                                 </ul>

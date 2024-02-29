@@ -122,77 +122,117 @@ class AuthController extends Controller
     }
 
 
+
     public function print(){
         
        
+// PDF::AddPage('P',array(215.9,200));
+
+
+PDF::AddPage('P','A4');
 
 
 
-
-// set some language-dependent strings (optional)
-if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-    require_once(dirname(__FILE__).'/lang/eng.php');
-    PDF::setLanguageArray($l);
-}
+PDF::SetMargins(10, 20, 10, true);
 
 // ---------------------------------------------------------
 
 // set font
 PDF::SetFont('helvetica', 'B', 20);
 
-// add a page
-PDF::AddPage();
 
-PDF::Write(20, 'OCM-CPESD DTS', '', 0, 'C', true, 0, false, false, 0);
+// PDF::Write(20, 'OCM-CPESD DTS', '', 0, 'C', true, 0, false, false, 0);
 
-PDF::SetFont('helvetica', '', 8);
+
+PDF::SetFont('helvetica', '', 9);
 
 
 // -----------------------------------------------------------------------------
 
 
 
-
+$hey = 'sad';
 
 // -----------------------------------------------------------------------------
 
 // NON-BREAKING ROWS (nobr="true")
 
-$tbl = <<<EOF
+
+
+$tbl = '
+
+<style>
+
+
+</style>
+<div align="right" style="margin: 10px; ">
+<img  src="../assets/img/oroquieta_logo-300x300.png" width="50" height="50" >&nbsp;
+<img  src="../assets/img/peso_logo.png" width="50" height="50">
+<img  src="../assets/img/Bagong_Pilipinas_logo.png" width="60" height="50">
+</div>
+<br>
+
+
 <table border="1" >
+<tr >
+  <th colspan="4" style="text-align:center;font-size: 18px;font-family: "Times New Roman", Times, serif; font-weight: bold;">OCM-CPESD DTS</th>
+ </tr>
  <tr nobr="true">
-  <th colspan="4" style="text-align:center;font-size: 18px;font-family: 'Times New Roman', Times, serif; font-weight: bold;">Document Routing Slip</th>
+  <th colspan="4" style="text-align:center;font-size: 15px;font-family: "Times New Roman", Times, serif; font-weight: bold;">Routing Slip</th>
  </tr>
  <tr>
-				<th colspan="4" style="text-align:center; font-family: 'Times New Roman', Times, serif; font-style: italic;">Impt:All Simple transactions must be acted within 48 hours only</th>
+				<th colspan="4" style="text-align:center; font-family: "Times New Roman", Times, serif; font-style: italic;font-size:8px;">Impt:All Simple transactions must be acted within 48 hours only</th>
 
 			</tr>
- <tr nobr="true"  >
-  <td colspan="2" height="40"   >
-  
-    <label style="font-size:10px;">Document Name : </label>____________________________________<br>
-    <label style="font-size:10px;">Document No : </label>_____________<label style="font-size:10px;">Origin : </label>______________<br>
-    <label style="font-size:10px;">Document Type : </label>_____________<label style="font-size:10px;">Date Received : </label>__________<br>
+ <tr  >
+  <td colspan="3" height="40">
+    
+    <label style="font-size:10px;">Document Name : </label><span style="text-decoration: underline;">Letter</span><br>
+    <label style="font-size:10px;">Document No : </label><span style="text-decoration: underline;">'.$hey.'</span><br>
+    <label style="font-size:10px;">Document Type : </label>________________________<label style="font-size:10px;">Date Received : </label>________________________<br>
   </td>
-  <td colspan="2">
-  <label style="font-size:10px;">Encoded By : </label>____________________________________<br>
-  <label style="font-size:10px;">Office : </label>_________________________________
+  
+  <td colspan="1" height="40">
+  <br>
+  <label style="font-size:10px;">Encoded By : </label><br>&nbsp; ________________________
+
  
 </td>
 
  </tr>
 
+ 
  <tr nobr="true"  >
  
-  <td colspan="4" height="70">
-    <h3 align="center">Description</h3>
-    <span align="center"> &nbsp;  sadsad asdsadsa sadsad asdsa sadsadsadsadsadsadsadsa asdsadsadsad asdsad asdsad</p>
+  <td colspan="4" height="20"  >
+    <label>Brief Description</label> : ________________________________________________________
+    
+  </td>
+
+ </tr>
+
+ <tr nobr="true"  >
+ 
+  <td colspan="4" height="230">
+    <h2 align="center">Action Taken</h2>
+    
   </td>
 
  </tr>
 
 </table>
-EOF;
+<br>
+<hr>
+
+
+';
+
+
+
+
+// $style = array('width' => 0.5, 'dash' => '2,2,2,2', 'phase' => 0, 'color' => array(255, 0, 0));
+
+// PDF::Line(5, 20, 200, 20, $style);
 PDF::writeHTML($tbl, true, false, true, false, '');
 
 

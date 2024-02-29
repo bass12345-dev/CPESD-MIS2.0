@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use DateTime;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use PDF;
 
 class MyDocumentsController extends Controller
 {
@@ -21,6 +21,7 @@ class MyDocumentsController extends Controller
     public  $users_table          = "users";
     public  $final_actions_table = "final_actions";
     public  $now;
+    
     public function __construct()
     {
         $this->now = new \DateTime();
@@ -34,6 +35,8 @@ class MyDocumentsController extends Controller
         return view('dts.users.contents.my_documents.my_documents')->with($data);
     }
 
+
+    
     function get_all_documents()
     {
 
@@ -158,7 +161,7 @@ class MyDocumentsController extends Controller
 
                 $this->create_qr_code($items['tracking_number']);
 
-                $data = array('message' => 'Added Successfully', 'response' => true);
+                $data = array('id'=>$row->document_id,'message' => 'Added Successfully', 'response' => true);
             } else {
 
                 $data = array('message' => 'Something Wrong', 'response' => false);
@@ -391,4 +394,145 @@ class MyDocumentsController extends Controller
         }
         return response()->json($data);
     }
+
+
+
+
+public function print_slip(){
+
+    $id = $_GET['id'];
+   
+    $row = DocumentsModel::get_document_where($id);
+    
+    // PDF::AddPage('P',array(215.9,200));
+
+
+    PDF::AddPage('P','A4');
+
+
+
+    PDF::SetMargins(10, 20, 10, true);
+
+// ---------------------------------------------------------
+
+// set font
+    PDF::SetFont('helvetica', 'B', 20);
+
+
+// PDF::Write(20, 'OCM-CPESD DTS', '', 0, 'C', true, 0, false, false, 0);
+
+
+    PDF::SetFont('helvetica', '', 9);
+
+
+// -----------------------------------------------------------------------------
+
+
+
+$document_name  = $row->document_name;
+$tracking_number    = $row->tracking_number;
+$type           = $row->type_name;
+$created        = date('M d Y - h:i a', strtotime($row->created));
+$name           = $row->first_name . ' ' . $row->middle_name . ' ' . $row->last_name . ' ' . $row->extension;
+$description    = $row->document_description;
+// -----------------------------------------------------------------------------
+
+// NON-BREAKING ROWS (nobr="true")
+
+
+
+$tbl = '
+
+<style>
+
+
+</style>
+<div align="right" style="margin: 10px; ">
+<img  src="../assets/img/oroquieta_logo-300x300.png" width="50" height="50" >&nbsp;
+<img  src="../assets/img/peso_logo.png" width="50" height="50">
+<img  src="../assets/img/Bagong_Pilipinas_logo.png" width="60" height="50">
+</div>
+<br>
+
+
+<table border="1" >
+<tr >
+  <th colspan="4" style="text-align:center;font-size: 18px;font-family: "Times New Roman", Times, serif; font-weight: bold;">OCM-CPESD DTS</th>
+ </tr>
+ <tr nobr="true">
+  <th colspan="4" style="text-align:center;font-size: 15px;font-family: "Times New Roman", Times, serif; font-weight: bold;">Routing Slip</th>
+ </tr>
+ <tr>
+				<th colspan="4" style="text-align:center; font-family: "Times New Roman", Times, serif; font-style: italic;font-size:8px;">Impt:All Simple transactions must be acted within 48 hours only</th>
+
+			</tr>
+ <tr  >
+  <td colspan="3" height="40">
+    
+    <label style="font-size:10px;">Document Name : </label><span style="text-decoration: underline;font-size:10px;">'.$document_name.'</span><br>
+    <label style="font-size:10px;">Document No : </label><span style="text-decoration: underline;font-size:10px;">'.$tracking_number.'</span><br>
+    <label style="font-size:10px;">Document Type : </label><span style="text-decoration: underline;font-size:10px;">'.$type.'</span><br>
+    <label style="font-size:10px;">Date Received : </label><span style="text-decoration: underline;font-size:10px;">'.$created.'</span><br>
+  
+  </td>
+  
+  <td colspan="1" height="40">
+  <br>
+  <br>
+  <label style="font-size:10px;">Encoded By : </label><br>&nbsp; <span style="text-decoration: underline;font-size:10px;">'.$name.'</span>
+
+ 
+</td>
+
+ </tr>
+
+ 
+ <tr nobr="true"  >
+ 
+  <td colspan="4" height="30"  >
+    <br>
+    <br>
+    <label style="font-size:10px;">Brief Description</label> : &nbsp; <span style="text-decoration: underline;font-size:10px;">'.$description.'</span>
+
+  </td>
+
+ </tr>
+
+ <tr nobr="true"  >
+ 
+  <td colspan="4" height="200">
+    <h2 align="center">Action Taken</h2>
+    
+  </td>
+
+ </tr>
+
+</table>
+<br>
+<hr>
+
+
+';
+
+
+
+
+// $style = array('width' => 0.5, 'dash' => '2,2,2,2', 'phase' => 0, 'color' => array(255, 0, 0));
+
+// PDF::Line(5, 20, 200, 20, $style);
+PDF::writeHTML($tbl, true, false, true, false, '');
+
+
+
+PDF::Output('example_048.pdf', 'I');
+// -----------------------------------------------------------------------------
+
+//Close and output PDF documentPDF::Output('example_048.pdf', 'I');
+
+    }
+
+
+
+
+
 }

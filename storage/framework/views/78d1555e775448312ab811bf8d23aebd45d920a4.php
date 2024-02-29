@@ -42,6 +42,28 @@ delete_item(form,url,button_text = 'Remove Document',text = "Document #" + t)
 
 });
 
+
+$('a.print_document').on('click', function(){
+var id = $(this).data('id');
+var t = $(this).data('track');
+Swal.fire({
+                  title: "Print Routing Slip for #" + t,
+                  text: "",
+                  icon: "success",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "print"
+               }).then((result) => {
+                  if (result.isConfirmed) {
+                     window.location.href = base_url + '/dts/user/print-slip?id=' + id
+                  }
+
+               });
+
+
+});
+
 $('a.cancel_document').on('click', function(){
 var id = $(this).data('id');
 var t = $(this).data('track');
