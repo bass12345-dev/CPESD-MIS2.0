@@ -439,11 +439,11 @@ public function print_slip(){
     PDF::Image("../storage/app/img/qr-code/20240205008.png",$x=165, $y=5, $w=35, $h=35, 'PNG');
 
     //Left Logo
-    PDF::Image("../assets/img/oroquieta_logo-300x300.png",$x=18, $y=5, $w=17, $h=17, 'PNG');
-    PDF::Image("../assets/img/peso_logo.png",$x=36, $y=5, $w=17, $h=17, 'PNG');
+    PDF::Image("../assets/img/oroquieta_logo-300x300.png",$x=6, $y=5, $w=17, $h=17, 'PNG');
+    PDF::Image("../assets/img/peso_logo.png",$x=25, $y=5, $w=17, $h=17, 'PNG');
 
-    PDF::Image("../assets/img/Bagong_Pilipinas_logo.png",$x=18, $y=23, $w=17, $h=17, 'PNG');
-    PDF::Image("../assets/img/oroquieta_logo-300x300.png",$x=36, $y=23, $w=17, $h=17, 'PNG');
+    PDF::Image("../assets/img/Bagong_Pilipinas_logo.png",$x=6, $y=23, $w=18, $h=17, 'PNG');
+    PDF::Image("../assets/img/oroquieta_logo-300x300.png",$x=25, $y=23, $w=17, $h=17, 'PNG');
 
 
     

@@ -40,21 +40,23 @@ class AddDocumentController extends Controller
 
             if($current_year > $last_created )
                 {      
-                     $l = date('Ymd', time()).'001';
+                     $l = Carbon::now()->format('Ymd').'001';
 
                 }else if ($current_year < $last_created) {
 
-                    $l = DB::table('documents')->whereRaw("YEAR(documents.created) = '".date('Y-m-d', time())."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
+                    $l = DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y-m-d')."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
                    
                     
-                }else if (date('Y', time()) === $last_created){
+                }else if (Carbon::now()->format('Y') === $last_created){
 
-                    $x = DB::table('documents')->whereRaw("YEAR(documents.created) = '".date('Y', time())."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
+                    $x = DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y')."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
                     $l = $this->put_zeros($x);
                    
                 }
         }else {
-             $l = date('Ymd', time()).'001';
+
+            $l = Carbon::now()->format('Ymd').'001';
+
         }
 
     
@@ -74,7 +76,7 @@ class AddDocumentController extends Controller
 
     function addOne(){
 
-        return DB::table('documents')->whereRaw("YEAR(documents.created) = '".date('Y', time())."' ")->get()[0]->tracking_number +  1;
+        return DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y')."' ")->get()[0]->tracking_number +  1;
 
     }
 
