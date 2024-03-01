@@ -403,23 +403,53 @@ public function print_slip(){
     $id = $_GET['id'];
    
     $row = DocumentsModel::get_document_where($id);
+
+    $document_name  = $row->document_name;
+    $tracking_number    = $row->tracking_number;
+    $type           = $row->type_name;
+    $created        = date('M d Y - h:i a', strtotime($row->created));
+    $name           = $row->first_name . ' ' . $row->middle_name . ' ' . $row->last_name . ' ' . $row->extension;
+    $description    = $row->document_description;
     
     // PDF::AddPage('P',array(215.9,200));
 
 
+    // PDF::AddPage('P',array(215.9,200));
+    PDF::SetAuthor('Basil John C. Manabo');
+    PDF::SetTitle('Print Document No.'.$tracking_number);
+    PDF::SetSubject('DTS');
+    PDF::SetKeywords('CPESD-MIS | Document Tracking System');
+
+
     PDF::AddPage('P','A4');
 
+    PDF::SetMargins(5, 10, 5, true);
 
+    // ---------------------------------------------------------
 
-    PDF::SetMargins(10, 20, 10, true);
-
-// ---------------------------------------------------------
-
-// set font
+    // set font
     PDF::SetFont('helvetica', 'B', 20);
 
 
-// PDF::Write(20, 'OCM-CPESD DTS', '', 0, 'C', true, 0, false, false, 0);
+    PDF::Write(30, 'OCM-CPESD DTS', '', 0, 'C', false, 0, false, false, 0);
+  
+
+
+
+    PDF::Image("../storage/app/img/qr-code/20240205008.png",$x=165, $y=5, $w=35, $h=35, 'PNG');
+
+    //Left Logo
+    PDF::Image("../assets/img/oroquieta_logo-300x300.png",$x=18, $y=5, $w=17, $h=17, 'PNG');
+    PDF::Image("../assets/img/peso_logo.png",$x=36, $y=5, $w=17, $h=17, 'PNG');
+
+    PDF::Image("../assets/img/Bagong_Pilipinas_logo.png",$x=18, $y=23, $w=17, $h=17, 'PNG');
+    PDF::Image("../assets/img/oroquieta_logo-300x300.png",$x=36, $y=23, $w=17, $h=17, 'PNG');
+
+
+    
+    //Right Logo
+   
+
 
 
     PDF::SetFont('helvetica', '', 9);
@@ -429,36 +459,36 @@ public function print_slip(){
 
 
 
-$document_name  = $row->document_name;
-$tracking_number    = $row->tracking_number;
-$type           = $row->type_name;
-$created        = date('M d Y - h:i a', strtotime($row->created));
-$name           = $row->first_name . ' ' . $row->middle_name . ' ' . $row->last_name . ' ' . $row->extension;
-$description    = $row->document_description;
+
 // -----------------------------------------------------------------------------
 
 // NON-BREAKING ROWS (nobr="true")
 
 
+$tbl = '';
 
-$tbl = '
+//Break Line
+$tbl .= '
 
-<style>
-
-
-</style>
-<div align="right" style="margin: 10px; ">
-<img  src="../assets/img/oroquieta_logo-300x300.png" width="50" height="50" >&nbsp;
-<img  src="../assets/img/peso_logo.png" width="50" height="50">
-<img  src="../assets/img/Bagong_Pilipinas_logo.png" width="60" height="50">
-</div>
 <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+';
+
+$tbl .= '
+
+<div>
 
 
-<table border="1" >
-<tr >
-  <th colspan="4" style="text-align:center;font-size: 18px;font-family: "Times New Roman", Times, serif; font-weight: bold;">OCM-CPESD DTS</th>
- </tr>
+
+<table border="1"  cellpadding="3" cellspacing="2" >
+
  <tr nobr="true">
   <th colspan="4" style="text-align:center;font-size: 15px;font-family: "Times New Roman", Times, serif; font-weight: bold;">Routing Slip</th>
  </tr>
@@ -469,17 +499,17 @@ $tbl = '
  <tr  >
   <td colspan="3" height="40">
     
-    <label style="font-size:10px;">Document Name : </label><span style="text-decoration: underline;font-size:10px;">'.$document_name.'</span><br>
-    <label style="font-size:10px;">Document No : </label><span style="text-decoration: underline;font-size:10px;">'.$tracking_number.'</span><br>
-    <label style="font-size:10px;">Document Type : </label><span style="text-decoration: underline;font-size:10px;">'.$type.'</span><br>
-    <label style="font-size:10px;">Date Received : </label><span style="text-decoration: underline;font-size:10px;">'.$created.'</span><br>
+    <label style="font-size:10px;font-weight:bold;">Document Name : </label><span style="font-size:10px;">'.$document_name.'</span><br>
+    <label style="font-size:10px;font-weight:bold;">Document No : </label><span style="font-size:10px;">'.$tracking_number.'</span><br>
+    <label style="font-size:10px;font-weight:bold;">Document Type : </label><span style="font-size:10px;">'.$type.'</span><br>
+    <label style="font-size:10px;font-weight:bold;">Date Received : </label><span style="font-size:10px;">'.$created.'</span><br>
   
   </td>
   
   <td colspan="1" height="40">
   <br>
   <br>
-  <label style="font-size:10px;">Encoded By : </label><br>&nbsp; <span style="text-decoration: underline;font-size:10px;">'.$name.'</span>
+  <label style="font-size:10px;font-weight:bold;">Encoded By : </label><br>&nbsp; <span style="font-size:10px;">'.$name.'</span>
 
  
 </td>
@@ -492,7 +522,7 @@ $tbl = '
   <td colspan="4" height="30"  >
     <br>
     <br>
-    <label style="font-size:10px;">Brief Description</label> : &nbsp; <span style="text-decoration: underline;font-size:10px;">'.$description.'</span>
+    <label style="font-size:10px; font-weight:bold;">Brief Description</label> : <br><span style="font-size:10px;">'.$description.'</span>
 
   </td>
 
@@ -500,7 +530,7 @@ $tbl = '
 
  <tr nobr="true"  >
  
-  <td colspan="4" height="200">
+  <td colspan="4" height="145">
     <h2 align="center">Action Taken</h2>
     
   </td>

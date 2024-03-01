@@ -70,7 +70,11 @@
                   if (result.isConfirmed) {
          
                      window.location.href = base_url + '/dts/user/print-slip?id=' + id
+                  }else {
+                     window.location.reload();
                   }
+
+               
 
                });
 
@@ -80,11 +84,11 @@
 
             }
 
-            // setTimeout(reload_page, 2000)
+           
          },
          error: function() {
             alert('something Wrong');
-            // location.reload();
+            setTimeout(reload_page, 2000)
          }
 
       });

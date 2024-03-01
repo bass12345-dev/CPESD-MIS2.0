@@ -3,9 +3,9 @@
 
 <head>
     
-	@include('dts.auth.includes.meta')
+	<?php echo $__env->make('dts.auth.includes.meta', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 	<title>DTS Register</title>
-    @include('dts.auth.includes.css')
+    <?php echo $__env->make('dts.auth.includes.css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
 
                     <div class="card">
 							<div class="card-body">
-								<a href="{{url('/dts')}}"><i class="fas fa-arrow-left"></i></a>
+								<a href="<?php echo e(url('/dts')); ?>"><i class="fas fa-arrow-left"></i></a>
 								<div class="text-center mt-4">
 
 									<h1 class="h2 text-black">Register</h1>
@@ -68,7 +68,7 @@
                                                         foreach($barangay as $row):
 
                                                     ?>
-                                                    <option value="{{$row}}">{{$row}}</option>
+                                                    <option value="<?php echo e($row); ?>"><?php echo e($row); ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
@@ -101,7 +101,7 @@
 										</div>
 
 										<!-- <div class="d-grid gap-2 mt-1">
-											<a href="{{url('/dts/track')}}" class="btn btn-lg btn-success">Track Documents</a>
+											<a href="<?php echo e(url('/dts/track')); ?>" class="btn btn-lg btn-success">Track Documents</a>
 										</div> -->
 									</form>
 								</div>
@@ -121,7 +121,7 @@
 
 </body>
 
-@include('dts.auth.includes.js')
+<?php echo $__env->make('dts.auth.includes.js', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <script>
     $('#register_form').on('submit', function (e) {
@@ -170,4 +170,4 @@ function reload_page() {
 </script>
 
 
-</html>
+</html><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/dts/auth/register.blade.php ENDPATH**/ ?>
