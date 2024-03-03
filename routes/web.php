@@ -121,6 +121,8 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function  () {
     Route::post('/u-f-r', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_remarks']);
     //Cancel Document
     Route::post('/c-doc', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'cancel_document']);
+    //Get Incoming in Receiver
+    Route::get('/g-r-i', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'get_receiver_incoming']);
     
 
     

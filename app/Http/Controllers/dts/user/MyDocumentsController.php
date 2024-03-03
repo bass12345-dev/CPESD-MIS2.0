@@ -400,6 +400,13 @@ class MyDocumentsController extends Controller
 
 
 
+public function get_receiver_incoming(){
+    $id = session('_id');
+    $count = CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => NULL, 'status' => 'torec', 'release_status' => NULL, 'to_receiver' => 'yes'))->count();
+    return $count;
+
+}
+
 
 public function print_slip(){
 
