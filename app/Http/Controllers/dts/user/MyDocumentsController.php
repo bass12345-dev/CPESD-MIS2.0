@@ -60,7 +60,10 @@ class MyDocumentsController extends Controller
                 'doc_type'                     => $key->doc_type,
                 'description'                  => $key->document_description,
                 'destination_type'             => $key->destination_type,
-                'doc_status'                   => $key->doc_status
+                'doc_status'                   => $key->doc_status,
+                'name'                         => $key->name,
+                'document_type_name'           => $key->type_name,
+                'encoded_by'                   => $key->first_name.' '. $key->middle_name.' '. $key->last_name.' '. $key->extension
             );
         }
         return $data;

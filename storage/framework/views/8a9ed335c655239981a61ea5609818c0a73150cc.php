@@ -1,6 +1,6 @@
 <div class="card flex-fill p-2">
    <div class="card-header">
-      <h5 class="card-title mb-2">Documents</h5>
+      <h5 class="card-title mb-3">Documents</h5>
       <button class="btn btn-danger" id="delete"> Delete</button>
    </div>
    <!-- <div class="d-flex flex-row ">

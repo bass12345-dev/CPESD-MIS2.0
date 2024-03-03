@@ -49,7 +49,8 @@ class AddDocumentController extends Controller
                     
                 }else if (Carbon::now()->format('Y') === $last_created){
 
-                    $x = DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y')."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
+                    //$x = DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y')."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
+                    $x = Carbon::now()->format('Ymd').$this->last_three_digits() + 1;
                     $l = $this->put_zeros($x);
                    
                 }
@@ -64,6 +65,20 @@ class AddDocumentController extends Controller
         return $l;
         // response()->json((array('number'=> $l,'y'=> date('Y', time()), 'm' => date('m', time()), 'd' => date('d', time()) )));
     }
+
+
+    function last_three_digits() { 
+
+        $number = DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y')."' ")->orderBy('created', 'desc')->get()[0]->tracking_number;
+        $arr = str_split((string)$number); 
+          
+        $lastThirdDigit = $arr[sizeof($arr)-3]; 
+        $lastSecondDigit = $arr[sizeof($arr)-2]; 
+        $lastDigit = $arr[sizeof($arr)-1]; 
+
+        return $lastThirdDigit.$lastSecondDigit.$lastDigit;
+        
+    } 
 
     function l($l){
 

@@ -161,6 +161,7 @@ class DocumentsModel extends Model
     public static function get_my_documents(){
         $rows = DB::table('documents as documents')
         ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
+        ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
         ->select(   'documents.created as d_created', 
                     'documents.doc_status as doc_status',
                     'documents.tracking_number as tracking_number', 
@@ -169,7 +170,12 @@ class DocumentsModel extends Model
                     'documents.doc_type as doc_type', 
                     'documents.document_description as document_description', 
                     'documents.destination_type as destination_type',
-                    'document_types.type_name'
+                    'document_types.type_name as type_name',
+                    'users.first_name as first_name', 
+                    'users.middle_name as middle_name', 
+                    'users.last_name as last_name', 
+                    'users.extension as extension',
+                    DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name")
                     )
         ->where('u_id', session('_id'))
         ->orderBy('documents.document_id', 'desc')
