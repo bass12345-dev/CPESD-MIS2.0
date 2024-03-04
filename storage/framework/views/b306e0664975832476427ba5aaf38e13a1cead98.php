@@ -7,21 +7,43 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
 <script>
-    $('button#delete').on('click', function(){
-    let items = [];
-    var button_text = 'Remove selected items';
-    $('input[name=document_id]:checked').map(function(item){
-
-        items.push($(this).val());
-    });
-
+$('button#delete').on('click', function(){
+    var button_text = 'Delete selected items';
     var url = '/dts/delete-documents';
-    var data = {
-                id : items,
-              
-    };
-    delete_item(data,url,button_text);
+    let items = get_selected_items();
+    var data = {id : items};
+
+    if(items.length  == 0){
+      alert('Please Select at least one')
+    }else{
+      delete_item(data,url,button_text);
+    }
+   
 });
+
+
+$('button#cancel').on('click', function(){
+
+   var button_text = 'Cancel selected items';
+   var url = '/dts/cancel-documents';
+   let items = get_selected_items();
+   var data = {id : items};
+   if(items.length  == 0){
+      alert('Please Select at least one')
+    }else{
+      delete_item(data,url,button_text);
+   }
+
+
+});
+
+function get_selected_items(){
+
+   let items = [];
+   $('input[name=document_id]:checked').map(function(item){items.push($(this).val());});
+   return items;
+
+}
 
 
 $('input[name=check_all]').on('change', function(){

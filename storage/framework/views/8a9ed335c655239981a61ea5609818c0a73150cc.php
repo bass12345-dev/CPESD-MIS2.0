@@ -2,6 +2,7 @@
    <div class="card-header">
       <h5 class="card-title mb-3">Documents</h5>
       <button class="btn btn-danger" id="delete"> Delete</button>
+      <button class="btn btn-warning" id="cancel"> Cancel</button>
    </div>
    <!-- <div class="d-flex flex-row ">
       <div class="p-1" style="width: 45%;">

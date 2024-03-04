@@ -189,6 +189,33 @@ class AllDocumentsController extends Controller
 
     }
 
+
+    public function cancel_documents(Request $request)
+    {
+
+        $id = $request->input('id')['id'];
+
+        if (is_array($id)) {
+            foreach ($id as $row) {
+                $items = array(
+                    'doc_status'         => 'cancelled',
+                );
+                $update = CustomModel::update_item($this->documents_table, array('document_id' => $row), $items);
+            }
+
+            $data = array('message' => 'Canceled Succesfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+
+
+
+        return response()->json($data);
+    }
+
+
+
+
     public function cancel_document(Request $request){
 
         $tracking_number = $request->input('t');

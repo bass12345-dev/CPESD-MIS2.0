@@ -4,8 +4,8 @@
     <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel"></h5>
-                <button type="button btn btn-primary" onclick="print_slip()">Print</button>
+                <h5 class="modal-titl e" id="staticBackdropLabel"></h5>
+                <button type="button" class="btn btn-primary" onclick="print_slip()"><i class="fas fa-print"></i> Print</button>
                 <!-- <button type="button btn btn-primary" onclick="export_to_pdf()">Export to PDF</button> -->
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -54,7 +54,7 @@
                         justify-content: center;
                         align-items: center;
                         /* width: 320px; */
-                        line-height: 2px;
+                        line-height: 9px;
                         /* margin-top: 10px; */
 
                     }
@@ -70,7 +70,7 @@
 
 
 
-                    .middle p {
+                    .middle span {
                         font-family: "Inter", sans-serif;
                         color: #000;
                         font-size: 15px;
@@ -122,6 +122,7 @@
                 </style>
                 <div id="header">
                     <div class="top-header">
+                  
                         <div class="left">
                             <div class="left-logo">
                                 <img class="top-logo " src="<?php echo e(asset('assets/img/oroquieta_logo-300x300.png')); ?>">
@@ -130,15 +131,15 @@
 
                         </div>
                         <div class="middle">
-                            <p>Republic of the Philippines</p>
-                            <p class="office-city-mayor">Office of the City Mayor</p>
-                            <p class="oro">Oroquieta City</p>
-                            <p class="oro capital">The Capital of Misamis Occidental</p>
+                            <span>Republic of the Philippines</span><br>
+                            <span class="office-city-mayor">Office of the City Mayor</span><br>
+                            <span class="oro">Oroquieta City</span><br>
+                            <span class="oro capital">The Capital of Misamis Occidental</span>
                         </div>
                         <div class="right">
                             <div class="bagong-image-card">
                                 <img class="top-logo" src="<?php echo e(asset('assets/img/Bagong_Pilipinas_logo.png')); ?>">
-                                <img class="top-logo" src="<?php echo e(asset('assets/img/Bagong_Pilipinas_logo.png')); ?>">
+                                <img class="top-logo" src="<?php echo e(asset('assets/img/asenso_logo.png')); ?>">
                             </div>
 
                         </div>
@@ -152,13 +153,10 @@
 
                     <table cellpadding="3" cellspacing="2" style="width: 100%; border: 1px solid #000;">
                         <tr nobr="true">
-                            <th colspan="4" style="text-align:center;font-size: 20px;font-family: 'Times New Roman', Times, serif; font-weight: bold; border: 1px solid #000;">Routing Slip</th>
+                            <th colspan="4" style="text-align:center;font-size: 20px;font-family: 'Times New Roman', Times, serif; font-weight: bold; border: 1px solid #000; text-transform: uppercase;">Routing Slip</th>
                         </tr>
 
-                        <tr>
-                            <th colspan="4" style="text-align:center; font-family: 'Times New Roman', Times, serif; font-style: italic;font-size:10px;border: 1px solid #000;">Impt:All Simple transactions must be acted within 48 hours only</th>
-
-                        </tr>
+                      
                         <tr>
                             <td colspan="3" height="40" style="border: 1px solid #000;">
 
@@ -193,8 +191,8 @@
 
                         <tr>
 
-                            <td colspan="4" height="145" style="text-align: center; border: 1px solid #000;">
-                                <h2 style="margin-bottom: 100px;">Action Taken</h2>
+                            <td colspan="4" height="145" style=" border: 1px solid #000;">
+                                <h5 style="margin-bottom: 120px;text-transform: uppercase;font-weight:bold;">Action Taken :</h5>
 
                             </td>
 

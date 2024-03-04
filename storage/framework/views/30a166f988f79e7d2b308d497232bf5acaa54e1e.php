@@ -10,7 +10,7 @@
       <?php echo $__env->make('dts.users.contents.add_document.sections.form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
    </div>
 </div>
-
+<?php echo $__env->make('dts.users.contents.my_documents.modals.print_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
 <script type="text/javascript">
@@ -32,8 +32,7 @@
          if (result.isConfirmed) {
             //add_item(form,url);
             $('#add_document').find('button').attr('disabled', true);
-            add_document(form, url);
-
+            add_item(form, url)
 
          }
       });
@@ -41,58 +40,7 @@
 
    });
 
-   function add_document(form,url) {
-      Swal.showLoading();
-      $.ajax({
-         url: base_url + url,
-         method: 'POST',
-         data: form,
-         dataType: 'json',
- 
-         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-         },
-         success: function(data) {
-            Swal.close();
-            var id = data.id;
-            if (data.response) {
 
-
-               Swal.fire({
-                  title: "Print Routing Slip",
-                  text: "",
-                  icon: "success",
-                  showCancelButton: true,
-                  confirmButtonColor: "#3085d6",
-                  cancelButtonColor: "#d33",
-                  confirmButtonText: "print"
-               }).then((result) => {
-                  if (result.isConfirmed) {
-         
-                     window.location.href = base_url + '/dts/user/print-slip?id=' + id
-                  }else {
-                     window.location.reload();
-                  }
-
-               
-
-               });
-
-            } else {
-
-               alert(data.message)
-
-            }
-
-           
-         },
-         error: function() {
-            alert('something Wrong');
-            setTimeout(reload_page, 2000)
-         }
-
-      });
-   }
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('dts.users.layout.user_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/dts/users/contents/add_document/add_document.blade.php ENDPATH**/ ?>

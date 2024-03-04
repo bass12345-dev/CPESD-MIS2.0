@@ -20,7 +20,7 @@
               <?php foreach ($forwarded_documents as $row) :  ?>
                 <tr>
                   <td>{{$row['tracking_number']}}</td>
-                  <td>{{$row['document_name']}}</td>
+                  <td><a href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}" data-toggle="tooltip" data-placement="top" title="View <?php echo $row['tracking_number'] ?>"><?php echo $row['document_name']; ?></a></td>
                   <td>{{$row['forwarded_to']}}</td>
                   <td>{{$row['type_name']}}</td>
                   <td><a href="javascript:;" id="view_remarks"   data-remarks="{{$row['remarks']}}" >View Remarks</a><br> 
@@ -34,7 +34,7 @@
                              <i class="fa fa-ellipsis-v " class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false"></i>
                              <ul class="dropdown-menu">
                                   <li><a class="dropdown-item " id="forward_icon" data-remarks="{{$row['remarks']}}" data-history-id="{{$row['history_id']}}" data-tracking-number="{{$row['tracking_number']}}"  href="javascript:;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" >Update Forward To</a></li>
-                                  <li><a class="dropdown-item" href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}">View Information</a></li>
+                                 
                                 </ul>
                            </div>
                         </td>

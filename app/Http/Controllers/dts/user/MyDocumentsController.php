@@ -120,6 +120,10 @@ class MyDocumentsController extends Controller
 
             $row = CustomModel::q_get_where($this->documents_table, array('document_id' => DB::getPdo()->lastInsertId()))->first();
             $receiver = CustomModel::q_get_where($this->users_table, array('is_receiver' => 'yes'))->first();
+           
+            
+          
+
 
             $items1 = array(
                 't_number'                     => $row->tracking_number,
@@ -162,7 +166,7 @@ class MyDocumentsController extends Controller
                     CustomModel::insert_item($this->history_table, $items2);
                 }
 
-                $this->create_qr_code($items['tracking_number']);
+                // $this->create_qr_code($items['tracking_number']);
 
                 $data = array('id'=>$row->document_id,'message' => 'Added Successfully', 'response' => true);
             } else {
@@ -399,13 +403,13 @@ class MyDocumentsController extends Controller
     }
 
 
-
-public function get_receiver_incoming(){
-    $id = session('_id');
-    $count = CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => NULL, 'status' => 'torec', 'release_status' => NULL, 'to_receiver' => 'yes'))->count();
-    return $count;
-
-}
+    public function get_receiver_incoming(){
+        $id = session('_id');
+        $count = CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => NULL, 'status' => 'torec', 'release_status' => NULL, 'to_receiver' => 'yes'))->count();
+        return $count;
+    
+    }
+    
 
 
 public function print_slip(){

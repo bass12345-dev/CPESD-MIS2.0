@@ -76,6 +76,7 @@
       var div = document.getElementById("slip").innerHTML;
       var a = window.open('', '');
       a.document.write('<html><title>Routing Slip</title>');
+
       a.document.write('<body>');
       a.document.write(div);
       a.document.write('</body></html>');
