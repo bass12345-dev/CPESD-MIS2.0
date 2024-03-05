@@ -19,6 +19,7 @@
          <td>Office</td>
          <td>{{$doc_data['office']}}</td>
       </tr>
+    
       <tr>
          <td>Document Type</td>
          <td>{{$doc_data['document_type']}}</td>
@@ -26,6 +27,10 @@
       <tr>
          <td>Description</td>
          <td>{{$doc_data['description']}}</td>
+      </tr>
+      <tr>
+         <td>Type</td>
+         <td>{{$doc_data['destination_type']}}</td>
       </tr>
        <tr>
          <td>Qr Code</td>

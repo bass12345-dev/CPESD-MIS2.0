@@ -133,14 +133,14 @@ class DocumentsModel extends Model
                     'users.last_name as last_name', 
                     'users.extension as extension', 
                     DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
-        ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') >= '".$start."' "))
-        ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') <= '".$end."' "))
+        ->whereDate('documents.created', '>=', $start)
+        ->whereDate('documents.created', '<=', $end)
         ->orderBy('documents.document_id', 'desc')->get();
 
         return $rows;
     }
 
-    public static function  filter_date_documents_where($start,$end,$where){
+    public static function  filter_date_documents_where_doc_type($start,$end,$doc_type){
         $rows = DB::table('documents as documents')
         ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
         ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
@@ -149,10 +149,44 @@ class DocumentsModel extends Model
                  'document_types.type_name', 'documents.doc_status as doc_status', 'documents.u_id as u_id', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension', DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
         ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') >= '".$start."' "))
         ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') <= '".$end."' "))
-        ->where('documents.doc_type'.$where['doc_type'])
+        ->where('documents.doc_type',$doc_type)
         ->orderBy('documents.document_id', 'desc')->get();
 
         return $rows;
+    }
+
+
+    public static function  filter_date_documents_where_doc_status($start,$end,$status){
+        $rows = DB::table('documents as documents')
+        ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
+        ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
+        ->select('documents.created as created','documents.tracking_number as tracking_number', 'documents.doc_type as doc_type', 
+                 'documents.document_name as   document_name', 'documents.document_id as document_id', 
+                 'document_types.type_name', 'documents.doc_status as doc_status', 'documents.u_id as u_id', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension', DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+        ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') >= '".$start."' "))
+        ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') <= '".$end."' "))
+        ->where('documents.doc_status',$status)
+        ->orderBy('documents.document_id', 'desc')->get();
+
+        return $rows;
+    }
+
+    public static function filter_date_documents_where_doc_status_and_doc_type($start,$end,$status,$type){
+
+        $rows = DB::table('documents as documents')
+        ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
+        ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
+        ->select('documents.created as created','documents.tracking_number as tracking_number', 'documents.doc_type as doc_type', 
+                 'documents.document_name as   document_name', 'documents.document_id as document_id', 
+                 'document_types.type_name', 'documents.doc_status as doc_status', 'documents.u_id as u_id', 'users.first_name as first_name', 'users.middle_name as middle_name', 'users.last_name as last_name', 'users.extension as extension', DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+        ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') >= '".$start."' "))
+        ->where(DB::raw("DATE_FORMAT(documents.created,'%Y-%m-%d') <= '".$end."' "))
+        ->where('documents.doc_status',$status)
+        ->where('documents.doc_type',$type)
+        ->orderBy('documents.document_id', 'desc')->get();
+
+        return $rows;
+
     }
 
     //User Query
@@ -246,7 +280,7 @@ class DocumentsModel extends Model
             ->where('release_status',NULL )
             ->where('status' , 'received')
             ->where('doc_status'  ,'!=', 'cancelled')
-            ->where('documents.destination_type', 'complex')
+            // ->where('documents.destination_type', 'complex')
             ->where('to_receiver' , 'no')
             ->orderBy('received_date', 'desc')->get();
 

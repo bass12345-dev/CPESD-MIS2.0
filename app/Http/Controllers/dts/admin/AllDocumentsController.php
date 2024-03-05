@@ -31,56 +31,47 @@ class AllDocumentsController extends Controller
         $user                       = DB::table('users')->where('user_id', session('_id'))->get()[0];
         $data['user_data']          = array('user_id' => session('_id'), 'office_id' => $user->off_id);
         $data['final_actions']      = $this->get_final_actions();
-
-
-       
-        // if(isset($_GET['from']) && isset($_GET['to'] )){
-
-        //     echo 1;
-
-        //     $start_date          =  date('Y-m-d', strtotime($_GET['from']));
-        //     $end_date            =  date('Y-m-d', strtotime($_GET['to']));
-
-            
-
-        //     $data['documents']   =  $this->get_all_documents($start_date,$end_date,$type_id="");
-
-        // }else if(isset($_GET['from']) != '' && isset($_GET['to']) != '' && isset($_GET['type']) != ''){
-            
-        //     echo 2;
-        //     $start_date          =  date('Y-m-d', strtotime($_GET['from']));
-        //     $end_date            =  date('Y-m-d', strtotime($_GET['to']));
-        //     $type_id             = $_GET['type'];
-        //     $data['documents']   = $this->get_all_documents($start_date,$end_date,$type_id);
-
-            
-        // }else{
-        //     echo 3;
-        //     $data['documents']   = $this->get_all_documents($start_date="",$end_date="",$type_id="");
-        // }
+        $row_documents              = null;
         
+        if(isset($_GET['from']) && isset($_GET['to']) && isset($_GET['type']) && isset($_GET['status'])){
+            
+            $start   = date('Y-m-d',strtotime($_GET['from']));
+            $end     = date('Y-m-d',strtotime($_GET['to']));
+            $type   = $_GET['type'];
+            $status = $_GET['status'];
+
+            $row_documents = $this->get_all_documents($start,$end,$type,$status);
+          
+            
+        }else {
+
+            $row_documents = $this->get_all_documents($start_date="",$end_date="",$type_id="",$status1="");
+        }
         
       
-
-        $data['documents']   = $this->get_all_documents($start_date="",$end_date="",$type_id="");
-       
+        $data['documents']      = $row_documents;
         return view('dts.admin.contents.all_documents.all_documents')->with($data);
+       
     }
 
 
-    public function get_all_documents($start,$end,$type)
+    public function get_all_documents($start,$end,$type,$status)
     {
-        $rows = DocumentsModel::get_all_documents();
-        // if($start == '' && $end == '' && $type == ''){
-        //     $rows = DocumentsModel::get_all_documents();
-        // }else if($start != '' && $end != '' && $type == ''){
-        //     $rows =  DocumentsModel::filter_date_documents($start,$end);
-        // }else if($start != '' && $end != '' && $type != ''){
-        //     $where = array('doc_type' => $type);
-        //     $rows =  DocumentsModel::filter_date_documents_where($start,$end,$where);
-        // }
+        $rows = '';
 
-        
+        if(!$start && !$end && !$type && !$status){
+            $rows = DocumentsModel::get_all_documents();
+        }else if($start != '' && $end != '' && $type == 0 && $status == 0){
+            $rows = DocumentsModel::filter_date_documents($start,$end);
+        }else if($start != null && $end != null && $type != 0 && $status == 0){
+            $rows = DocumentsModel::filter_date_documents_where_doc_type($start,$end,$type);
+        }else if($start != null && $end != null && $type == 0 && $status != 0){
+            $rows = DocumentsModel::filter_date_documents_where_doc_status($start,$end,$status);
+        }else if($start != null && $end != null && $type != 0 && $status != 0){
+            $rows = DocumentsModel::filter_date_documents_where_doc_status_and_doc_type($start,$end,$status,$type);
+        }
+
+      
         $data = [];
         $i = 1;
 

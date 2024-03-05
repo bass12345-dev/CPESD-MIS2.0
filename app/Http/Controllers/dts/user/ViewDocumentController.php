@@ -47,7 +47,8 @@ class ViewDocumentController extends Controller
             'type_id'               => $row->type_id,
             'description'           => $row->document_description,
             'qr'                    => env('APP_URL') . '/storage/app/img/qr-code/' . $row->tracking_number . '.png',
-            'status'                => MyDocumentsController::check_status($row->doc_status) 
+            'status'                => MyDocumentsController::check_status($row->doc_status) ,
+            'destination_type'      => $row->destination_type
           
             
             // CustomModel::q_get_where($this->history_table, array('t_number' => $row->tracking_number, 'status' => 'completed'))->count() == 1 ? true : false,

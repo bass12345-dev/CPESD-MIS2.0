@@ -141,30 +141,30 @@ class MyDocumentsController extends Controller
 
 
 
-            $items2 = array(
-                't_number'                     => $row->tracking_number,
-                'user1'                        => $row->u_id,
-                'office1'                      => $row->offi_id,
-                'user2'                        => $receiver->user_id,
-                'office2'                      => $row->offi_id,
-                'status'                       => 'torec',
-                'received_status'              => NULL,
-                'received_date'                => NULL,
-                'release_status'               => NULL,
-                'to_receiver'                  => 'yes',
-                'release_date'                 =>  Carbon::now()->format('Y-m-d H:i:s'),
-                'remarks'                      => ''
+            // $items2 = array(
+            //     't_number'                     => $row->tracking_number,
+            //     'user1'                        => $row->u_id,
+            //     'office1'                      => $row->offi_id,
+            //     'user2'                        => $receiver->user_id,
+            //     'office2'                      => $row->offi_id,
+            //     'status'                       => 'torec',
+            //     'received_status'              => NULL,
+            //     'received_date'                => NULL,
+            //     'release_status'               => NULL,
+            //     'to_receiver'                  => 'yes',
+            //     'release_date'                 =>  Carbon::now()->format('Y-m-d H:i:s'),
+            //     'remarks'                      => ''
 
-            );
+            // );
 
 
             $add1 = CustomModel::insert_item($this->history_table, $items1);
 
             if ($add1) {
 
-                if ($row->destination_type == 'simple') {
-                    CustomModel::insert_item($this->history_table, $items2);
-                }
+                // if ($row->destination_type == 'simple') {
+                //     CustomModel::insert_item($this->history_table, $items2);
+                // }
 
                 // $this->create_qr_code($items['tracking_number']);
 

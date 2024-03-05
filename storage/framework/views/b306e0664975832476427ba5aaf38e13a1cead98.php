@@ -75,17 +75,15 @@ $('#forward_form').on('submit', function (e) {
 $('input[name="dates"]').daterangepicker();
 
 $('button#filter').on('click', function(){
-   var dates = $('input[name="dates"]').val();
+   var dates         = $('input[name="dates"]').val();
    var document_type = $('select[name="select_document_types"]').val();
+   var document_status = $('select[name="select_document_status"]').val();
    var date = dates.split(' - ');
    var from = date[0];
    var to = date[1];
    
-   if(!document_type){
-    window.location.href = base_url + '/dts/admin/all-documents?from='+from+'&&to='+to;
-   }else {
-    window.location.href = base_url + '/dts/admin/all-documents?from='+from+'&&to='+to+'&&type='+document_type;
-   }
+   window.location.href = base_url + '/dts/admin/all-documents?from='+from+'&&to='+to+'&&type='+document_type+'&&status='+document_status;
+  
 });
 
 
