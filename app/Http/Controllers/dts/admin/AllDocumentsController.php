@@ -185,16 +185,28 @@ class AllDocumentsController extends Controller
     {
 
         $id = $request->input('id')['id'];
-
+        $message = '';
+        $arr = array();
         if (is_array($id)) {
             foreach ($id as $row) {
                 $items = array(
                     'doc_status'         => 'cancelled',
                 );
-                $update = CustomModel::update_item($this->documents_table, array('document_id' => $row), $items);
+
+                $check = CustomModel::q_get_where($this->documents_table,array('document_id' => $row))->first();
+                if($check->doc_status != 'completed'){
+                    $update = CustomModel::update_item($this->documents_table, array('document_id' => $row), $items);
+                }else {
+                    array_push($arr, $check->document_id);
+                }
+                
+                
             }
 
-            $data = array('message' => 'Canceled Succesfully', 'response' => true);
+            $message = count($arr) > 0 ? " Canceled Successfully | Some documents is cannot be cancelled because it's already completed or canceled already" : 'Canceled Succesfully';
+            
+
+            $data = array('message' => $message, 'response' => true);
         } else {
             $data = array('message' => 'Error', 'response' => false);
         }
@@ -207,24 +219,24 @@ class AllDocumentsController extends Controller
 
 
 
-    public function cancel_document(Request $request){
+    // public function cancel_document(Request $request){
 
-        $tracking_number = $request->input('t');
-        $items = array(
-            'doc_status'         => 'cancelled',
-        );
-        $update = CustomModel::update_item($this->documents_table, array('tracking_number' => $tracking_number), $items);
-        if ($update) {
+    //     $tracking_number = $request->input('t');
+    //     $items = array(
+    //         'doc_status'         => 'cancelled',
+    //     );
+    //     $update = CustomModel::update_item($this->documents_table, array('tracking_number' => $tracking_number), $items);
+    //     if ($update) {
 
 
-            $data = array('message' => 'Canceled Succesfully', 'response' => true);
-        } else {
+    //         $data = array('message' => 'Canceled Succesfully', 'response' => true);
+    //     } else {
 
-            $data = array('message' => 'Something Wrong/No Changes Apply ', 'response' => false);
-        }
-        return response()->json($data);
+    //         $data = array('message' => 'Something Wrong/No Changes Apply ', 'response' => false);
+    //     }
+    //     return response()->json($data);
 
-    }
+    // }
 
     public function revert_document(Request $request){
 

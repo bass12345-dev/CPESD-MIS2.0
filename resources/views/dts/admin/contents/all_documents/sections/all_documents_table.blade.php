@@ -77,16 +77,14 @@
                <?php echo $row['is'] ?>
             </td>
 
-            <td>    
+            <td>   
+               <?php if($row['history_status'] != 'completed')  : ?> 
                <div class="btn-group dropstart">
+                  
                   <i class="fa fa-ellipsis-v " class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false"></i>
                   <ul class="dropdown-menu">
                      
-                     <?php if($row['history_status'] == 'pending') : ?>
-                     <li><a class="dropdown-item" id="cancel_document" href="#" data-history-id="{{$row['history_id']}}"
-                  data-tracking-number="{{$row['tracking_number']}}">Cancel Document</a></li>
-                     <?php endif; ?>
-
+                    
                      <?php if($row['history_status'] != 'pending' AND $row['history_status'] == 'cancelled' ) : ?>
                      <li><a class="dropdown-item" id="revert_document" href="#" data-history-id="{{$row['history_id']}}"
                   data-tracking-number="{{$row['tracking_number']}}">Revert</a></li>
@@ -99,6 +97,7 @@
                       <?php endif; ?>
                   </ul>               
                </div>      
+               <?php endif; ?>
             </td>
            
          </tr>

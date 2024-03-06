@@ -9,7 +9,7 @@
          <table class="table table-hover table-striped " id="datatables-buttons" style="width: 100%; "  >
             <thead>
                <tr>
-                  <th class=""></th>
+                 
                   <th class="">#</th>
                   <th class="">Tracking Number</th>
                   <th class="">Document Name</th>
@@ -24,7 +24,7 @@
                    $i = 1;
                    foreach ($documents as $row) :?>
                      <tr>
-                        <td><input type="checkbox"></td>
+                        
                         <td><?php echo $i++; ?></td>
                         <td><?php echo $row['tracking_number']; ?></td>
                         <td><?php echo $row['document_name']; ?></td>

@@ -84,57 +84,29 @@
       a.print();
    }
 
-   function export_to_pdf() {
+   $('a#print_slips').on('click', function(){
 
-   }
-   // $('a.print_document').on('click', function(){
-   // var id = $(this).data('id');
-   // var t = $(this).data('track');
-   // Swal.fire({
-   //                   title: "Print Routing Slip for #" + t,
-   //                   text: "",
-   //                   icon: "success",
-   //                   showCancelButton: true,
-   //                   confirmButtonColor: "#3085d6",
-   //                   cancelButtonColor: "#d33",
-   //                   confirmButtonText: "print"
-   //                }).then((result) => {
-   //                   if (result.isConfirmed) {
-   //                      window.location.href = base_url + '/dts/user/print-slip?id=' + id
-   //                   }
-
-   //                });
-
-
-   // });
-
-   $('a.cancel_document').on('click', function() {
-      var id = $(this).data('id');
-      var t = $(this).data('track');
-
-
-      let form = {
-         id: id
+      selected_items = get_selected_items();
+      if(selected_items.length  == 0){
+         alert('Please Select at least one')
+      }else{
+         var a = window.open(base_url + '/dts/user/print-slips/?ids='+selected_items, '__blank');
       }
-      var url = '/dts/us/c-doc';
 
-
-      Swal.fire({
-         title: "Are you sure?",
-         text: "",
-         icon: "warning",
-         showCancelButton: true,
-         confirmButtonColor: "#3085d6",
-         cancelButtonColor: "#d33",
-         confirmButtonText: "Cancel Document #" + t
-      }).then((result) => {
-         if (result.isConfirmed) {
-            add_item(form, url);
-
-         }
-      });
+      
 
    });
+
+   function get_selected_items(){
+   let items = [];
+   $('input[name=document_id]:checked').map(function(item){items.push($(this).val());});
+   return items;
+
+   }
+
+
+
+
 </script>
 
 <?php $__env->stopSection(); ?>

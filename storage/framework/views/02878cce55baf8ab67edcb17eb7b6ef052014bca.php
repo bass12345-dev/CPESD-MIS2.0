@@ -43,6 +43,16 @@
       datatablesButtons.buttons().container().appendTo("#datatables-buttons_wrapper .col-md-6:eq(0)");
    });
 
+   $('input[name=check_all]').on('change', function(){
+
+   var check = $('input[name=check_all]:checked').val();
+   if(check == 'true'){
+      $('input[name=document_id]').prop('checked', true);
+   }else {
+      $('input[name=document_id]').prop('checked', false);
+   } 
+   });
+
 
    function add_item(data, url) {
       Swal.showLoading();

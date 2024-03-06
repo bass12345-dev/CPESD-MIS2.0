@@ -94,6 +94,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
 
     Route::get('/print-slip', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'print_slip']);
 
+    Route::get('/print-slips', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'print_slips']);
 
     Route::get('/track', function () {
      $data['title'] = 'Search';

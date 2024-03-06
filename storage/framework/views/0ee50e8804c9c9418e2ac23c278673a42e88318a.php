@@ -1,13 +1,14 @@
 <div class="card flex-fill p-3">
    <div class="card-header">
       <h5 class="card-title mb-3">Documents</h5>
-      <!-- <button class="btn btn-primary" id="print">Multiple Print Tracking Slip</button> -->
+      <a class="btn btn-primary" href="javascript:;" id="print_slips"><i class="fas fa-print"></i> Tracking Slips</a>
+      <hr>
    </div>
    <!-- <?php echo $__env->make('dts.users.contents.my_documents.sections.filter.filter', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?> -->
    <table class="table table-hover table-striped " id="datatables-buttons" style="width: 100%; "  >
       <thead>
          <tr>
-            <!-- <th class=""><input type="checkbox" name="check_all" value="true"></th> -->
+            <th class=""><input type="checkbox" name="check_all" value="true"></th>
             <th >#</th>
             <th >Tracking Number</th>
             <th >Document Name</th>
@@ -25,7 +26,7 @@
               
               ?>
          <tr>
-            <!-- <td><input type="checkbox" name="document_id" value="<?php echo $row['document_id'] ?>"></td> -->
+            <td><input type="checkbox" name="document_id" value="<?php echo $row['document_id'] ?>"></td>
             <td><?php echo e($i++); ?></td>
             <td><?php echo $row['tracking_number']; ?></td>
             <td><a href="<?php echo e(url('/dts/user/view?tn='.$row['tracking_number'])); ?>" data-toggle="tooltip" data-placement="top" title="View <?php echo $row['tracking_number'] ?>"><?php echo $row['document_name']; ?></a> </td>

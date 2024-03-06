@@ -97,6 +97,31 @@ class DocumentsModel extends Model
         return $row;
     }
 
+    public static function get_document_where_id($id){
+        $row = DB::table('documents')
+        ->where('document_id', $id)
+        ->leftJoin('document_types', 'document_types.type_id', '=', 'documents.doc_type')
+        ->leftJoin('users', 'users.user_id', '=', 'documents.u_id')
+        ->leftJoin('offices', 'offices.office_id', '=', 'documents.offi_id')
+        ->select(   //Documents
+            'documents.created as document_created',
+            'documents.tracking_number as tracking_number', 
+            'documents.document_name as   document_name', 
+            'documents.document_id as document_id', 
+            'document_types.type_name as type_name', 
+            'documents.doc_status as doc_status', 
+            'documents.u_id as u_id', 
+            'documents.document_description as document_description',
+            //User
+            'users.first_name as first_name', 
+            'users.middle_name as middle_name', 
+            'users.last_name as last_name', 
+            'users.extension as extension', 
+            DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+        ->first();
+        return $row;
+    }
+
 
     public static function get_history($tn){
         $row = DB::table('history')
