@@ -75,8 +75,8 @@ class MyDocumentsController extends Controller
                         
                         <div class="table">
                             <table cellpadding="3" cellspacing="2" style="width: 100%; border: 1px solid #000;">
-                                <tr colspan="4" style="border: 1px solid #000;">
-                                    <th  style="text-align:center;font-size: 20px;font-family: "Times New Roman", Times, serif; font-weight: bold; border: 1px solid #000; text-transform: uppercase;">Routing Slip</th>
+                                <tr colspan="4" style="border: 1px solid #000; text-align:center;">
+                                    <th  style="font-size: 20px;font-family: "Times New Roman", Times, serif; font-weight: bold; border: 1px solid #000; text-transform: uppercase;">Routing Slip</th>
                                 </tr>
 
                                 <tr>
@@ -89,7 +89,7 @@ class MyDocumentsController extends Controller
                                     <td colspan="1" height="40" style="border: 1px solid #000;">
                                         <div style="margin-bottom: 50px;">
                                             <label style="font-size:13px;font-weight:bold;">Encoded By : </label> <span style="font-size:13px;" class="encoded_by">'. $doc->first_name.' '. $doc->middle_name.' '. $doc->last_name.' '. $doc->extension.'</span><br>
-                                            <label style="font-size:13px;font-weight:bold;">Type : </label> <span style="font-size:13px;" class="type">'.$doc->type_name.'</span>
+                                            <label style="font-size:13px;font-weight:bold;">Type : </label> <span style="font-size:13px;" class="type">'.$doc->destination_type.'</span>
                                         </div>
                                     </td>
                                 </tr>

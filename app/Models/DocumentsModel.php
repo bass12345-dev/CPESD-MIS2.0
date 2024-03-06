@@ -112,6 +112,7 @@ class DocumentsModel extends Model
             'documents.doc_status as doc_status', 
             'documents.u_id as u_id', 
             'documents.document_description as document_description',
+            'documents.destination_type as destination_type',
             //User
             'users.first_name as first_name', 
             'users.middle_name as middle_name', 

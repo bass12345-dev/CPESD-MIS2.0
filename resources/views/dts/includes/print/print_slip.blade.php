@@ -111,6 +111,14 @@
 	justify-content: center;*/
 
                     }
+
+                  
+                    .action_taken {
+                                    
+                                    margin-bottom: 130px;
+                                    text-transform: uppercase;
+                                    font-weight:bold;
+                    }
         </style>
     </head>
     <body>
