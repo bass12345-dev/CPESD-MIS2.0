@@ -1,7 +1,7 @@
 <div class="card flex-fill p-3">
    <div class="card-header">
       <h5 class="card-title mb-3">Documents</h5>
-      <!-- <a class="btn btn-primary" href="javascript:;" id="print_slips"><i class="fas fa-print"></i> Tracking Slips</a> -->
+      <a class="btn btn-primary" href="javascript:;" id="print_slips"><i class="fas fa-print"></i> Tracking Slips</a>
       <hr>
    </div>
    <!-- <?php echo $__env->make('dts.users.contents.my_documents.sections.filter.filter', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?> -->

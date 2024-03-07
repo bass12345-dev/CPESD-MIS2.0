@@ -1,7 +1,7 @@
 <div class="card flex-fill p-3">
          <div class="card-header">
             <h5 class="card-title mb-2">Documents</h5>
-            <button class="btn btn-danger"> Delete</button>
+          
 
          </div>
          

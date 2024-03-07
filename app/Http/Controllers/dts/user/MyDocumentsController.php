@@ -36,7 +36,8 @@ class MyDocumentsController extends Controller
     }
 
     public function print_slips(){
-        $data['content'] = '';
+   
+        $arr = [];
         if(isset($_GET['ids'])){
             $ids = $_GET['ids'];
             if($ids != ''){
@@ -44,74 +45,8 @@ class MyDocumentsController extends Controller
             foreach($pieces as $row){
 
                 $doc = DocumentsModel::get_document_where_id($row);
-                    
-                $data['content'] .= '
-                        <div id="header">
-                            <div class="top-header">
-                                <div class="left">
-                                    <div class="left-logo">
-                                        <img class="top-logo " src="'.asset("assets/img/oroquieta_logo-300x300.png").'">
-                                        <img class="top-logo right-l" src="'.asset("assets/img/peso_logo.png").'">
-                                    </div>
-                                </div>
+                array_push($arr,$doc); 
 
-                                <div class="middle">
-                                    <span>Republic of the Philippines</span><br>
-                                    <span class="office-city-mayor">Office of the City Mayor</span><br>
-                                    <span class="oro">Oroquieta City</span><br>
-                                    <span class="oro capital">The Capital of Misamis Occidental</span>
-                                </div>
-                                <div class="right">
-                                    <div class="bagong-image-card">
-                                        <img class="top-logo" src="'.asset("assets/img/Bagong_Pilipinas_logo.png").'">
-                                        <img class="top-logo" src="'.asset("assets/img/asenso_logo.png").'">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="below-header">
-                                <h21>Cooperative & Public Employment Service Division</h2>
-                            </di>
-                        </div>
-                        
-                        <div class="table">
-                            <table cellpadding="3" cellspacing="2" style="width: 100%; border: 1px solid #000;">
-                                <tr colspan="4" style="border: 1px solid #000; text-align:center;">
-                                    <th  style="font-size: 20px;font-family: "Times New Roman", Times, serif; font-weight: bold; border: 1px solid #000; text-transform: uppercase;">Routing Slip</th>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="3" height="40" style="border: 1px solid #000;">
-                                        <label style="font-size:13px;font-weight:bold;">Document Name : </label> <span style="font-size:13px;" class="document_name">'.$doc->document_name.'</span><br>
-                                        <label style="font-size:13px;font-weight:bold;">Document No : </label> <span style="font-size:13px;" class="print_tracking_number">'.$doc->tracking_number.'</span><br>
-                                        <label style="font-size:13px;font-weight:bold;">Document Type : </label> <span style="font-size:13px;" class="document_type">'.$doc->type_name.'</span><br>
-                                        <label style="font-size:13px;font-weight:bold;">Date Received : </label> <span style="font-size:13px;" class="created">'.date('M d Y - h:i a', strtotime($doc->document_created)).'</span><br>
-                                    </td>
-                                    <td colspan="1" height="40" style="border: 1px solid #000;">
-                                        <div style="margin-bottom: 50px;">
-                                            <label style="font-size:13px;font-weight:bold;">Encoded By : </label> <span style="font-size:13px;" class="encoded_by">'. $doc->first_name.' '. $doc->middle_name.' '. $doc->last_name.' '. $doc->extension.'</span><br>
-                                            <label style="font-size:13px;font-weight:bold;">Type : </label> <span style="font-size:13px;" class="type">'.$doc->destination_type.'</span>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="4" style="border: 1px solid #000;">
-                                        <label style="font-size:13px; font-weight:bold;">Brief Description</label> : <span style="font-size:13px;" class="description">'.$doc->document_description.'</span>
-                                    </td>
-                                </tr>
-    
-                            <tr>
-                                <td colspan="4" height="145" style=" border: 1px solid #000;">
-                                    <h5 style="margin-bottom: 120px;text-transform: uppercase;font-weight:bold;">Action Taken :</h5>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <br>
-                    <hr>
-                    <br>
-                        
-                        ';
 
             }
 
@@ -121,6 +56,8 @@ class MyDocumentsController extends Controller
         }else {
             abort(404);
         }
+        $data['data'] = $arr;
+
         
         return view('dts.includes.print.print_slip')->with($data);
     }
@@ -340,8 +277,9 @@ class MyDocumentsController extends Controller
 
     public function receive(Request $request)
     {
-        $id                  = $request->input('id');
-        $tracking_number     = $request->input('tracking_number');
+        $id                                 = $request->input('id');
+        $tracking_number                    = $request->input('track');
+        
         $items  = array(
 
             'status'            => 'received',
@@ -355,7 +293,7 @@ class MyDocumentsController extends Controller
 
             $update_receive = CustomModel::update_item($this->history_table, array('history_id' => $id), $items);
             if ($update_receive) {
-                $data = array('message' => 'Received Succesfully', 'response' => true);
+                $data = array('message' => 'Received Succesfully','id'=>$id,'tracking_number' => $tracking_number, 'response' => true);
             } else {
                 $data = array('message' => 'Something Wrong', 'response' => false);
             }
