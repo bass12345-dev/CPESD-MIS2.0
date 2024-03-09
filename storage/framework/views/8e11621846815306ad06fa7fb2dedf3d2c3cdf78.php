@@ -39,11 +39,20 @@
                 </a>
             </li>
 
-            <li class="sidebar-item <?= $segments[2] == 'manage-receiver' ? 'active' : '' ?>">
-                <a class="sidebar-link" href="<?php echo e(url('/dts/admin/manage-receiver')); ?>">
-                    <i class="align-middle fas fa-hand" ></i> <span class="align-middle">Manage Receiver</span>
+
+            <?php 
+                use App\Models\CustomModel;
+                $row = CustomModel::q_get_where('users',array('user_id' => session('_id')))->first();
+                if($row->user_id == 8){
+                ?>
+
+            <li class="sidebar-item <?= $segments[2] == 'manage-staff' ? 'active' : '' ?>">
+                <a class="sidebar-link" href="<?php echo e(url('/dts/admin/manage-staff')); ?>">
+                    <i class="align-middle fas fa-hand" ></i> <span class="align-middle">Manage Staff</span>
                 </a>
             </li>
+
+            <?php }  ?>
 
             <li class="sidebar-item <?= $segments[2] == 'manage-users' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="<?php echo e(url('/dts/admin/manage-users')); ?>">

@@ -1,9 +1,10 @@
 @extends('dts.receiver.layout.receiver_master')
-<!-- @section('title', 'Dashboard') -->
+@section('title', $title)
 @section('content')
 @include('global_includes.title')
 @include('dts.receiver.contents.incoming.sections.incoming_table')
 @include('dts.receiver.contents.incoming.modal.final_action_modal')
+@include('dts.receiver.contents.incoming.modal.add_note_modal')
 @endsection
 
 
@@ -84,6 +85,42 @@
    var url = '/dts/r/complete-document';
    var form = $(this).serialize();
    add_item(form,url);
+
+});
+
+$('form#update_note').on('submit', function (e) {
+   e.preventDefault();
+   var url = '/dts/r/a-n';
+   var form = $(this).serialize();
+   add_item(form,url);
+
+});
+
+
+$('button.update_note').on('click', function() {
+  $('#update_note').attr('hidden',false);
+  $(this).attr('hidden',true);
+
+  //  
+});
+
+$('button.close_add_note').on('click', function() {
+  $('#update_note').attr('hidden',true);
+  $('button.update_note').attr('hidden',false);
+});
+
+
+$('a.add-note').on('click', function() {
+
+    $('#add_note_modal').modal('show');
+    var document_id = $(this).data('id');
+    $('#update_note').attr('hidden',true);
+    $('button.update_note').attr('hidden',false);
+    $('input[name=document_id]').val(document_id);
+    var note = $(this).data('note')
+    $('#add_note_modal').find('p.note').text(note);
+    $('textarea[name=note]').val(note);
+
 
 });
 </script>

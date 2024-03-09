@@ -26,7 +26,8 @@
                   <td><a href="javascript:;" id="view_remarks" data-remarks="<?php echo e($row['remarks']); ?>" >View Remarks</a></td>
                   <td><?php echo e($row['released_date']); ?></td>
                   <td>    
-                     <a class="btn btn-success received_document" data-track="<?php echo e($row['tracking_number']); ?>"  data-id="<?php echo e($row['history_id']); ?>"><i class="fas fa-hand"></i></a>       
+                     <a class="btn btn-success received_document" data-track="<?php echo e($row['tracking_number']); ?>"  data-id="<?php echo e($row['history_id']); ?>"><i class="fas fa-hand"></i></a> 
+                     <a class="btn btn-secondary add-note" data-note="<?php echo e($row['note']); ?>" data-id="<?php echo e($row['document_id']); ?>"><i class="fas fa-sticky-note  "></i></a>       
                   </td>
                 </tr>
               <?php endforeach; ?> 

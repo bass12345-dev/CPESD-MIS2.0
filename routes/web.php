@@ -39,7 +39,7 @@ Route::middleware(['SessionGuard','IsAdmin'])->prefix('dts/admin')->group(functi
     Route::get('/doc-types', [App\Http\Controllers\dts\admin\DocTypesController::class, 'index']);
     Route::get('/final-actions', [App\Http\Controllers\dts\admin\FinalActionsController::class, 'index']);
     Route::get('/manage-users', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'index']);
-    Route::get('/manage-receiver', [App\Http\Controllers\dts\admin\SetReceiverController::class, 'index']);
+    Route::get('/manage-staff', [App\Http\Controllers\dts\admin\SetReceiverController::class, 'index']);
     Route::get('/view', [App\Http\Controllers\dts\admin\ViewDocumentController::class, 'index']);
 }); 
 
@@ -66,7 +66,9 @@ Route::middleware(['SessionGuard'])->prefix('dts')->group(function  () {
     Route::post('/delete-user', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'delete_user']);
     Route::post('/c-p-t-u', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'change_p_t_u']);
 
+    // Manage Staff
     Route::post('/u-r', [App\Http\Controllers\dts\admin\SetReceiverController::class, 'update_receiver']);
+    Route::post('/u-oic', [App\Http\Controllers\dts\admin\SetReceiverController::class, 'update_oic']);
 
     //Documents
     Route::post('/delete-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'delete']);
@@ -146,6 +148,8 @@ Route::middleware(['SessionGuard'])->prefix('dts/r')->group(function  () {
     
     //My Documents
     Route::post('/complete-document', [App\Http\Controllers\dts\receiver\ReceivedController::class, 'complete']);
+
+    Route::post('/a-n', [App\Http\Controllers\dts\receiver\IncomingController::class, 'add_note']);
    
     
 

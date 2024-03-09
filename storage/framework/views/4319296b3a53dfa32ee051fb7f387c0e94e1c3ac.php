@@ -1,9 +1,10 @@
 
-<!-- <?php $__env->startSection('title', 'Dashboard'); ?> -->
+<?php $__env->startSection('title', $title); ?>
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('global_includes.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('dts.receiver.contents.incoming.sections.incoming_table', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('dts.receiver.contents.incoming.modal.final_action_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('dts.receiver.contents.incoming.modal.add_note_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 
 
@@ -84,6 +85,42 @@
    var url = '/dts/r/complete-document';
    var form = $(this).serialize();
    add_item(form,url);
+
+});
+
+$('form#update_note').on('submit', function (e) {
+   e.preventDefault();
+   var url = '/dts/r/a-n';
+   var form = $(this).serialize();
+   add_item(form,url);
+
+});
+
+
+$('button.update_note').on('click', function() {
+  $('#update_note').attr('hidden',false);
+  $(this).attr('hidden',true);
+
+  //  
+});
+
+$('button.close_add_note').on('click', function() {
+  $('#update_note').attr('hidden',true);
+  $('button.update_note').attr('hidden',false);
+});
+
+
+$('a.add-note').on('click', function() {
+
+    $('#add_note_modal').modal('show');
+    var document_id = $(this).data('id');
+    $('#update_note').attr('hidden',true);
+    $('button.update_note').attr('hidden',false);
+    $('input[name=document_id]').val(document_id);
+    var note = $(this).data('note')
+    $('#add_note_modal').find('p.note').text(note);
+    $('textarea[name=note]').val(note);
+
 
 });
 </script>

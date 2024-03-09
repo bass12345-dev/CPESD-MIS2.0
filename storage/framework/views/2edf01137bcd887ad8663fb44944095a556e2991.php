@@ -1,5 +1,5 @@
 
-<!-- <?php $__env->startSection('title', 'Dashboard'); ?> -->
+<?php $__env->startSection('title', $title); ?>
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('global_includes.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('dts.receiver.contents.all_documents.sections.all_documents_table', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

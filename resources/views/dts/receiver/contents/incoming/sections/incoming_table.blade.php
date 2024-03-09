@@ -26,7 +26,8 @@
                   <td><a href="javascript:;" id="view_remarks" data-remarks="{{$row['remarks']}}" >View Remarks</a></td>
                   <td>{{$row['released_date']}}</td>
                   <td>    
-                     <a class="btn btn-success received_document" data-track="{{$row['tracking_number']}}"  data-id="{{$row['history_id']}}"><i class="fas fa-hand"></i></a>       
+                     <a class="btn btn-success received_document" data-track="{{$row['tracking_number']}}"  data-id="{{$row['history_id']}}"><i class="fas fa-hand"></i></a> 
+                     <a class="btn btn-secondary add-note" data-note="{{$row['note']}}" data-id="{{$row['document_id']}}"><i class="fas fa-sticky-note  "></i></a>       
                   </td>
                 </tr>
               <?php endforeach; ?> 

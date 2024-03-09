@@ -1,5 +1,5 @@
 @extends('dts.receiver.layout.receiver_master')
-<!-- @section('title', 'Dashboard') -->
+@section('title', $title)
 @section('content')
 @include('global_includes.title')
 @include('dts.receiver.contents.dashboard.sections.count_section')

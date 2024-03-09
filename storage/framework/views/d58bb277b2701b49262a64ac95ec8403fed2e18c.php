@@ -32,10 +32,10 @@
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Office</label>
                      <select class="form-control" name="office_id" required>
-                        <option value="">Select Document Type</option>
+                        <option value="">Select Office</option>
                         <?php
                            foreach ($offices as $row) :
-                              $selected = $row->office_id == 21 ? 'selected' : '';
+                              $selected = $row->office_id == 21 ? 'selected' : 'disabled';
                               echo "<option value='".$row->office_id."' ".$selected.">".$row->office."</option>";
                               # code...
                            endforeach;

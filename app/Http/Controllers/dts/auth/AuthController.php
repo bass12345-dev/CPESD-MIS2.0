@@ -116,11 +116,12 @@ class AuthController extends Controller
 
                     $request->session()->put(
                         array(
-                            'name' => $user->get()[0]->first_name,
-                            '_id' => $user->get()[0]->user_id,
-                            'isLoggedIn' => true,
-                            'user_type' => $user->get()[0]->user_type,
-                            'is_receiver' => $user->get()[0]->is_receiver
+                            'name'              => $user->get()[0]->first_name,
+                            '_id'               => $user->get()[0]->user_id,
+                            'isLoggedIn'        => true,
+                            'user_type'         => $user->get()[0]->user_type,
+                            'is_receiver'       => $user->get()[0]->is_receiver,
+                            'is_oic'            => $user->get()[0]->is_oic == 'yes' ? true : false
                         )
                     );
 

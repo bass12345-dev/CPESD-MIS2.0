@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DocumentsModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\CustomModel;
+use Illuminate\Http\Request;
 
 class IncomingController extends Controller
 {
@@ -41,10 +42,27 @@ class IncomingController extends Controller
                     'document_id'       => $key->document_id,
                     'history_id'        => $key->history_id,
                     'remarks'           => $key->remarks,
-                    'a'                 => $key->user_type == 'admin' ? true : false
+                    'a'                 => $key->user_type == 'admin' ? true : false,
+                    'note'              => empty($key->note) ? 'Empty Note' : $key->note
             );
         }
 
         return $data;
       }
+
+    public function add_note(Request $request){
+
+        $document_id    = $request->input('document_id');
+        $note           = $request->input('note');
+
+        $update     = CustomModel::update_item('documents', array('document_id' => $document_id), array('note' => $note));
+
+        if ($update) {
+            $data = array('message' => 'Note Updated Successfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Something Wrong | Note is not updated', 'response' => false);
+        }
+        return response()->json($data);
+
+    }
 }

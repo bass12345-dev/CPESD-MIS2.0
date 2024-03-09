@@ -16,7 +16,7 @@
                   <th class="">Document Type</th>
                   <th class="">Created</th>
                   <th class="">Status</th>
-                  <th class="">Actions</th>
+                 
                </tr>
             </thead>
             <tbody>
@@ -27,14 +27,11 @@
                         
                         <td><?php echo $i++; ?></td>
                         <td><?php echo $row['tracking_number']; ?></td>
-                        <td><?php echo $row['document_name']; ?></td>
+                        <td><a href="<?php echo e(url('/dts/user/view?tn='.$row['tracking_number'])); ?>" data-toggle="tooltip" data-placement="top" title="View <?php echo $row['tracking_number'] ?>"><?php echo $row['document_name']; ?></a> </td>
                         <td><?php echo $row['type_name']; ?></td>
                         <td><?php echo $row['created']; ?></td>
                         <td><?php echo $row['is'] == 'Pending' ? '<span class="badge p-2 bg-danger">Pending</span>' : '<span class="badge p-2 bg-success">Completed</span>'; ?></td>
-                        <td> 
-                           <a href="<?php echo e(url('/dts/user/view?tn='.$row['tracking_number'])); ?>" ><i class="fas fa-eye"></i></a>   
-                           
-                        </td>
+                       
                      </tr>
                 <?php endforeach; ?>    
             </tbody>
