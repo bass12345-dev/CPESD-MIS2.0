@@ -10,8 +10,56 @@ class AuthController extends Controller
 {
     public function index()
     {
+        return view('maintainance.index');
+        // return view('watchlisted.auth.code_login');
+    }
 
-        return view('watchlisted.auth.code_login');
+
+    public function new_user_login()
+    {
+        return view('maintainance.index');
+        // return view('watchlisted.auth.new_user_login');
+    }
+
+    public function verify_user(Request $request){
+
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        $user = CustomModel::q_get_where('users', array('username' => $username));
+
+        if ($user->count() > 0) {
+
+            if ($user->get()[0]->user_status == 'active') {
+
+                $check = password_verify($password, $user->get()[0]->password);
+
+                if ($check) {
+
+
+
+                    $request->session()->put(
+                        array(
+                            'name'              => $user->get()[0]->first_name,
+                            'watch_id'          => $user->get()[0]->user_id,
+                            'user_type'         => $user->get()[0]->user_type ,
+                            'isLoggedInWatch'   => true,
+                        )
+                    );
+
+                    return response()->json(['message' => 'Success.', 'response' => true]);
+                } else {
+                    return response()->json(['message' => 'invalid Password.', 'response' => false]);
+                }
+            } else {
+                return response()->json(['message' => 'Please Contact Administrator to activate your Account!!!', 'response' => false]);
+            }
+        } else {
+
+            return response()->json(['message' => 'invalid Username.', 'response' => false]);
+        }
+
+
     }
 
     public function verify_code(Request $request)

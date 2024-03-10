@@ -23,7 +23,7 @@ class ViewProfileController extends Controller
     {   
         $id = $_GET['id'];
         $data['title']              = 'View Profile';
-        $data['person_data']        = CustomModel::q_get_where($this->person_table,array('person_id' => $id))->first();
+        $data['person_data']        = PersonModel::get_person_profile($id);
         $data['programs']           = $this->get_programs();
         $data['person_programs']    = $this->get_person_programs($data['programs']);   
         $data['records']            = $this->get_records();

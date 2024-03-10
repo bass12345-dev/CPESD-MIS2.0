@@ -4,7 +4,7 @@
     </a>
 
     <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-        <span class="text-dark">Administrator</span>
+        <span class="text-dark">{{session('name')}}</span>
     </a>
     <div class="dropdown-menu dropdown-menu-end">
         <a class="dropdown-item text-danger" href="{{url('/wl_logout')}}">Log out</a>

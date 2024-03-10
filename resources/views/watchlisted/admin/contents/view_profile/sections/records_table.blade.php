@@ -11,6 +11,7 @@
                  
                   <th>Record</th>
                   <th>Created</th>
+                  
                   <th>Actions</th>
                </tr>
             </thead>

@@ -19,5 +19,5 @@
 </body>
 @include('global_includes.js')
 @yield('js')
-
+@include('global_includes.js_.wl_script')
 </html>

@@ -12,8 +12,9 @@ class DashboardController extends Controller
     public $programs_table = "programs";
     public function index(){
         $data['title']          = 'Watchlisted Dashboard';
-        $data['count_active']   = $this->count_all();
-        $data['count_programs']   = CustomModel::q_get($this->programs_table)->count();
+        $data['count']   = $this->count_all();
+
+       
         return view('watchlisted.admin.contents.dashboard.dashboard')->with($data);
     }
 
@@ -21,8 +22,15 @@ class DashboardController extends Controller
         $data           = [];
         $active         = CustomModel::q_get_where($this->person_table,array('status' => 'active'))->count();
         $inactive       = CustomModel::q_get_where($this->person_table,array('status' => 'inactive'))->count();
-        $data[]         = array('active' => $active , 'inactive' => $inactive);
-        return response()->json($data);
+        $to_approve     = CustomModel::q_get_where($this->person_table,array('status' => 'not-approved'))->count();
+        $programs       = CustomModel::q_get($this->programs_table)->count();
+        $data         = array(
+                                'active'            => $active , 
+                                'inactive'          => $inactive,
+                                'to_approve'        => $to_approve,
+                                'programs'          => $programs
+                            );
+        return  $data;
     }
 
     public function data_per_barangay(){

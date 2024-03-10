@@ -41,7 +41,8 @@ class ActiveListController extends Controller
             'email_address'             => $request->input('emailAddress'),
             'created_at'                => Carbon::now()->format('Y-m-d H:i:s') ,
             'status'                    => 'active',
-            'age'                       => $request->input('age')
+            'age'                       => $request->input('age'),
+            'added_by'                  => session('watch_id')
         );
         $add = CustomModel::insert_item($this->person_table, $items);
         if ($add) {
@@ -160,7 +161,12 @@ class ActiveListController extends Controller
             }
             $data = array('message' => 'Added Succesfully', 'response' => true);
         } else {
-            $data = array('message' => 'Error', 'response' => false);
+            $delete = CustomModel::delete_item($this->programs_block_table,array('person_id' => $person_id));
+            if($delete){
+                $data = array('message' => 'Programs Removed Succesfully', 'response' => true);
+            }else {
+                $data = array('message' => 'Error', 'response' => false);
+            }
         }
 
         return response()->json($data);

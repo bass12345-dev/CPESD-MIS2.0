@@ -29,10 +29,13 @@ Route::get('/dts/print', [App\Http\Controllers\dts\auth\AuthController::class, '
 Route::get('/dts/register', [App\Http\Controllers\dts\auth\AuthController::class, 'register']);
 
 Route::get('/dts', [App\Http\Controllers\dts\auth\AuthController::class, 'index'])->middleware(['UsersCheck']);
-Route::get('/watchlisted', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'index'])->middleware(['WatchLoginCheck']);
+
+
+
+// Route::get('/watchlisted', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'index'])->middleware(['WatchLoginCheck']);
 
 //ADMIN ROUTES//
-Route::middleware(['SessionGuard','IsAdmin'])->prefix('dts/admin')->group(function  () {
+Route::middleware(['SessionGuard', 'IsAdmin'])->prefix('dts/admin')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\dts\admin\DashboardController::class, 'index']);
     Route::get('/all-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'index']);
     Route::get('/offices', [App\Http\Controllers\dts\admin\OfficesController::class, 'index']);
@@ -41,11 +44,11 @@ Route::middleware(['SessionGuard','IsAdmin'])->prefix('dts/admin')->group(functi
     Route::get('/manage-users', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'index']);
     Route::get('/manage-staff', [App\Http\Controllers\dts\admin\SetReceiverController::class, 'index']);
     Route::get('/view', [App\Http\Controllers\dts\admin\ViewDocumentController::class, 'index']);
-}); 
+});
 
 
 //ADMIN ACTIONS//
-Route::middleware(['SessionGuard'])->prefix('dts')->group(function  () {
+Route::middleware(['SessionGuard'])->prefix('dts')->group(function () {
     //Office
     Route::post('/add-office', [App\Http\Controllers\dts\admin\OfficesController::class, 'store']);
     Route::post('/update-office', [App\Http\Controllers\dts\admin\OfficesController::class, 'update']);
@@ -77,13 +80,13 @@ Route::middleware(['SessionGuard'])->prefix('dts')->group(function  () {
     Route::post('/cancel-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'cancel_document']);
     Route::post('/cancel-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'cancel_documents']);
     Route::post('/revert-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'revert_document']);
-}); 
+});
 
 
 
 //USER ROUTES//
-Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
-    Route::get('/dashboard', [App\Http\Controllers\dts\user\DashboardController::class, 'index']);  
+Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\dts\user\DashboardController::class, 'index']);
     Route::get('/my-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'index']);
     Route::get('/add-document', [App\Http\Controllers\dts\user\AddDocumentController::class, 'index']);
     Route::get('/incoming', [App\Http\Controllers\dts\user\IncomingController::class, 'index']);
@@ -99,14 +102,14 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function  () {
     Route::get('/print-slips', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'print_slips']);
 
     Route::get('/track', function () {
-     $data['title'] = 'Search';
-     return view('dts.users.contents.search.search')->with($data);
+        $data['title'] = 'Search';
+        return view('dts.users.contents.search.search')->with($data);
     });
-}); 
+});
 
 //USER ACTIONS//
-Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function  () {
-    
+Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
+
     //My Documents
     Route::post('/update-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update']);
     Route::post('/delete-my-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'delete']);
@@ -126,71 +129,100 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function  () {
     Route::post('/c-doc', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'cancel_document']);
     //Get Incoming in Receiver
     Route::get('/g-r-i', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'get_receiver_incoming']);
-    
-
-    
-}); 
+});
 
 
 //Receiver ROUTES//
-Route::middleware(['SessionGuard','IsReceiver'])->prefix('dts/receiver')->group(function  () {
+Route::middleware(['SessionGuard', 'IsReceiver'])->prefix('dts/receiver')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\dts\receiver\DashboardController::class, 'index']);
     // Route::get('/pending', [App\Http\Controllers\dts\receiver\PendingController::class, 'index']);
     Route::get('/all-documents', [App\Http\Controllers\dts\receiver\ReceivedDocumentsController::class, 'index']);
     Route::get('/incoming', [App\Http\Controllers\dts\receiver\IncomingController::class, 'index']);
     Route::get('/received', [App\Http\Controllers\dts\receiver\ReceivedController::class, 'index']);
-    
-}); 
+});
 
 
 //USER ACTIONS//
-Route::middleware(['SessionGuard'])->prefix('dts/r')->group(function  () {
-    
+Route::middleware(['SessionGuard'])->prefix('dts/r')->group(function () {
+
     //My Documents
     Route::post('/complete-document', [App\Http\Controllers\dts\receiver\ReceivedController::class, 'complete']);
 
     Route::post('/a-n', [App\Http\Controllers\dts\receiver\IncomingController::class, 'add_note']);
-   
-    
-
-    
-}); 
+});
 
 
+//Auth Watchlisted
+Route::get('/watchlisted', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'new_user_login'])->middleware(['WatchLoginCheck']);
 
-
-//WATCHLISTED ROUTES//
-Route::middleware(['WatchAdminCheck'])->prefix('watchlisted/admin')->group(function  () {
+//WATCHLISTED admin ROUTES//
+Route::middleware(['IsLoggedInCheck', 'WatchAdminCheck'])->prefix('watchlisted/admin')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\watchlisted\admin\DashboardController::class, 'index']);
-    Route::get('/list', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'index']);  
+    Route::get('//to-approve', [App\Http\Controllers\watchlisted\admin\ToApproveController::class, 'index']);
+    Route::get('/list', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'index']);
     Route::get('/restore', [App\Http\Controllers\watchlisted\admin\RestoreListController::class, 'index']);
     Route::get('/add', [App\Http\Controllers\watchlisted\admin\AddWatchController::class, 'index']);
     Route::get('/search', [App\Http\Controllers\watchlisted\admin\SearchController::class, 'index']);
     Route::get('/manage-program', [App\Http\Controllers\watchlisted\admin\ManageProgramController::class, 'index']);
     Route::get('/change-code', [App\Http\Controllers\watchlisted\admin\ChangeSecurityController::class, 'index']);
     Route::get('/view_profile', [App\Http\Controllers\watchlisted\admin\ViewProfileController::class, 'index']);
-}); 
+});
 
-//WATCHLISTED ACTIONS//
-Route::middleware(['WatchAdminCheck'])->prefix('wl')->group(function  () {
 
-    
+
+//WATCHLISTED user ROUTES//
+Route::middleware(['IsLoggedInCheck', 'WatchUserCheck'])->prefix('watchlisted/user')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\watchlisted\user\DashboardController::class, 'index']);
+    Route::get('/approved', [App\Http\Controllers\watchlisted\user\ApprovedListController::class, 'index']);
+    Route::get('/pending', [App\Http\Controllers\watchlisted\user\PendingListController::class, 'index']);
+    Route::get('/add', [App\Http\Controllers\watchlisted\user\AddController::class, 'index']);
+    Route::get('/search', [App\Http\Controllers\watchlisted\user\SearchController::class, 'index']);
+    Route::get('/view_profile', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'index']);
+});
+
+
+
+//USer Actions
+
+Route::middleware(['IsLoggedInCheck', 'WatchUserCheck'])->prefix('wl/user')->group(function () {
+
+    //Records
+    Route::post('/a-p', [App\Http\Controllers\watchlisted\user\AddController::class, 'store']);
+    Route::post('/d-p', [App\Http\Controllers\watchlisted\user\PendingListController::class, 'delete']);
+
+
+    //Records
+    Route::post('/add-record', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'add_record']);
+    Route::post('/update-record', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'update_record']);
+    Route::post('/delete-record', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'delete_record']);
+    Route::post('/s-p-p', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'save_record_program']);
+});
+
+
+
+//WATCHLISTED Admin ACTIONS//
+Route::middleware(['IsLoggedInCheck', 'WatchAdminCheck'])->prefix('wl')->group(function () {
+
+
 
     //Dashboard
-    Route::get('/data-per-barangay', [App\Http\Controllers\watchlisted\admin\DashboardController::class, 'data_per_barangay']); 
+    Route::get('/data-per-barangay', [App\Http\Controllers\watchlisted\admin\DashboardController::class, 'data_per_barangay']);
 
     //Remove List
-    Route::post('/ch-stat', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'change_status']); 
-    Route::post('/delete', [App\Http\Controllers\watchlisted\admin\RestoreListController::class, 'delete']); 
+    Route::post('/ch-stat', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'change_status']);
+    Route::post('/delete', [App\Http\Controllers\watchlisted\admin\RestoreListController::class, 'delete']);
+
+    //Approve
+    Route::post('/app-p', [App\Http\Controllers\watchlisted\admin\ToApproveController::class, 'approve']);
 
     //Add List
-    Route::post('/add', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'store']); 
-    Route::post('/update', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'update_information']); 
+    Route::post('/add', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'store']);
+    Route::post('/update', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'update_information']);
     //Search
-    Route::post('/search-query', [App\Http\Controllers\watchlisted\admin\SearchController::class, 'search']); 
+    Route::post('/search-query', [App\Http\Controllers\watchlisted\admin\SearchController::class, 'search']);
 
     //Programs
-    Route::post('/add-program', [App\Http\Controllers\watchlisted\admin\ManageProgramController::class, 'store']); 
+    Route::post('/add-program', [App\Http\Controllers\watchlisted\admin\ManageProgramController::class, 'store']);
     Route::post('/delete-program', [App\Http\Controllers\watchlisted\admin\ManageProgramController::class, 'delete']);
     Route::post('/update-program', [App\Http\Controllers\watchlisted\admin\ManageProgramController::class, 'update']);
 
@@ -202,12 +234,14 @@ Route::middleware(['WatchAdminCheck'])->prefix('wl')->group(function  () {
 
     //Change Code
     Route::post('/change-code', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'change_code']);
+});
 
-}); 
-
+//DTS
 Route::post('/r-u', [App\Http\Controllers\dts\auth\AuthController::class, 'register_user']);
 Route::post('/v-u', [App\Http\Controllers\dts\auth\AuthController::class, 'verify_user']);
-Route::post('/v-c', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'verify_code']);
-
 Route::get('/dts_logout', [App\Http\Controllers\dts\auth\AuthController::class, 'dts_logout']);
+
+//Watchlisted
+Route::post('/w-v-u', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'verify_user']);
+Route::post('/v-c', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'verify_code']);
 Route::get('/wl_logout', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'wl_logout']);

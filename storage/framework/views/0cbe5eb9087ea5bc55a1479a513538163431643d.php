@@ -20,5 +20,6 @@
 
 <?php echo $__env->make('global_includes.js', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->yieldContent('js'); ?>
+<?php echo $__env->make('global_includes.js_.dts_script', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 </html><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/dts/users/layout/user_master.blade.php ENDPATH**/ ?>

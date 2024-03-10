@@ -76,6 +76,13 @@ class Kernel extends HttpKernel
         'IsReceiver' => \App\Http\Middleware\IsReceiver::class,
         //Watchlisted
         'WatchLoginCheck' => \App\Http\Middleware\WatchLoginCheck::class,
-        'WatchAdminCheck' => \App\Http\Middleware\WatchAdminCheck::class,
+        
+
+        'IsLoggedInCheck' => \App\Http\Middleware\watchlisted\IsLoggedInCheck::class,
+
+        //Is admin
+        'WatchAdminCheck' => \App\Http\Middleware\watchlisted\WatchAdminCheck::class,
+
+        'WatchUserCheck' => \App\Http\Middleware\watchlisted\WatchUserCheck::class,
     ];
 }

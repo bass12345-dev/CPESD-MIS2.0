@@ -31,6 +31,10 @@
          <td>Added</td>
          <td>{{$person_data->created_at}}</td>
       </tr>
+      <tr>
+         <td>Encoded By</td>
+         <td>{{ $person_data->user_first_name.' '.$person_data->user_middle_name.' '.$person_data->user_last_name.' '.$person_data->user_extension }}</td>
+      </tr>
        <tr>
          <td>Status</td>
          <td ><span class="{{$person_data->status == 'active' ? 'bg-danger' : 'bg-success' }} p-2 text-black badge " style="font-size: 17px;">{{ $person_data->status == 'active'? 'Active' : 'Forgiven' }}</span></td>

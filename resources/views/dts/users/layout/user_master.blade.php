@@ -20,5 +20,6 @@
 
 @include('global_includes.js')
 @yield('js')
+@include('global_includes.js_.dts_script')
 
 </html>
