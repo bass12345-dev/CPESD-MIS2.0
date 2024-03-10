@@ -43,7 +43,7 @@ class IncomingController extends Controller
                     'history_id'        => $key->history_id,
                     'remarks'           => $key->remarks,
                     'a'                 => $key->user_type == 'admin' ? true : false,
-                    'note'              => empty($key->note) ? 'Empty Note' : $key->note
+                    'note'              => empty($key->note) ? '' : $key->note
             );
         }
 
@@ -53,7 +53,7 @@ class IncomingController extends Controller
     public function add_note(Request $request){
 
         $document_id    = $request->input('document_id');
-        $note           = $request->input('note');
+        $note           = empty($request->input('note')) ? ' ' : $request->input('note');
 
         $update     = CustomModel::update_item('documents', array('document_id' => $document_id), array('note' => $note));
 

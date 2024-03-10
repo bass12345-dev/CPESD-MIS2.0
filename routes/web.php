@@ -142,7 +142,7 @@ Route::middleware(['SessionGuard', 'IsReceiver'])->prefix('dts/receiver')->group
 });
 
 
-//USER ACTIONS//
+//Receiver ACTIONS//
 Route::middleware(['SessionGuard'])->prefix('dts/r')->group(function () {
 
     //My Documents
