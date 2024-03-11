@@ -196,6 +196,9 @@ Route::middleware(['IsLoggedInCheck', 'WatchUserCheck'])->prefix('wl/user')->gro
     Route::post('/update-record', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'update_record']);
     Route::post('/delete-record', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'delete_record']);
     Route::post('/s-p-p', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'save_record_program']);
+
+    //Search
+    Route::post('/search-query', [App\Http\Controllers\watchlisted\user\SearchController::class, 'search']);
 });
 
 

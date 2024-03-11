@@ -17,7 +17,7 @@ class AuthController extends Controller
 
     public function new_user_login()
     {
-        // return view('maintainance.index');
+        // return view('maintainance.sample');
         return view('watchlisted.auth.new_user_login');
     }
 
