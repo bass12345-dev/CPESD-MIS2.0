@@ -43,7 +43,7 @@ class IncomingController extends Controller
                     'history_id'        => $key->history_id,
                     'remarks'           => $key->remarks,
                     'a'                 => $key->user_type == 'admin' ? true : false,
-                    'note'              => empty($key->note) ? '' : $key->note
+                    'note'              => empty($key->note) ? 'Empty Note' : $key->note
             );
         }
 

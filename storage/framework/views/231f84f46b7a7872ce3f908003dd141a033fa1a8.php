@@ -2,6 +2,7 @@
 <?php $__env->startSection('title', $title); ?>
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('global_includes.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('watchlisted.users.contents.dashboard.sections.count', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
 <?php $__env->stopSection(); ?>

@@ -10,15 +10,15 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('maintainance.index');
-        // return view('watchlisted.auth.code_login');
+        // return view('maintainance.index');
+        return view('watchlisted.auth.code_login');
     }
 
 
     public function new_user_login()
     {
-        return view('maintainance.index');
-        // return view('watchlisted.auth.new_user_login');
+        // return view('maintainance.index');
+        return view('watchlisted.auth.new_user_login');
     }
 
     public function verify_user(Request $request){
