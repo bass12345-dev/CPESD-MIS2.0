@@ -100,10 +100,10 @@ $('#login_form').on('submit', function (e) {
          } else {
 
             alert(data.message)
-
+			location.reload();
          }
       },
-      error: function () {
+      error: function (data) {
 		Swal.close();
 		alert('Something Wrong!')
       }

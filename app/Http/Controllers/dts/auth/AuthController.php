@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Exception;
 use PDF;
 use Symfony\Component\HttpFoundation\IpUtils;
+use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
@@ -73,26 +74,7 @@ class AuthController extends Controller
 
         return response()->json($data);
 
-        // if ($request->input('password') == $request->input('confirm_password')) {
-
-        //     $check = CustomModel::q_get_where('users', array('username' => $items['username']))->count();
-        //     if ($check) {
-        //         $data = array('message' => 'Username is Taken', 'response' => false);
-        //     } else {
-        //         if (strlen($items['password']) >= 5) {
-        //             $add = CustomModel::insert_item('users', $items);
-        //             if ($add) {
-        //                 $data = array('message' => 'Registered Successfully', 'response' => true);
-        //             } else {
-        //                 $data = array('message' => 'Something Wrong', 'response' => false);
-        //             }
-        //         } else {
-        //             $data = array('message' => 'Password is too short', 'response' => false);
-        //         }
-        //     }
-        // } else {
-        //     $data = array('message' => "Password don't match", 'response' => false);
-        // }
+      
      
     }
 
@@ -102,41 +84,83 @@ class AuthController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
-        $user = CustomModel::q_get_where('users', array('username' => $username));
+        $recaptcha_response = $request->input('g-recaptcha-response');
 
-        if ($user->count() > 0) {
+    
 
-            if ($user->get()[0]->user_status == 'active') {
-
-                $check = password_verify($password, $user->get()[0]->password);
-
-                if ($check) {
+        if($recaptcha_response != null) {
 
 
+            $url = "https://www.google.com/recaptcha/api/siteverify";
 
-                    $request->session()->put(
-                        array(
-                            'name'              => $user->get()[0]->first_name,
-                            '_id'               => $user->get()[0]->user_id,
-                            'isLoggedIn'        => true,
-                            'user_type'         => $user->get()[0]->user_type,
-                            'is_receiver'       => $user->get()[0]->is_receiver,
-                            'is_oic'            => $user->get()[0]->is_oic == 'yes' ? true : false
-                        )
-                    );
 
-                    return response()->json(['message' => 'Success.', 'response' => true]);
+            $body = [
+                'secret' => config('services.recaptcha.secret'),
+                'response' => $recaptcha_response,
+                'remoteip' => IpUtils::anonymize($request->ip()) //anonymize the ip to be GDPR compliant. Otherwise just pass the default ip address
+            ];
+    
+            $response = Http::asForm()->post($url, $body);
+    
+            $result = json_decode($response);
+
+        
+        if ($response->successful() && $result->success == true) {  
+
+            $user = CustomModel::q_get_where('users', array('username' => $username));
+
+            if ($user->count() > 0) {
+                
+                $user_row = $user->first();
+    
+                if ($user_row->user_status == 'active') {
+
+                    $check = password_verify($password, $user_row->password);
+    
+                    if ($check) {
+    
+    
+    
+                        $request->session()->put(
+                            array(
+                                'name'              => $user_row->first_name,
+                                '_id'               => $user_row->user_id,
+                                'isLoggedIn'        => true,
+                                'user_type'         => $user_row->user_type,
+                                'is_receiver'       => $user_row->is_receiver,
+                                'is_oic'            => $user_row->is_oic == 'yes' ? true : false
+                            )
+                        );
+    
+                        return response()->json(['message' => 'Success.', 'response' => true]);
+                    } else {
+                        return response()->json(['message' => 'invalid Password.', 'response' => false]);
+                    }
                 } else {
-                    return response()->json(['message' => 'invalid Password.', 'response' => false]);
+                    return response()->json(['message' => 'Please Contact Administrator to activate your Account!!!', 'response' => false]);
                 }
             } else {
-                return response()->json(['message' => 'Please Contact Administrator to activate your Account!!!', 'response' => false]);
+    
+                return response()->json(['message' => 'invalid Username.', 'response' => false]);
             }
+          
         } else {
-
-            return response()->json(['message' => 'invalid Username.', 'response' => false]);
+            return response()->json(['message' => 'Please Complete the Recaptcha Again to proceed.', 'response' => false]);
         }
+
+    }else {
+        return response()->json(['message' => 'Please Complete the Recaptcha to proceed.', 'response' => false]);
     }
+      
+    }
+
+
+    function login($username,$password,$request){
+
+
+
+    }
+
     public function dts_logout(Request $request)
     {
         $request->session()->flush();
