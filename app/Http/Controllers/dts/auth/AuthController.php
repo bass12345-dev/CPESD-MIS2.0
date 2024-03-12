@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Exception;
 use PDF;
+use Symfony\Component\HttpFoundation\IpUtils;
 
 class AuthController extends Controller
 {
@@ -26,7 +27,6 @@ class AuthController extends Controller
 
     public function register_user(Request $request)
     {
-
 
         $password = $request->input('password');
         $confirm_password = $request->input('confirm_password');
@@ -98,7 +98,7 @@ class AuthController extends Controller
 
     public function verify_user(Request $request)
     {
-
+        
         $username = $request->input('username');
         $password = $request->input('password');
 

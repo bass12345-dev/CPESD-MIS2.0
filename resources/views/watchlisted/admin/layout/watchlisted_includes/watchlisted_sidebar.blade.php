@@ -31,7 +31,7 @@
 
 			<li class="sidebar-item <?= $segments[2] == 'restore' ? 'active' : '' ?>">
 				<a class="sidebar-link" href="{{url('/watchlisted/admin/restore')}}">
-					<i class="fas fa-building align-middle"></i> <span class="align-middle">Restore</span>
+					<i class="fa fa-refresh align-middle"></i> <span class="align-middle">Restore</span>
 				</a>
 			</li>
 
@@ -53,11 +53,11 @@
 				</a>
 			</li>
 
-			<li class="sidebar-item <?= $segments[2] == 'change-code' ? 'active' : '' ?>">
+			<!-- <li class="sidebar-item <?= $segments[2] == 'change-code' ? 'active' : '' ?>">
 				<a class="sidebar-link" href="{{url('/watchlisted/admin/change-code')}}">
 					<i class="align-middle" data-feather="key"></i> <span class="align-middle">Change Security Code</span>
 				</a>
-			</li>
+			</li> -->
 
 
 		</ul>

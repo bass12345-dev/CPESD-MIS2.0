@@ -36,6 +36,7 @@
 											<label class="form-label">Password</label>
 											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" autocomplete required />
 										</div>
+										<div class="g-recaptcha mt-4" data-sitekey={{config('services.recaptcha.key')}}></div>
 										
 										<div class="d-grid gap-2 mt-3">
 											<button type="submit" class="btn btn-lg btn-primary">Submit</button>
@@ -67,7 +68,7 @@
 </body>
 
 @include('dts.auth.includes.js')
-
+<script async src="https://www.google.com/recaptcha/api.js"></script>
 <script type="text/javascript">
 
 $('#login_form').on('submit', function (e) {

@@ -37,20 +37,20 @@
 
    <div class="col-sm-4">
       <div class="card">
-            <div class="card-body bg-warning ">
-               <div class="row">
-                  <div class="col mt-0">
-                     <h5 class="card-title text-white">Total Cancelled Documents</h5>
-                  </div>
-                  <div class="col-auto">
-                     <div class="stat text-primary">
-                        <i class="fas fa-file align-middle"></i>
-                     </div>
+         <div class="card-body bg-warning ">
+            <div class="row">
+               <div class="col mt-0">
+                  <h5 class="card-title text-white">Total Cancelled Documents</h5>
+               </div>
+               <div class="col-auto">
+                  <div class="stat text-primary">
+                     <i class="fas fa-file align-middle"></i>
                   </div>
                </div>
-               <h1 class="mt-1 mb-3 text-white">{{$count['cancelled']}}</h1>
             </div>
+            <h1 class="mt-1 mb-3 text-white">{{$count['cancelled']}}</h1>
          </div>
+      </div>
    </div>
 
 </div>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-auto">
                            <div class="stat text-primary">
-                           <i class="fas fa-file align-middle"></i>
+                              <i class="fas fa-file align-middle"></i>
                            </div>
                         </div>
                      </div>
@@ -155,3 +155,4 @@
       </div>
    </div>
 </div>
+

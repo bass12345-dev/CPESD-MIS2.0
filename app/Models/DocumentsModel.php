@@ -140,6 +140,33 @@ class DocumentsModel extends Model
         return $row;
     }
 
+    public static function today_transaction($now){
+
+        $rows = DB::table('documents as documents')
+        ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
+        ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
+        ->select(   //Documents
+                    'documents.created as created',
+                    'documents.tracking_number as tracking_number', 
+                    'documents.document_name as   document_name', 
+                    'documents.document_id as document_id', 
+                    'document_types.type_name as type_name', 
+                    'documents.doc_status as doc_status', 
+                    'documents.u_id as u_id', 
+                    //User
+                    'users.first_name as first_name', 
+                    'users.middle_name as middle_name', 
+                    'users.last_name as last_name', 
+                    'users.extension as extension', 
+                    DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+        ->whereDate('documents.created', '=', $now)
+        ->where('u_id',session('_id'))
+        ->orderBy('documents.document_id', 'desc')->get();
+
+        return $rows;
+
+    }
+
 
     public static function  filter_date_documents($start,$end){
         $rows = DB::table('documents as documents')

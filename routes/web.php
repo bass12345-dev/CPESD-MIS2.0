@@ -236,7 +236,7 @@ Route::middleware(['IsLoggedInCheck', 'WatchAdminCheck'])->prefix('wl')->group(f
     Route::post('/s-p-p', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'save_record_program']);
 
     //Change Code
-    Route::post('/change-code', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'change_code']);
+    // Route::post('/change-code', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'change_code']);
 });
 
 //DTS

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\dts\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
+use App\Models\DocumentsModel;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class DashboardController extends Controller
 {
 
@@ -15,11 +16,13 @@ class DashboardController extends Controller
         $data['title'] = 'User Dashboard';
         $data['count'] = $this->countmydoc_dash();
         return view('dts.users.contents.dashboard.dashboard')->with($data);
+       
     }
 
     public function countmydoc_dash(){
 
         $id = session('_id');
+        $date_now = Carbon::now()->format('Y-m-d');
         $data = array(
 
                 'count_documents'   => CustomModel::q_get_where($this->documents_table,array('u_id' => $id))->count(),
@@ -29,6 +32,7 @@ class DashboardController extends Controller
                 'pending'           => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'pending','u_id'=> session('_id')))->count(),
                 'completed'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'completed','u_id'=> session('_id')))->count(),
                 'cancelled'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'cancelled','u_id'=> session('_id')))->count(),
+                'added_today'         => DocumentsModel::today_transaction($date_now)
         );
 
         return $data;
