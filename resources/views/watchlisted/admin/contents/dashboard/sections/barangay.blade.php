@@ -6,7 +6,7 @@
 		</div>
 		<div class="card-body d-flex w-100" >
 			<div class="align-self-center chart chart-lg">
-				<canvas id="chartjs-dashboard-bar" style="height: 300vh;"></canvas>
+				<canvas id="chartjs-dashboard-bar" style="height: 150px;"></canvas>
 			</div>
 		</div>
 	</div>

@@ -15,6 +15,7 @@ class DashboardController extends Controller
     public function index(){
         $data['title'] = 'User Dashboard';
         $data['count'] = $this->countmydoc_dash();
+        $data['today'] = Carbon::now()->format('M d Y');
         return view('dts.users.contents.dashboard.dashboard')->with($data);
        
     }
@@ -32,7 +33,7 @@ class DashboardController extends Controller
                 'pending'           => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'pending','u_id'=> session('_id')))->count(),
                 'completed'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'completed','u_id'=> session('_id')))->count(),
                 'cancelled'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'cancelled','u_id'=> session('_id')))->count(),
-                'added_today'         => DocumentsModel::today_transaction($date_now)
+                'added_today'         => DocumentsModel::user_added_document_date_now($date_now)
         );
 
         return $data;

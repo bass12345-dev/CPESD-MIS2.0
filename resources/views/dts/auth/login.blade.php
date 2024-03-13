@@ -68,7 +68,7 @@
 </body>
 
 @include('dts.auth.includes.js')
-<script async src="https://www.google.com/recaptcha/api.js"></script>
+
 <script type="text/javascript">
 
 $('#login_form').on('submit', function (e) {

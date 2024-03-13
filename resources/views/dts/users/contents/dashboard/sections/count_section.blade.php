@@ -138,25 +138,27 @@
                <div>
                   <div class="card">
                      <div class="card-header bg-primary text-white">
-                        Added Document Today
+                           Document Added Today - {{$today}}
                      </div>
                      <table class="table">
                         <thead>
                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Tracking Number</th>
-                              <th scope="col">Document Name</th>
-                              <th scope="col">Type</th>
+                              <th class="text-center">#</th>
+                              <th class="text-center">Tracking Number</th>
+                              <th class="text-center">Document Name</th>
+                              <th class="text-center">Type</th>
+                              <th class="text-center">Transaction Type</th>
                            </tr>
                         </thead>
                         <tbody>
                            <?php foreach($count['added_today'] as $row) {
                               $i =1; ?>
                            <tr>
-                              <th scope="row">{{$i++}}</th>
-                              <td>{{$row->tracking_number}}</td>
-                              <td>{{$row->document_name}}</td>
-                              <td>{{$row->type_name}}</td>
+                              <th class="text-center">{{$i++}}</th>
+                              <td class="text-center">{{$row->tracking_number}}</td>
+                              <td class="text-center">{{$row->document_name}}</td>
+                              <td class="text-center">{{$row->type_name}}</td>
+                              <td class="text-center">{{$row->destination_type}}</td>
                            </tr>
                           <?php } ?>
                         </tbody>

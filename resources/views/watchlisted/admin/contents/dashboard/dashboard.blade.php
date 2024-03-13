@@ -19,7 +19,7 @@
 
 			      		// Bar chart
 			new Chart(document.getElementById("chartjs-dashboard-bar"), {
-				type: "horizontalBar",
+				type: "bar",
 				data: {
 					labels: data.label,
 					datasets: [{
