@@ -68,7 +68,7 @@
 </body>
 
 <?php echo $__env->make('dts.auth.includes.js', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<script async src="https://www.google.com/recaptcha/api.js"></script>
+
 <script type="text/javascript">
 
 $('#login_form').on('submit', function (e) {

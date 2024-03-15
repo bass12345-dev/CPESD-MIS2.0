@@ -43,6 +43,7 @@ Route::middleware(['SessionGuard', 'IsAdmin'])->prefix('dts/admin')->group(funct
     Route::get('/final-actions', [App\Http\Controllers\dts\admin\FinalActionsController::class, 'index']);
     Route::get('/manage-users', [App\Http\Controllers\dts\admin\ManageUsersController::class, 'index']);
     Route::get('/manage-staff', [App\Http\Controllers\dts\admin\SetReceiverController::class, 'index']);
+    Route::get('/logged-in-history', [App\Http\Controllers\dts\admin\LoggedInHistoryController::class, 'index']);
     Route::get('/view', [App\Http\Controllers\dts\admin\ViewDocumentController::class, 'index']);
 });
 

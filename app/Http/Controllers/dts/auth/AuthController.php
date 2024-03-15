@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
+    private $log_in_history_table = 'logged_in_history';
     public function index()
     {
         return view('dts.auth.login');
@@ -118,20 +119,9 @@ class AuthController extends Controller
                     $check = password_verify($password, $user_row->password);
     
                     if ($check) {
-    
-    
-    
-                        $request->session()->put(
-                            array(
-                                'name'              => $user_row->first_name,
-                                '_id'               => $user_row->user_id,
-                                'isLoggedIn'        => true,
-                                'user_type'         => $user_row->user_type,
-                                'is_receiver'       => $user_row->is_receiver,
-                                'is_oic'            => $user_row->is_oic == 'yes' ? true : false
-                            )
-                        );
-    
+
+                        $this->set_session($request,$user_row);
+                        $this->store_login_history($user_row);
                         return response()->json(['message' => 'Success.', 'response' => true]);
                     } else {
                         return response()->json(['message' => 'invalid Password.', 'response' => false]);
@@ -155,11 +145,27 @@ class AuthController extends Controller
     }
 
 
-    function login($username,$password,$request){
+    private function store_login_history($user_row){
 
-
-
+            $items = ['web_type'=> 'dts','user_id'=>$user_row->user_id,'logged_in_date'=> Carbon::now()->format('Y-m-d H:i:s') ];
+             CustomModel::insert_item($this->log_in_history_table,$items);
     }
+
+
+    private function set_session($request,$user_row){
+        
+        $request->session()->put(
+            array(
+                'name'              => $user_row->first_name,
+                '_id'               => $user_row->user_id,
+                'isLoggedIn'        => true,
+                'user_type'         => $user_row->user_type,
+                'is_receiver'       => $user_row->is_receiver,
+                'is_oic'            => $user_row->is_oic == 'yes' ? true : false
+            )
+        );
+    }
+
 
     public function dts_logout(Request $request)
     {

@@ -42,5 +42,25 @@ class CustomModel extends Model
     public static function delete_item($table,$where){
         return DB::table($table)->where($where)->delete();
     }
+
+
+    //Login History
+    
+    public static function get_logged_in_history(){
+        $row = DB::table('logged_in_history')
+        ->leftJoin('users', 'users.user_id', '=', 'logged_in_history.user_id')
+        ->select(   //history
+            
+            'logged_in_history.logged_in_date as logged_in_date', 
+            //User
+            'users.first_name as first_name', 
+            'users.middle_name as middle_name', 
+            'users.last_name as last_name', 
+            'users.extension as extension', 
+          )
+        ->where('logged_in_history.web_type','dts')
+        ->get();
+        return $row;
+    }
     
 }

@@ -61,6 +61,13 @@
                 </a>
             </li>
 
+            <li class="sidebar-item <?= $segments[2] == 'logged-in-history' ? 'active' : '' ?>">
+                <a class="sidebar-link" href="<?php echo e(url('/dts/admin/logged-in-history')); ?>">
+                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Logged in History</span>
+                </a>
+            </li>
+            
+
             <!-- <li class="sidebar-item <?= $segments[2] == 'back-up' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="<?php echo e(url('/dts/admin/back-up')); ?>">
                     <i class="align-middle" data-feather="database"></i> <span class="align-middle">Back Up
