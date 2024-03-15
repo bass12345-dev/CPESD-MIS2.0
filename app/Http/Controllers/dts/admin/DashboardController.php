@@ -7,6 +7,7 @@ use App\Models\CustomModel;
 use Illuminate\Http\Request;
 use App\Models\DocumentsModel;
 use Carbon\Carbon;
+use DateTime;
 class DashboardController extends Controller
 {   
     public $document_table          = "documents";
@@ -14,11 +15,13 @@ class DashboardController extends Controller
     public $document_types_table    = "document_types";
     public $users_table             = "users";
     public $final_actions_table = "final_actions";
+    private $logged_in_history = 'logged_in_history';
     public function index()
     {
         $data['title'] = 'Admin Dashboard';
         $data['count'] = $this->count_menu_data();
         $data['today'] = Carbon::now()->format('M d Y');
+        $data['inactive']   =  $this->calculate_inactive_logged();
         return view('dts.admin.contents.dashboard.dashboard')->with($data);
     }
 
@@ -39,5 +42,31 @@ class DashboardController extends Controller
         );
 
         return $data;
+    }
+
+
+    function calculate_inactive_logged(){
+        //get users
+        $users = CustomModel::q_get($this->users_table)->get();
+        //date now
+        $date_now = Carbon::now()->format('Y-m-d H:i:s');
+        //store results
+        $result = array();
+        foreach($users as $row){
+            $query_history =  CustomModel::q_get_where_order($this->logged_in_history, array('user_id' => $row->user_id),'logged_in_history_id','desc');
+            if($query_history->count() > 0){
+                $get_history = $query_history->get()[0];
+                $date_now_              = new DateTime($date_now);
+                $logged_in_date         = new DateTime($get_history->logged_in_date);
+                //Difference Between Two Dayas
+                $interval               = $date_now_->diff($logged_in_date);
+                //Count Days
+                $count_days = $interval->d;
+                $name = $count_days  > 1 ?  array_push($result,$row->first_name.' is '.$count_days.' days Inactive'):  false;
+            }
+            
+        }
+
+        return $result;
     }
 }
