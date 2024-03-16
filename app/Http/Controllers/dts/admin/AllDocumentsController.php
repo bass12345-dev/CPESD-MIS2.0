@@ -306,7 +306,7 @@ class AllDocumentsController extends Controller
 
             $update_receive = DB::table('documents')
                 ->where('tracking_number', $tracking_number)
-                ->update(array('doc_status' => 'completed'));
+                ->update(array('doc_status' => 'completed','completed_on'=> Carbon::now()->format('Y-m-d H:i:s')));
 
             $data = array('message' => 'Completed Succesfully', 'response' => true);
         } else {

@@ -62,8 +62,9 @@ class DocumentsModel extends Model
                     'documents.tracking_number as tracking_number', 
                     'documents.document_name as document_name', 
                     'documents.document_id as document_id', 
+                    'documents.destination_type as destination_type', 
                     //Document Types
-                    'document_types.type_name', 
+                    'document_types.type_name as type_name', 
                     //User
                     'users.first_name as first_name', 
                     'users.middle_name as middle_name', 
@@ -162,6 +163,35 @@ class DocumentsModel extends Model
                     'users.extension as extension', 
                     DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
         ->whereDate('documents.created', '=', $now)
+        ->orderBy('documents.document_id', 'desc')->get();
+
+        return $rows;
+
+    }
+
+
+    public static function completed_document_date_now($now){
+
+        $rows = DB::table('documents as documents')
+        ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
+        ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
+        ->select(   //Documents
+                    'documents.created as created',
+                    'documents.tracking_number as tracking_number', 
+                    'documents.document_name as   document_name', 
+                    'documents.document_id as document_id', 
+                    'document_types.type_name as type_name', 
+                    'documents.doc_status as doc_status', 
+                    'documents.u_id as u_id', 
+                    'documents.destination_type as destination_type',
+                    //User
+                    'users.first_name as first_name', 
+                    'users.middle_name as middle_name', 
+                    'users.last_name as last_name', 
+                    'users.extension as extension', 
+                    DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+        ->whereDate('documents.completed_on', '=', $now)
+        ->where('documents.doc_status','completed')
         ->orderBy('documents.document_id', 'desc')->get();
 
         return $rows;

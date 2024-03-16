@@ -4,56 +4,37 @@
          <div class="row">
             <div class="col-sm-8">
                <div>
-                  <div class="card">
-                     <div class="card-header bg-primary text-white">
-                        Document Added Today - <?php echo e($today); ?>
+               <ul class="nav nav-tabs" role="tablist">
+                     <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0" aria-selected="true"> Added Today</a>
+                     </li>
+                     <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-1" role="tab" aria-controls="simple-tabpanel-1" aria-selected="false">Completed Today</a>
+                     </li>
 
-                     </div>
-                     <table class="table">
-                        <thead>
-                           <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Tracking Number</th>
-                              <th scope="col">Document Name</th>
-                              <th scope="col">Document Type</th>
-                              <th scope="col">Transaction Type</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <?php foreach($count['added_today'] as $row) {
-                              $i =1; ?>
-                           <tr>
-                              <th scope="row"><?php echo e($i++); ?></th>
-                              <td><?php echo e($row->tracking_number); ?></td>
-                              <td><?php echo e($row->document_name); ?></td>
-                              <td><?php echo e($row->type_name); ?></td>
-                              <td><?php echo e($row->destination_type); ?></td>
-                           </tr>
-                          <?php } ?>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-
-            </div>
-
-            
-            <div class="col-sm-4">
-
-            <div>
-                  <div class="card" >
-                     <div class="card-header bg-danger text-white">
-                       Users Logged in Status
-                     </div>
-                     <ul class="list-group list-group-flush">
-                       <?php foreach($inactive as $row): ?>
-                        <li class="list-group-item text-danger"><?php echo e($row); ?></li>
-                       <?php endforeach; ?>
+                     <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-2" role="tab" aria-controls="simple-tabpanel-2" aria-selected="false">Latest Completed</a>
+                     </li>
+                     
                      </ul>
-                  </div>
+                     <div class="tab-content pt-5" id="tab-content">
+                     <div class="tab-pane active" id="simple-tabpanel-0" role="tabpanel" aria-labelledby="simple-tab-0">
+                           <?php echo $__env->make('dts.admin.contents.dashboard.sections.more.added_today', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                     </div>
+                     <div class="tab-pane" id="simple-tabpanel-1" role="tabpanel" aria-labelledby="simple-tab-1">
+                           <?php echo $__env->make('dts.admin.contents.dashboard.sections.more.completed_today', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                     </div>
+                     <div class="tab-pane" id="simple-tabpanel-2" role="tabpanel" aria-labelledby="simple-tab-1">
+                           <?php echo $__env->make('dts.admin.contents.dashboard.sections.more.latest', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                     </div>
+                     </div>
+                
                </div>
 
             </div>
+
+            <?php echo $__env->make('dts.admin.contents.dashboard.sections.more.user_login_status', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            
 
             
          </div>

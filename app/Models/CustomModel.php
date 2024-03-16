@@ -59,6 +59,7 @@ class CustomModel extends Model
             'users.extension as extension', 
           )
         ->where('logged_in_history.web_type','dts')
+        ->orderBy('logged_in_history.logged_in_date', 'desc')
         ->get();
         return $row;
     }
