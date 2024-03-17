@@ -119,7 +119,8 @@ $('#login_form').on('submit', function (e) {
 
          } else {
 
-            alert(data.message)
+			alert(data.message)
+			location.reload();
 
          }
       },

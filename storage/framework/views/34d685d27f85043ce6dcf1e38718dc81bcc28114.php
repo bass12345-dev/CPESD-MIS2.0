@@ -22,7 +22,8 @@
 				type: "bar",
 				data: {
 					labels: data.label,
-					datasets: [{
+					datasets: [
+						{
 						
 						backgroundColor: window.theme.danger,
 						borderColor: window.theme.danger,
@@ -31,7 +32,32 @@
 						data: data.active,
 						barPercentage: .75,
 						categoryPercentage: .5
-					}]
+					},
+
+					{
+						
+						backgroundColor: window.theme.warning,
+						borderColor: window.theme.warning,
+						hoverBackgroundColor: window.theme.warning,
+						hoverBorderColor: window.theme.warning,
+						data: data.to_approved,
+						barPercentage: .75,
+						categoryPercentage: .5
+					},
+
+					{
+						
+						backgroundColor: window.theme.success,
+						borderColor: window.theme.success,
+						hoverBackgroundColor: window.theme.success,
+						hoverBorderColor: window.theme.success,
+						data: data.removed,
+						barPercentage: .75,
+						categoryPercentage: .5
+					}
+					
+
+				]
 				},
 				options: {
 					maintainAspectRatio: false,

@@ -37,6 +37,8 @@ class DashboardController extends Controller
 
 
         $active     = array();
+        $to_approved = array();
+        $removed = array();
         $barangay   = config('app.barangay');
 
         foreach ($barangay as $row) {
@@ -44,11 +46,19 @@ class DashboardController extends Controller
             $count = CustomModel::q_get_where($this->person_table,array('status' => 'active', 'address' => $row))->count();
             array_push($active, $count);
 
+            $count1 = CustomModel::q_get_where($this->person_table,array('status' => 'not-approved', 'address' => $row))->count();
+            array_push($to_approved, $count1);
+
+            $count3 = CustomModel::q_get_where($this->person_table,array('status' => 'inactive', 'address' => $row))->count();
+            array_push($removed, $count3);
+
         }
 
 
         $data['label'] = $barangay;
         $data['active'] = $active;
+        $data['to_approved'] = $to_approved;
+        $data['removed'] = $removed;
 
         return response()->json($data);
     }

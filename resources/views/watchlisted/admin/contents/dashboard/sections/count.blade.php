@@ -3,7 +3,7 @@
       <div class="w-100">
          <div class="row">
             <div class="col-sm-3">
-               <div class="card l-bg-cherry">
+               <div class="card bg-danger">
                   <div class="card-body">
                      <div class="row">
                         <div class="col mt-0">
@@ -20,7 +20,7 @@
                </div>
             </div>
             <div class="col-sm-3">
-               <div class="card bg-danger">
+               <div class="card bg-warning">
                   <div class="card-body">
                      <div class="row">
                         <div class="col mt-0">
@@ -38,7 +38,7 @@
             </div>
 
             <div class="col-sm-3">
-               <div class="card bg-warning">
+               <div class="card bg-success">
                   <div class="card-body">
                      <div class="row">
                         <div class="col mt-0">
