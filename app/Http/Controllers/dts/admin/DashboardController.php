@@ -57,7 +57,7 @@ class DashboardController extends Controller
 
     function calculate_inactive_logged(){
         //get users
-        $users = CustomModel::q_get($this->users_table)->get();
+        $users = CustomModel::q_get_where($this->users_table,array('user_status'=>'active'))->get();
         //store results
         $result = array();
         foreach($users as $row){

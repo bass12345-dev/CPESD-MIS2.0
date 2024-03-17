@@ -41,7 +41,7 @@
                      aria-expanded="false"></i>
                   <ul class="dropdown-menu">
                   <?php echo $button1 ?>
-                  <li class="dropdown-item update-username"  data-id="{{$row->user_id}}">Change Password</li>
+                  <!-- <li class="dropdown-item update-username"  data-id="{{$row->user_id}}">Change Password</li> -->
                   <?php echo $button3 ?>
                   </ul>
                </div>
