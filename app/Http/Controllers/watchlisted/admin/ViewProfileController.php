@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 
 class ViewProfileController extends Controller
 {
-    public $person_table            = 'persons';
-    public $programs_table          = 'programs';
-    public $programs_block_table    = 'program_block';
-    public $records_table           = 'records';
-    public $now;
+    private $person_table            = 'persons';
+    private $programs_table          = 'programs';
+    private $programs_block_table    = 'program_block';
+    private $records_table           = 'records';
+    private $now;
     public function __construct()
     {
         $this->now = new \DateTime();

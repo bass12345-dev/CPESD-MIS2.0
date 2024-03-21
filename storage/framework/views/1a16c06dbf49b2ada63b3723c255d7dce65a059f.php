@@ -37,7 +37,29 @@
       </tr>
        <tr>
          <td>Status</td>
-         <td ><span class="<?php echo e($person_data->status == 'active' ? 'bg-danger' : 'bg-success'); ?> p-2 text-black badge " style="font-size: 17px;"><?php echo e($person_data->status == 'active'? 'Active' : 'Forgiven'); ?></span></td>
+         <?php 
+               $status  = '';
+               $bg      = '';
+
+               switch ($person_data->status) {
+                  case 'not-approved':
+                     $status = 'To Approved';
+                     $bg = 'bg-warning';
+                     break;
+                  case 'inactive':
+                     $status = 'Removed';
+                     $bg = 'bg-success';
+                     break;
+                  case 'active': 
+                     $status = 'Active';
+                     $bg = 'bg-danger';
+                  
+                  default:
+                    
+                     break;
+               }
+         ?>
+         <td ><span class="<?php echo e($bg); ?> p-2 text-black badge " style="font-size: 17px;"><?php echo e($status); ?></span></td>
       </tr>
       
 

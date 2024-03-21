@@ -176,6 +176,7 @@ Route::middleware(['IsLoggedInCheck', 'WatchUserCheck'])->prefix('watchlisted/us
     Route::get('/dashboard', [App\Http\Controllers\watchlisted\user\DashboardController::class, 'index']);
     Route::get('/approved', [App\Http\Controllers\watchlisted\user\ApprovedListController::class, 'index']);
     Route::get('/pending', [App\Http\Controllers\watchlisted\user\PendingListController::class, 'index']);
+    Route::get('/removed', [App\Http\Controllers\watchlisted\user\RemovedController::class, 'index']);
     Route::get('/add', [App\Http\Controllers\watchlisted\user\AddController::class, 'index']);
     Route::get('/search', [App\Http\Controllers\watchlisted\user\SearchController::class, 'index']);
     Route::get('/view_profile', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'index']);

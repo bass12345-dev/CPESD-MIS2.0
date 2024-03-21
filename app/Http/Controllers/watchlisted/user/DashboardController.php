@@ -13,7 +13,8 @@ class DashboardController extends Controller
         
         $data['title']                      = 'User Watchlisted Dashboard';
         $data['count_approved']             = CustomModel::q_get_where($this->person_table,array('status' => 'active','added_by'=>session('watch_id')))->count();
-        $data['count_pending']              = CustomModel::q_get_where($this->person_table,array('status' => 'inactive','added_by'=>session('watch_id')))->count();
+        $data['count_pending']              = CustomModel::q_get_where($this->person_table,array('status' => 'not-approved','added_by'=>session('watch_id')))->count();
+        $data['removed']                    = CustomModel::q_get_where($this->person_table,array('status' => 'inactive','added_by'=>session('watch_id')))->count();
         $data['barangay']                   = $this->per_barangay();
         return view('watchlisted.users.contents.dashboard.dashboard')->with($data);
        

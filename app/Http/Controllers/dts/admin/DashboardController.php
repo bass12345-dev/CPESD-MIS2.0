@@ -10,12 +10,12 @@ use Carbon\Carbon;
 use DateTime;
 class DashboardController extends Controller
 {   
-    public $document_table          = "documents";
-    public $office_table            = "offices";
-    public $document_types_table    = "document_types";
-    public $users_table             = "users";
-    public $final_actions_table     = "final_actions";
-    private $logged_in_history      = 'logged_in_history';
+    protected $document_table          = "documents";
+    protected $office_table            = "offices";
+    protected $document_types_table    = "document_types";
+    protected $users_table             = "users";
+    protected $final_actions_table     = "final_actions";
+    protected $logged_in_history      = 'logged_in_history';
     
     private $date_now;
 
