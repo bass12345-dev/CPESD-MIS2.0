@@ -151,8 +151,8 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <?php foreach($count['added_today'] as $row) {
-                              $i =1; ?>
+                           <?php $i =1; foreach($count['added_today'] as $row) {
+                               ?>
                            <tr>
                               <th class="text-center">{{$i++}}</th>
                               <td class="text-center">{{$row->tracking_number}}</td>

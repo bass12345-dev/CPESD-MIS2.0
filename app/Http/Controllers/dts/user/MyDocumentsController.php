@@ -138,9 +138,11 @@ class MyDocumentsController extends Controller
         );
 
 
+        $count = CustomModel::q_get_where($this->documents_table,array('tracking_number' => $items['tracking_number']))->count();
 
+        if($count == 0) {
 
-
+        
         $add = CustomModel::insert_item($this->documents_table, $items);
 
         if ($add) {
@@ -203,6 +205,10 @@ class MyDocumentsController extends Controller
         } else {
 
             $data = array('message' => 'Something Wrong', 'response' => false);
+        }
+
+        }else {
+            $data = array('message' => 'Tracking Number is Existing', 'response' => false);
         }
 
         return response()->json($data);
