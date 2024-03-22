@@ -65,7 +65,7 @@
                <?php echo $row['tracking_number']; ?>
             </td>
             <td>
-               <a href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}" data-toggle="tooltip" data-placement="top" title="View <?php echo $row['tracking_number'] ?>"><?php echo $row['document_name']; ?></a> 
+               <a href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}" class="{{$row['error']}}" data-toggle="tooltip" data-placement="top" title="View <?php echo $row['tracking_number'] ?>"><?php echo $row['document_name']; ?></a> 
             </td>
             <td>
                <?php echo $row['type_name']; ?>

@@ -11,10 +11,10 @@ use Carbon\Carbon;
 
 class AllDocumentsController extends Controller
 {
-    public $document_type_table     = "document_types";
-    public $history_table           = "history";
-    public $documents_table         = "documents";
-    public $final_actions_table     = "final_actions";
+    private $document_type_table     = "document_types";
+    private $history_table           = "history";
+    private $documents_table         = "documents";
+    private $final_actions_table     = "final_actions";
 
     public $now;
     public function __construct()
@@ -33,20 +33,20 @@ class AllDocumentsController extends Controller
         $data['final_actions']      = $this->get_final_actions();
         $row_documents              = null;
         
-        if(isset($_GET['from']) && isset($_GET['to']) && isset($_GET['type']) && isset($_GET['status'])){
+        // if(isset($_GET['from']) && isset($_GET['to']) && isset($_GET['type']) && isset($_GET['status'])){
             
-            $start   = date('Y-m-d',strtotime($_GET['from']));
-            $end     = date('Y-m-d',strtotime($_GET['to']));
-            $type   = $_GET['type'];
-            $status = $_GET['status'];
+        //     $start   = date('Y-m-d',strtotime($_GET['from']));
+        //     $end     = date('Y-m-d',strtotime($_GET['to']));
+        //     $type   = $_GET['type'];
+        //     $status = $_GET['status'];
 
-            $row_documents = $this->get_all_documents($start,$end,$type,$status);
+        //     $row_documents = $this->get_all_documents($start,$end,$type,$status);
           
             
-        }else {
+        // }else {
 
             $row_documents = $this->get_all_documents($start_date="",$end_date="",$type_id="",$status1="");
-        }
+        // }
         
       
         $data['documents']      = $row_documents;
@@ -59,17 +59,20 @@ class AllDocumentsController extends Controller
     {
         $rows = '';
 
-        if(!$start && !$end && !$type && !$status){
-            $rows = DocumentsModel::get_all_documents();
-        }else if($start != '' && $end != '' && $type == 0 && $status == 0){
-            $rows = DocumentsModel::filter_date_documents($start,$end);
-        }else if($start != null && $end != null && $type != 0 && $status == 0){
-            $rows = DocumentsModel::filter_date_documents_where_doc_type($start,$end,$type);
-        }else if($start != null && $end != null && $type == 0 && $status != 0){
-            $rows = DocumentsModel::filter_date_documents_where_doc_status($start,$end,$status);
-        }else if($start != null && $end != null && $type != 0 && $status != 0){
-            $rows = DocumentsModel::filter_date_documents_where_doc_status_and_doc_type($start,$end,$status,$type);
-        }
+        // if(!$start && !$end && !$type && !$status){
+        //     $rows = DocumentsModel::get_all_documents();
+        // }else if($start != '' && $end != '' && $type == 0 && $status == 0){
+        //     $rows = DocumentsModel::filter_date_documents($start,$end);
+        // }else if($start != null && $end != null && $type != 0 && $status == 0){
+        //     $rows = DocumentsModel::filter_date_documents_where_doc_type($start,$end,$type);
+        // }else if($start != null && $end != null && $type == 0 && $status != 0){
+        //     $rows = DocumentsModel::filter_date_documents_where_doc_status($start,$end,$status);
+        // }else if($start != null && $end != null && $type != 0 && $status != 0){
+        //     $rows = DocumentsModel::filter_date_documents_where_doc_status_and_doc_type($start,$end,$status,$type);
+        // }
+
+
+        $rows = DocumentsModel::get_all_documents();
 
       
         $data = [];
@@ -79,7 +82,9 @@ class AllDocumentsController extends Controller
             $where                          = array('t_number' => $key->tracking_number);
             $delete_button                  = CustomModel::q_get_where($this->history_table, $where)->count() > 1 ? true : false;
             $status                         = $this->check_status($key->doc_status);
-            $history                        = CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0];
+            $history                        = CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc');
+            $is_existing                     = $history->count();
+            // $history                        = CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0];
 
 
             $data[] = array(
@@ -90,7 +95,9 @@ class AllDocumentsController extends Controller
                 'created'                   => date('M d Y - h:i a', strtotime($key->created)),
                 'a'                         => $delete_button,
                 'document_id'               => $key->document_id,
-                'history_id'                => $history->history_id,
+                'history_id'                => $is_existing == 0 ? '' : CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0]->history_id,
+                // 'history_id'                => $history->history_id,
+                'error'                     => $is_existing == 0 ? 'text-danger' : '',
                 'user_id'                   => $key->u_id,
                 'created_by'                => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
                 'is'                        => $status,
