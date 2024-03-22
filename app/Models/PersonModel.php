@@ -23,9 +23,9 @@ class PersonModel extends Model
             ->select(
                 'persons.person_id as person_id',
                 'persons.first_name as first_name',
-                'persons.first_name as middle_name',
-                'persons.first_name as last_name',
-                'persons.first_name as extension',
+                'persons.middle_name as middle_name',
+                'persons.last_name as last_name',
+                'persons.extension as extension',
 
                 'persons.phone_number as phone_number',
                 'persons.email_address as email_address',
@@ -53,9 +53,9 @@ class PersonModel extends Model
             ->select(
                 'persons.person_id as person_id',
                 'persons.first_name as first_name',
-                'persons.first_name as middle_name',
-                'persons.first_name as last_name',
-                'persons.first_name as extension',
+                'persons.middle_name as middle_name',
+                'persons.last_name as last_name',
+                'persons.extension as extension',
 
                 'persons.phone_number as phone_number',
                 'persons.email_address as email_address',
