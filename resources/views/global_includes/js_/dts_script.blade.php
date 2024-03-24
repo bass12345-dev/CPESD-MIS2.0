@@ -1,3 +1,4 @@
+
 <script>
     
     $('a#view_remarks').on('click', function() {
@@ -39,6 +40,9 @@
         });
 
     }
+
+
+    
 
     // A $( document ).ready() block.
     $(document).ready(function() {
