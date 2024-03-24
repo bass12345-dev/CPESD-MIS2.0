@@ -86,7 +86,31 @@ function search_name_result(url,form){
             {
                data: null,
                render: function (data, type, row) {
-                  return row.status == 'active' ? '<span class="badge bg-danger">Active</span>' : '<span class="badge bg-success">Forgiven</span>';
+
+                  let status = '';
+                  let bg = '';
+
+                  switch (row.status) {
+                     case 'not-approved':
+                        status = 'To Approved';
+                        bg = 'bg-warning';
+                        break;
+                     case 'inactive' : 
+                        status = 'Removed';
+                        bg = 'bg-success';
+                        break;
+                     
+                     case 'active' : 
+                        status = 'Active';
+                        bg = 'bg-danger';
+                        break;
+                  
+                     default:
+                        break;
+                  }
+
+                  return '<span class="badge '+bg+'">'+status+'</span>';
+                  // return row.status == 'active' ? '<span class="badge bg-danger">Active</span>' : '<span class="badge bg-success">Forgiven</span>';
                }
             }, 
             

@@ -19,7 +19,6 @@
         var id = $('input[name=id]').val();
         var url = '/dts/us/update-profile';
         update_item(id,form,url);
-
         $('#update_user_form').find('button').attr('disabled', true);
     });
 
