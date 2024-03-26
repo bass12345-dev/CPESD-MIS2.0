@@ -34,8 +34,11 @@ class AddController extends Controller
             'created_at'                => Carbon::now()->format('Y-m-d H:i:s') ,
             'status'                    => 'not-approved',
             'age'                       => $request->input('age'),
+            'gender'                    => $request->input('gender'),
             'added_by'                  => session('watch_id')
         );
+
+        
         $add = CustomModel::insert_item($this->person_table, $items);
         if ($add) {
             $data = array('id' => DB::getPdo()->lastInsertId(), 'message' => 'Added Successfully', 'response' => true);

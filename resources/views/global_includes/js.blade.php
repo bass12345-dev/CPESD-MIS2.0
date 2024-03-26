@@ -25,9 +25,9 @@ function reload_page() {
 }
 
 
-$(document).ready(function() {
-    $('#strong_pass_modal').modal('show')
-});
+//$(document).ready(function() {
+    //$('#strong_pass_modal').modal('show')
+//});
 
 $(document).on('click','span.show_con', function(){
    var input = $('input.password');

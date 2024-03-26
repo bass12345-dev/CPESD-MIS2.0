@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
 	<div class="sidebar-content js-simplebar">
 		<a class="sidebar-brand" href="">
-			<span class="align-middle">PESO Watchlisted Administrator</span>
+			<span class="align-middle">PESO Watchlisted User</span>
 		</a>
 
 		<?php $segments = Request::segments(); ?>

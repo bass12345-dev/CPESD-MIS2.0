@@ -21,7 +21,7 @@
              <div class="row">
                 <div class="form-group col-md-6 mb-3">
                    <label for="inputEmail4">Middle Name<span class="text-danger">*</span></label>
-                   <input type="text" name="middleName'" class="form-control">
+                   <input type="text" name="middleName" class="form-control">
                 </div>
                 <div class="form-group col-md-6 mb-3">
                    <label for="inputEmail4">Extension</label>
@@ -51,6 +51,16 @@
                 <label for="inputEmail4">Age</label>
                 <input type="number" name="age" class="form-control">
              </div>
+
+             <div class="form-group col-md-12 mb-3">
+                <label for="inputEmail4">Gender</label>
+                <select class="form-control" required>
+                     <option value="" selected>Select Gender</option>
+                     <option value="male">Male</option>
+                     <option value="female">Female</option>
+                </select>
+             </div>
+             
 
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>

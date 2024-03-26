@@ -42,6 +42,7 @@ class ActiveListController extends Controller
             'created_at'                => Carbon::now()->format('Y-m-d H:i:s') ,
             'status'                    => 'active',
             'age'                       => $request->input('age'),
+            'gender'                    => $request->input('gender'),
             'added_by'                  => session('watch_id')
         );
         $add = CustomModel::insert_item($this->person_table, $items);
@@ -65,7 +66,8 @@ class ActiveListController extends Controller
             'phone_number'      => $request->input('phoneNumber'),
             'address'           => $request->input('address'),
             'email_address'     => $request->input('emailAddress'),
-            'age'               => $request->input('age')
+            'age'               => $request->input('age'),
+            'gender'            => $request->input('gender'),
         );
         $id = $request->input('person_id');
         $update = CustomModel::update_item($this->person_table, array('person_id' => $id), $items);

@@ -61,6 +61,7 @@ class PersonModel extends Model
                 'persons.email_address as email_address',
                 'persons.address as address',
                 'persons.age as age',
+                'persons.gender as gender',
                 'persons.created_at as created_at',
                 'persons.status as status',
 

@@ -28,8 +28,17 @@
          <td class="age"><?php echo e($person_data->age); ?></td>
       </tr>
       <tr>
+         <td>Gender</td>
+         <td class="gender"><?php
+                  
+                  $display_gender = $person_data->gender;
+                  echo strtoupper($display_gender[0]).''.ltrim($display_gender,$display_gender[0]);
+                  
+         ?></td>
+      </tr>
+      <tr>
          <td>Added</td>
-         <td><?php echo e($person_data->created_at); ?></td>
+         <td><?php echo e(date('M d Y', strtotime($person_data->created_at))); ?></td>
       </tr>
       <tr>
          <td>Encoded By</td>

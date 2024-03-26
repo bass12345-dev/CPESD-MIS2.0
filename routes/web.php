@@ -188,10 +188,13 @@ Route::middleware(['IsLoggedInCheck', 'WatchUserCheck'])->prefix('watchlisted/us
 
 Route::middleware(['IsLoggedInCheck', 'WatchUserCheck'])->prefix('wl/user')->group(function () {
 
+
     //Records
     Route::post('/a-p', [App\Http\Controllers\watchlisted\user\AddController::class, 'store']);
     Route::post('/d-p', [App\Http\Controllers\watchlisted\user\PendingListController::class, 'delete']);
 
+
+    Route::post('/update', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'update_information']);
 
     //Records
     Route::post('/add-record', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'add_record']);
