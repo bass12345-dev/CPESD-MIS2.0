@@ -240,6 +240,8 @@ Route::middleware(['IsLoggedInCheck', 'WatchAdminCheck'])->prefix('wl')->group(f
     Route::post('/delete-record', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'delete_record']);
     Route::post('/s-p-p', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'save_record_program']);
 
+
+    Route::post('/l-c-g-a', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'count_gender_active_chart']);
     //Change Code
     // Route::post('/change-code', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'change_code']);
 });

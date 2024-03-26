@@ -7,4 +7,6 @@
 			</div>
 		</div>
 	</div>
-</div><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/watchlisted/admin/contents/dashboard/sections/barangay.blade.php ENDPATH**/ ?>
+</div>
+
+<?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/watchlisted/admin/contents/dashboard/sections/barangay.blade.php ENDPATH**/ ?>

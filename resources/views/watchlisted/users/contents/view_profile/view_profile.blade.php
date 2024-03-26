@@ -6,9 +6,7 @@
 	<div class="col-md-7">
 		@include('watchlisted.users.contents.view_profile.sections.info')
 	</div>
-	<div class="col-md-5">
-		@include('watchlisted.users.contents.view_profile.sections.program_block')
-	</div>
+	
 </div>
 
 

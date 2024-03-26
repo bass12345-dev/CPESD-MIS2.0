@@ -4,6 +4,7 @@ namespace App\Http\Controllers\watchlisted\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
+use App\Models\PersonModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -172,5 +173,33 @@ class ActiveListController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function count_gender_active_chart(Request $request){
+
+        $year                               =   $request->input('year');
+        $months                             = array();
+        $male                               = array();
+        $female                             = array();
+
+        for ($m = 1; $m <= 12; $m++) {
+
+            $total_male = PersonModel::count_gender_by_month($m,$year,'male');
+            array_push($male, $total_male);
+
+
+            $total_female            = PersonModel::count_gender_by_month($m,$year,'female');
+            array_push($female, $total_female);
+           
+            $month                          =  date('M', mktime(0, 0, 0, $m, 1));
+            array_push($months, $month);
+        }
+
+        $data['label']                      = $months;
+        $data['male']                       = $male;
+        $data['female']                     = $female;
+        return response()->json($data);
+
+       
     }
 }

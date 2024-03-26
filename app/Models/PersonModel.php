@@ -75,4 +75,16 @@ class PersonModel extends Model
             ->where('persons.person_id',$id)
             ->orderBy('persons.first_name', 'asc')->first();
     }
+
+    
+    public static function count_gender_by_month($month,$year,$gender){
+        
+        return DB::table('persons')
+        ->where('gender',$gender)
+        ->where('persons.status','active')
+        ->whereMonth('persons.created_at',$month)
+        ->whereYear('created_at',$year)
+        ->count();
+
+    }
 }
