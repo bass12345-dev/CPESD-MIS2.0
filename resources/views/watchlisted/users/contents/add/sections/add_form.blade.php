@@ -54,7 +54,7 @@
 
              <div class="form-group col-md-12 mb-3">
                 <label for="inputEmail4">Gender</label>
-                <select class="form-control" required>
+                <select class="form-control" name="gender" required>
                      <option value="" selected>Select Gender</option>
                      <option value="male">Male</option>
                      <option value="female">Female</option>

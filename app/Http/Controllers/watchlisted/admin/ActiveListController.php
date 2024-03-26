@@ -10,11 +10,11 @@ use Carbon\Carbon;
 
 class ActiveListController extends Controller
 {
-    public $person_table            = 'persons';
-    public $records_table           = 'records';
+    private $person_table            = 'persons';
+    private $records_table           = 'records';
 
-    public $programs_block_table    = 'program_block';
-    public $now;
+    private $programs_block_table    = 'program_block';
+    private $now;
     public function __construct()
     {
         $this->now = new \DateTime();

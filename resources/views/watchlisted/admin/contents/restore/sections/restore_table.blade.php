@@ -16,7 +16,7 @@
                   <th>Address</th>
                   <th>Email</th>
                   <th>Phone Number</th>
-                  <th>Actions</th>
+                 
                </tr>
             </thead>
             <tbody>
@@ -27,15 +27,12 @@
                      <tr>
                         <td><input type="checkbox" name="person_id" value="{{$row->person_id}}"></td>
                         <td><?php echo $i++; ?></td>
-                        <td><?php echo $row->first_name; ?></td>
+                        <td><a href="{{url('/watchlisted/admin/view_profile?id='.$row->person_id)}}" ><?php echo $row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension; ?></a></td>
                         <td><?php echo $row->age; ?></td>
                         <td><?php echo $row->address; ?></td>
                         <td><?php echo $row->email_address; ?></td>
                         <td><?php echo $row->phone_number; ?></td>
-                        <td> 
-                           <a href="{{url('/watchlisted/admin/view_profile?id='.$row->person_id)}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>   
-                            
-                        </td>
+                        
                        
                      </tr>
                 <?php endforeach; ?>    

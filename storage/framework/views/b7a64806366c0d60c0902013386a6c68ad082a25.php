@@ -17,7 +17,7 @@
                                     <div class="input-group flex-nowrap" style="height: 40px;">
 
                                         <input type="password" class="form-control password" name="old_password" placeholder="Old Password"
-                                            aria-label="Username" aria-describedby="addon-wrapping" required>
+                                            aria-label="Username" aria-describedby="addon-wrapping" required autocomplete="">
                                         <span class="input-group-text show_con">
                                           <i class="fas fa-eye show_icon"></i>
                                           <i class="fas fa-eye-slash hidden_icon" hidden ></i>
@@ -29,7 +29,7 @@
                                     <div class="input-group flex-nowrap" style="height: 40px;">
 
                                         <input type="password" class="form-control password1" name="new_password" placeholder="New Password"
-                                            aria-label="Username" aria-describedby="addon-wrapping" required>
+                                            aria-label="Username" aria-describedby="addon-wrapping" required autocomplete="">
                                         <span class="input-group-text show_con1">
                                           <i class="fas fa-eye show_icon1"></i>
                                           <i class="fas fa-eye-slash hidden_icon1" hidden ></i>
@@ -42,7 +42,7 @@
                                     <div class="input-group flex-nowrap" style="height: 40px;">
 
                                         <input type="password" class="form-control password2" name="confirm_new_password" placeholder="Confirm New Password"
-                                            aria-label="Username" aria-describedby="addon-wrapping" required>
+                                            aria-label="Username" aria-describedby="addon-wrapping" required autocomplete="">
                                         <span class="input-group-text show_con2">
                                           <i class="fas fa-eye show_icon2"></i>
                                           <i class="fas fa-eye-slash hidden_icon2" hidden ></i>

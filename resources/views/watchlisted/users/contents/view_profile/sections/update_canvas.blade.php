@@ -56,6 +56,19 @@
                 <input type="number" name="age" value="{{$person_data->age}}" class="form-control">
              </div>
 
+             <div class="form-group col-md-12 mb-3">
+                <label for="inputEmail4">Gender</label>
+                <select class="form-control" name="gender" required>
+                <?php
+                     $selected_male = $person_data->gender == 'male' ? 'selected' : '';
+                     $selected_female = $person_data->gender == 'female' ? 'selected' : '';
+                  ?>
+                     <option value="" >Select Gender</option>
+                     <option value="male" {{$selected_male}}>Male</option>
+                     <option value="female" {{$selected_female}}>Female</option>
+                </select>
+             </div>
+
           </div>
           <button type="submit" class="btn btn-primary">Update</button>
        </form>

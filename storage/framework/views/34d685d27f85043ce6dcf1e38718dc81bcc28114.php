@@ -24,7 +24,7 @@
 					labels: data.label,
 					datasets: [
 						{
-						
+						label: 'Active',
 						backgroundColor: window.theme.danger,
 						borderColor: window.theme.danger,
 						hoverBackgroundColor: window.theme.danger,
@@ -35,7 +35,7 @@
 					},
 
 					{
-						
+						label: 'To Approved',
 						backgroundColor: window.theme.warning,
 						borderColor: window.theme.warning,
 						hoverBackgroundColor: window.theme.warning,
@@ -46,7 +46,7 @@
 					},
 
 					{
-						
+						label: 'Removed',
 						backgroundColor: window.theme.success,
 						borderColor: window.theme.success,
 						hoverBackgroundColor: window.theme.success,
@@ -60,10 +60,19 @@
 				]
 				},
 				options: {
-					maintainAspectRatio: false,
+					maintainAspectRatio: true,
 					legend: {
-						display: false
-					},
+                     position: 'top',
+                     labels: {
+                        padding: 10,
+                        fontColor: '#007bff',
+                     }
+                  },
+				  responsive: true,
+				  title: {
+                     display: true,
+                     text: 'Per Barangay Data'
+                  },
 					scales: {
 						yAxes: [{
 							gridLines: {
@@ -72,7 +81,8 @@
 							stacked: false,
 							ticks: {
 								stepSize: 20
-							}
+							},
+							beginAtZero: true
 						}],
 						xAxes: [{
 							stacked: true,

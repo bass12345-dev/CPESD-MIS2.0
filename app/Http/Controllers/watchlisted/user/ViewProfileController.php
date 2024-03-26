@@ -41,7 +41,8 @@ class ViewProfileController extends Controller
             'phone_number'      => $request->input('phoneNumber'),
             'address'           => $request->input('address'),
             'email_address'     => $request->input('emailAddress'),
-            'age'               => $request->input('age')
+            'age'               => $request->input('age'),
+            'gender'            => $request->input('gender')
         );
 
        
