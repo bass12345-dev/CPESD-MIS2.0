@@ -4,19 +4,20 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Please update your <span
-                        class="text-danger">PASSWORD</span> to proceed..</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Please update your 
+                    <span class="text-danger">PASSWORD</span> to proceed....
+                </h5>
             </div>
             <div class="modal-body">
                 <div class="card">
                     <div class="card-body">
                         <div class="m-sm-3">
-                            <form id="update_password1">
+                            <form id="update_password_strong">
                                  <div class="row mb-2">
                                     <div class="input-group flex-nowrap" style="height: 40px;">
 
-                                        <input type="password" class="form-control password" placeholder="Old Password"
-                                            aria-label="Username" aria-describedby="addon-wrapping" >
+                                        <input type="password" class="form-control password" name="old_password" placeholder="Old Password"
+                                            aria-label="Username" aria-describedby="addon-wrapping" required>
                                         <span class="input-group-text show_con">
                                           <i class="fas fa-eye show_icon"></i>
                                           <i class="fas fa-eye-slash hidden_icon" hidden ></i>
@@ -27,11 +28,24 @@
                                 <div class="row mb-2">
                                     <div class="input-group flex-nowrap" style="height: 40px;">
 
-                                        <input type="password" class="form-control password1" placeholder="Old Password"
-                                            aria-label="Username" aria-describedby="addon-wrapping" >
+                                        <input type="password" class="form-control password1" name="new_password" placeholder="New Password"
+                                            aria-label="Username" aria-describedby="addon-wrapping" required>
                                         <span class="input-group-text show_con1">
                                           <i class="fas fa-eye show_icon1"></i>
                                           <i class="fas fa-eye-slash hidden_icon1" hidden ></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="row mb-2">
+                                    <div class="input-group flex-nowrap" style="height: 40px;">
+
+                                        <input type="password" class="form-control password2" name="confirm_new_password" placeholder="Confirm New Password"
+                                            aria-label="Username" aria-describedby="addon-wrapping" required>
+                                        <span class="input-group-text show_con2">
+                                          <i class="fas fa-eye show_icon2"></i>
+                                          <i class="fas fa-eye-slash hidden_icon2" hidden ></i>
                                         </span>
                                     </div>
                                 </div>

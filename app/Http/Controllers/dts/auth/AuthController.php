@@ -166,6 +166,28 @@ class AuthController extends Controller
         );
     }
 
+    public function strong_password(Request $request){
+        
+        $old_password = $request->input('old_password'); 
+        $new_password = $request->input('old_password'); 
+        $confirm_new_password = $request->input('old_password'); 
+
+        if($new_password === $confirm_new_password){
+           $data = array(
+                    
+                    'response' => true
+           );
+        }else{
+            $data = array(
+                    'response' => false
+            );
+        }
+        
+        return response()->json($data);
+
+        
+    }
+
 
     public function dts_logout(Request $request)
     {

@@ -1,6 +1,4 @@
-
 <script>
-    
     $('a#view_remarks').on('click', function() {
         $('#staticBackdrop').modal('show');
         $('.remarks').text($(this).data('remarks'));
@@ -42,10 +40,13 @@
     }
 
 
-    
+
 
     // A $( document ).ready() block.
     $(document).ready(function() {
         get_receiver_incoming();
     });
+
+
+    
 </script><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/global_includes/js_/dts_script.blade.php ENDPATH**/ ?>

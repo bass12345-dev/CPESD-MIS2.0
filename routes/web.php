@@ -245,6 +245,7 @@ Route::middleware(['IsLoggedInCheck', 'WatchAdminCheck'])->prefix('wl')->group(f
 Route::post('/r-u', [App\Http\Controllers\dts\auth\AuthController::class, 'register_user']);
 Route::post('/v-u', [App\Http\Controllers\dts\auth\AuthController::class, 'verify_user']);
 Route::get('/dts_logout', [App\Http\Controllers\dts\auth\AuthController::class, 'dts_logout']);
+Route::post('/up-pas', [App\Http\Controllers\dts\auth\AuthController::class, 'strong_password']);
 
 //Watchlisted
 Route::post('/w-v-u', [App\Http\Controllers\watchlisted\auth\AuthController::class, 'verify_user']);

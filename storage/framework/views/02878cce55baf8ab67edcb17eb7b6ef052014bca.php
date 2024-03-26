@@ -24,10 +24,10 @@ function reload_page() {
     location.reload();
 }
 
+
 $(document).ready(function() {
     $('#strong_pass_modal').modal('show')
 });
-
 
 $(document).on('click','span.show_con', function(){
    var input = $('input.password');
@@ -36,13 +36,19 @@ $(document).on('click','span.show_con', function(){
    show_icon(input,show_eye,hide_eye)
 });
 
-$(document).on('click','span.show_con1', function(){
-   var input = $('input.password1');
-   var show_eye = $('i.show_icon1');
-   var hide_eye = $('i.hidden_icon1');
-   show_icon(input,show_eye,hide_eye)
-})
+$(document).on('click', 'span.show_con1', function() {
+        var input = $('input.password1');
+        var show_eye = $('i.show_icon1');
+        var hide_eye = $('i.hidden_icon1');
+        show_icon(input, show_eye, hide_eye)
+    });
 
+    $(document).on('click', 'span.show_con2', function() {
+        var input = $('input.password2');
+        var show_eye = $('i.show_icon2');
+        var hide_eye = $('i.hidden_icon2');
+        show_icon(input, show_eye, hide_eye)
+    });
   
 
 function show_icon(input,show_eye,hide_eye){
@@ -59,6 +65,47 @@ function show_icon(input,show_eye,hide_eye){
 }
 
 
+$('form#update_password_strong').on('submit', function(e){
+    e.preventDefault();
+    Swal.showLoading();
+    var url = '/up-pas';    
+    $.ajax({
+        url: base_url + url,
+        method: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        },
+        success: function(data) {
+            Swal.close();
+            if (data.response) {
+
+                
+                // Swal.fire({
+                //     position: "top-end",
+                //     icon: "success",
+                //     title: data.message,
+                //     showConfirmButton: false,
+                //     timer: 1500
+                // });
+
+            } else {
+
+                alert(data.message)
+
+            }
+
+            setTimeout(reload_page, 2000)
+        },
+        error: function() {
+            alert('something Wrong');
+            
+        }
+
+    });
+    
+});
 
 
 
