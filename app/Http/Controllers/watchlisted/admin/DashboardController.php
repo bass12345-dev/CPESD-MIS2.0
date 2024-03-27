@@ -11,7 +11,8 @@ class DashboardController extends Controller
     public $person_table = 'persons';
     public $programs_table = "programs";
     public function index(){
-        $data['title']          = 'Watchlisted Dashboard';
+        $data['title']                  = 'Watchlisted Dashboard';
+        $data['gender_title']           = 'Count Active By Gender';
         $data['count']   = $this->count_all();
 
        
@@ -24,11 +25,15 @@ class DashboardController extends Controller
         $inactive       = CustomModel::q_get_where($this->person_table,array('status' => 'inactive'))->count();
         $to_approve     = CustomModel::q_get_where($this->person_table,array('status' => 'not-approved'))->count();
         $programs       = CustomModel::q_get($this->programs_table)->count();
+        $active_male    = CustomModel::q_get_where($this->person_table,array('status' => 'active','gender'=> 'male'))->count();
+        $active_female    = CustomModel::q_get_where($this->person_table,array('status' => 'active','gender'=> 'female'))->count();
         $data         = array(
                                 'active'            => $active , 
                                 'inactive'          => $inactive,
                                 'to_approve'        => $to_approve,
-                                'programs'          => $programs
+                                'programs'          => $programs,
+                                'total_male'        => $active_male ,
+                                'total_female'        => $active_female 
                             );
         return  $data;
     }

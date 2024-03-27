@@ -1,4 +1,7 @@
 <hr>
+<div class="mb-3">
+   <h1 class="h3 d-inline align-middle"><?php echo e($gender_title); ?></h1>
+</div>
 <div class="row">
    <div class="col-xl-12 col-xxl-12 d-flex">
       <div class="w-100">
@@ -16,7 +19,7 @@
                            </div>
                         </div>
                      </div>
-                     <h1 class="mt-1 mb-3 text-white"><?php echo e($count['active']); ?></h1>
+                     <h1 class="mt-1 mb-3 text-white"><?php echo e($count['total_male']); ?></h1>
                   </div>
                </div>
             </div>
@@ -33,7 +36,7 @@
                            </div>
                         </div>
                      </div>
-                     <h1 class="mt-1 mb-3 text-white"><?php echo e($count['to_approve']); ?></h1>
+                     <h1 class="mt-1 mb-3 text-white"><?php echo e($count['total_female']); ?></h1>
                   </div>
                </div>
             </div>
