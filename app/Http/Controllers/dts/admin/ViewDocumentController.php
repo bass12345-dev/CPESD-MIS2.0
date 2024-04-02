@@ -55,6 +55,13 @@ class ViewDocumentController extends Controller
     }
 
 
+    public function search(){
+        $search = trim($_GET['q']);
+        $docs = DocumentsModel::Adminsearch($search);
+        return response()->json($docs);
+    }
+
+
 
     public static function get_history($tn)
     {

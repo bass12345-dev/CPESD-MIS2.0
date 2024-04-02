@@ -91,6 +91,11 @@
         cursor: pointer;
     }
 
+    .highlight {
+         background-color: yellow;
+         font-weight: bold;
+      }
+
 
 
 

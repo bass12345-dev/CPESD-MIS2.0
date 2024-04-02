@@ -1,9 +1,9 @@
-@extends('dts.users.layout.user_master')
+@extends('dts.admin.layout.admin_master')
 @section('title', $title)
 @section('content')
 
 @include('global_includes.title')
-@include('dts.users.contents.search.sections.search_form')
+@include('dts.admin.contents.search.sections.search_form')
 <div class="row d-none result-card">
   <div class="col-md-12 col-12">
     <div class="card flex-fill p-3">
@@ -30,7 +30,7 @@
     $('.result').html('');
 
     $.ajax({
-      url: base_url + '/dts/us/search?q=' + q,
+      url: base_url + '/dts/search?q=' + q,
       method: 'GET',
       dataType: 'json',
       headers: {
@@ -39,13 +39,13 @@
       success: function(data) {
         $('.result-card').removeClass('d-none');
         if (data.length > 0) {
-          
+          console.log(data)
           let arr = [];
           $('.card-title').text(data.length + ' Result/s');
           simpleTemplating(data);
           $('.pagination-container').pagination({
             dataSource: data,
-            pageSize:100,
+            pageSize: 100,
             showPageNumbers: true,
             showNavigator: true,
             showSizeChanger: true,
@@ -79,6 +79,7 @@
       <details open>\
           <summary ><a href="'+ base_url + '/dts/user/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
           <p>'+item.document_description+'</p>\
+          <span class="text-primary"><b>Remarks</b></span><p>'+item.remarks+'</p>\
         </details>\
       </li>';
     });

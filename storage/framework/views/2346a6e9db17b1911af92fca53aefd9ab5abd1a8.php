@@ -58,7 +58,7 @@
 
             <li class="sidebar-item <?= $segments[2] == 'track' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="<?php echo e(url('/dts/user/track')); ?>">
-                    <i class="align-middle" data-feather="search"></i> <span class="align-middle">Track Documents</span>
+                    <i class="align-middle" data-feather="search"></i> <span class="align-middle">Search Documents</span>
                 </a>
             </li>
 

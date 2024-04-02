@@ -41,16 +41,24 @@
         if (data.length > 0) {
           
           let arr = [];
+          $('.card-title').text(data.length + ' Result/s');
           simpleTemplating(data);
           $('.pagination-container').pagination({
             dataSource: data,
+            pageSize: 100,
+            showPageNumbers: true,
+            showNavigator: true,
+            showSizeChanger: true,
             callback: function(data, pagination) {
-              var html = simpleTemplating(data);
+              var html = simpleTemplating(data,q);
               $('.data-container').html(html);
             }
-          })
+          });
+          $('.pagination-container').removeClass('d-none');
+          highlightText(q);
         } else {
           $('.data-container').html('<div class="row d-flex justify-content-center text-danger" style="font-size: 20px;">Sorry! We can\'t find the document you\'re looking for</div>');
+          $('.pagination-container').addClass('d-none');
         }
       },
       error: function() {
@@ -66,11 +74,40 @@
   function simpleTemplating(data) {
     var html = '<ul class="list-group">';
     $.each(data, function(index, item) {
-      $('.card-title').text(index + 1 + ' Result/s');
-      html += '<li class="list-group-item"><a href="'+ base_url + '/dts/user/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></li>';
+      
+      html += '<li class="list-group-item">\
+      <details open>\
+          <summary ><a href="'+ base_url + '/dts/user/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
+          <p>'+item.document_description+'</p>\
+        </details>\
+      </li>';
     });
     html += '</ul>';
     return html;
+  }
+
+  function highlightText(query){
+    
+
+    const searchValue = query.trim();
+    const contentElement = document.querySelector('.data-container');
+
+    
+    if (searchValue !== '') {
+         const content = contentElement.innerHTML;
+         const highlightedContent = content.replace(
+            new RegExp(searchValue, 'gi'),
+            '<span class="highlight">$&</span>'
+         );
+         contentElement.innerHTML = highlightedContent;
+        
+        
+         } else {
+            contentElement.innerHTML = contentElement.textContent;
+           
+            
+         }
+
   }
 
 

@@ -3,7 +3,7 @@
     <form id="search_form">
       <div class="search">
         <i class="fa fa-search"></i>
-        <input type="text" class="form-control" placeholder="Enter Document Title" name="search" required>
+        <input type="text" class="form-control" placeholder="Enter Document Title,Description" name="search" required>
         <button type="submit" class="btn btn-primary">Search</button>
       </div>
     </form>

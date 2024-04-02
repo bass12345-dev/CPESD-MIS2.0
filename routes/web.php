@@ -45,6 +45,10 @@ Route::middleware(['SessionGuard', 'IsAdmin'])->prefix('dts/admin')->group(funct
     Route::get('/manage-staff', [App\Http\Controllers\dts\admin\SetReceiverController::class, 'index']);
     Route::get('/logged-in-history', [App\Http\Controllers\dts\admin\LoggedInHistoryController::class, 'index']);
     Route::get('/view', [App\Http\Controllers\dts\admin\ViewDocumentController::class, 'index']);
+    Route::get('/track', function () {
+        $data['title'] = 'Admin Search';
+        return view('dts.admin.contents.search.search')->with($data);
+    });
 });
 
 
@@ -81,6 +85,9 @@ Route::middleware(['SessionGuard'])->prefix('dts')->group(function () {
     Route::post('/cancel-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'cancel_document']);
     Route::post('/cancel-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'cancel_documents']);
     Route::post('/revert-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'revert_document']);
+
+    //Search query
+    Route::get('/search', [App\Http\Controllers\dts\admin\ViewDocumentController::class, 'search']);
 });
 
 
@@ -103,7 +110,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function () {
     Route::get('/print-slips', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'print_slips']);
 
     Route::get('/track', function () {
-        $data['title'] = 'Search';
+        $data['title'] = 'User Search';
         return view('dts.users.contents.search.search')->with($data);
     });
 });
