@@ -18,6 +18,7 @@ var base_url = '<?php echo url('/'); ?>';
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://pagination.js.org/dist/2.6.0/pagination.js"></script>
 
 <script>
 function reload_page() {

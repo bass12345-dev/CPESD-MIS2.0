@@ -15,7 +15,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
+<link rel="stylesheet" type="text/css" href="https://pagination.js.org/dist/2.6.0/pagination.css">
 <style type="text/css">
     i {
         font-size: 20px;

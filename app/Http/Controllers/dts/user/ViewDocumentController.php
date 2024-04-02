@@ -10,8 +10,8 @@ use DateTime;
 
 class ViewDocumentController extends Controller
 {
-    public $documents_table = "documents";
-    public $history_table = "history";
+    private $documents_table = "documents";
+    private $history_table = "history";
     public function index()
     {
 
@@ -59,6 +59,13 @@ class ViewDocumentController extends Controller
         );
 
         return $data;
+    }
+
+    public function search(){
+        
+        $search = trim($_GET['q']);
+        $docs = DocumentsModel::search($search);
+        return response()->json($docs);
     }
 
 

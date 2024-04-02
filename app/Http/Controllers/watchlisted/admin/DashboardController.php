@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public $person_table = 'persons';
-    public $programs_table = "programs";
+    private $person_table = 'persons';
+    private $programs_table = "programs";
     public function index(){
         $data['title']                  = 'Watchlisted Dashboard';
         $data['gender_title']           = 'Count Active By Gender';

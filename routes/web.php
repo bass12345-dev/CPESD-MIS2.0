@@ -130,6 +130,9 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     Route::post('/c-doc', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'cancel_document']);
     //Get Incoming in Receiver
     Route::get('/g-r-i', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'get_receiver_incoming']);
+    
+    //Search query
+    Route::get('/search', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'search']);
 });
 
 
