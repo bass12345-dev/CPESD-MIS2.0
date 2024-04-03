@@ -77,7 +77,7 @@
       
       html += '<li class="list-group-item">\
       <details open>\
-          <summary ><a href="'+ base_url + '/dts/user/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
+          <summary ><a href="'+ base_url + '/dts/admin/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
           <p>'+item.document_description+'</p>\
           <span class="text-primary"><b>Remarks</b></span><p>'+item.remarks+'</p>\
         </details>\
@@ -87,29 +87,7 @@
     return html;
   }
 
-  function highlightText(query){
-    
 
-    const searchValue = query.trim();
-    const contentElement = document.querySelector('.data-container');
-
-    
-    if (searchValue !== '') {
-         const content = contentElement.innerHTML;
-         const highlightedContent = content.replace(
-            new RegExp(searchValue, 'gi'),
-            '<span class="highlight">$&</span>'
-         );
-         contentElement.innerHTML = highlightedContent;
-        
-        
-         } else {
-            contentElement.innerHTML = contentElement.textContent;
-           
-            
-         }
-
-  }
 
 
 </script>

@@ -9,7 +9,9 @@ use App\Models\CustomModel;
 
 class ReceivedController extends Controller
 {   
-    public $user_table = "users";
+    private $user_table = "users";
+    private  $history_table        = "history";
+    private  $documents_table      = 'documents';
     public function index(){
         $data['title']              = 'Received Documents';
         $data['user_data']          = CustomModel::q_get_where($this->user_table,array('user_id' => session('_id')))->first();
@@ -45,6 +47,36 @@ class ReceivedController extends Controller
 
         return $data;
 
+
+    }
+
+    public function received_error(Request $request){
+       
+        $history_id = $request->input('history_id');
+        $tracking_number = $request->input('tracking_number');
+        
+
+        $items  = array(
+
+            'status'            => 'torec',
+            'received_status'   => NULL,
+            'received_date'     => NULL
+        );
+
+        $check_cancelled    = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tracking_number, 'doc_status' => 'cancelled'))->count();
+
+        if ($check_cancelled < 1) {
+
+            $update_receive = CustomModel::update_item($this->history_table, array('history_id' => $history_id), $items);
+            if ($update_receive) {
+                $data = array('message' => 'Success','id'=>$history_id,'tracking_number' => $tracking_number, 'response' => true);
+            } else {
+                $data = array('message' => 'Something Wrong', 'response' => false);
+            }
+        } else {
+            $data = array('message' => 'This Document is cancelled', 'response' => false);
+        }
+        return response()->json($data);
 
     }
 }

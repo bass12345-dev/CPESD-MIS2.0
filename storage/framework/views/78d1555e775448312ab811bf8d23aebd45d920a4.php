@@ -54,6 +54,7 @@
       var encoded_by       =     $(this).data('encoded-by');
       var destination      =     $(this).data('destination');
       var description      =     $(this).data('description');
+      var origin      =     $(this).data('origin');
 
       $('#print_slip_modal').find('.document_name').text(name);
       $('#print_slip_modal').find('.print_tracking_number').text(track);
@@ -62,7 +63,7 @@
       $('#print_slip_modal').find('.encoded_by').text(encoded_by);
       $('#print_slip_modal').find('.type').text(destination);
       $('#print_slip_modal').find('.description').text(description);
-
+      $('#print_slip_modal').find('.origin').text(origin);
       $('#print_slip_modal').modal('show');
 
      

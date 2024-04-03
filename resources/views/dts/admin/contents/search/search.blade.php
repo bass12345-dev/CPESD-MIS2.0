@@ -7,7 +7,9 @@
 <div class="row d-none result-card">
   <div class="col-md-12 col-12">
     <div class="card flex-fill p-3">
+    <div class="loading"></div>
       <div class="card-header">
+      
         <h5 class="card-title text-danger mb-0"></h5>
       </div>
       <div class="data-container"></div>
@@ -36,8 +38,12 @@
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
       },
+      beforeSend : function(){
+          $('.loading').html('<h2>Searching.... Please Wait</h2>')
+      },
       success: function(data) {
         $('.result-card').removeClass('d-none');
+        $('.loading').html('');
         if (data.length > 0) {
           console.log(data)
           let arr = [];
@@ -63,7 +69,7 @@
       },
       error: function() {
         alert('something Wrong');
-        // location.reload();
+        location.reload();
       }
 
     });
@@ -77,7 +83,7 @@
       
       html += '<li class="list-group-item">\
       <details open>\
-          <summary ><a href="'+ base_url + '/dts/user/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
+          <summary ><a href="'+ base_url + '/dts/admin/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
           <p>'+item.document_description+'</p>\
           <span class="text-primary"><b>Remarks</b></span><p>'+item.remarks+'</p>\
         </details>\
@@ -87,29 +93,7 @@
     return html;
   }
 
-  function highlightText(query){
-    
 
-    const searchValue = query.trim();
-    const contentElement = document.querySelector('.data-container');
-
-    
-    if (searchValue !== '') {
-         const content = contentElement.innerHTML;
-         const highlightedContent = content.replace(
-            new RegExp(searchValue, 'gi'),
-            '<span class="highlight">$&</span>'
-         );
-         contentElement.innerHTML = highlightedContent;
-        
-        
-         } else {
-            contentElement.innerHTML = contentElement.textContent;
-           
-            
-         }
-
-  }
 
 
 </script>

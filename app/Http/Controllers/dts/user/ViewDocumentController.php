@@ -62,7 +62,7 @@ class ViewDocumentController extends Controller
     }
 
     public function search(){
-        
+       
         $search = trim($_GET['q']);
         $docs = DocumentsModel::search($search);
         return response()->json($docs);

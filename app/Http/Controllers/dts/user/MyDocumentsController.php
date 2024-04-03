@@ -15,12 +15,12 @@ use PDF;
 
 class MyDocumentsController extends Controller
 {
-    public  $history_table        = "history";
-    public  $document_types_table        = "document_types";
-    public  $documents_table      = 'documents';
-    public  $users_table          = "users";
-    public  $final_actions_table = "final_actions";
-    public  $now;
+    private  $history_table        = "history";
+    private  $document_types_table        = "document_types";
+    private  $documents_table      = 'documents';
+    private  $users_table          = "users";
+    private  $final_actions_table = "final_actions";
+    private  $now;
     
     public function __construct()
     {
@@ -90,7 +90,8 @@ class MyDocumentsController extends Controller
                 'doc_status'                   => $key->doc_status,
                 'name'                         => $key->name,
                 'document_type_name'           => $key->type_name,
-                'encoded_by'                   => $key->first_name.' '. $key->middle_name.' '. $key->last_name.' '. $key->extension
+                'encoded_by'                   => $key->first_name.' '. $key->middle_name.' '. $key->last_name.' '. $key->extension,
+                'origin'                       => $key->origin == NULL ? '-' : $key->origin
             );
         }
         return $data;
@@ -135,6 +136,7 @@ class MyDocumentsController extends Controller
             'created'                           => Carbon::now()->format('Y-m-d H:i:s'),
             'doc_status'                        => 'pending',
             'destination_type'                  => $request->input('type'),
+            'origin'                            => $request->input('origin'),
         );
 
 

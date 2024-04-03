@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dts\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\dts\user\MyDocumentsController;
 use App\Models\CustomModel;
 use App\Models\DocumentsModel;
 use Illuminate\Http\Request;
@@ -36,16 +37,16 @@ class ViewDocumentController extends Controller
 
         $data = array(
 
-            'document_name'             => $row->document_name,
-            'tracking_number'           => $row->tracking_number,
-            'encoded_by'                => $row->first_name . ' ' . $row->middle_name . ' ' . $row->last_name . ' ' . $row->extension,
-            'office'                    => $row->office,
-            'document_type'             => $row->type_name,
-            'type_id'                   => $row->type_id,
-            'description'               => $row->document_description,
-            'qr'                        => env('APP_URL') . '/storage/app/img/qr-code/' . $row->tracking_number . '.png',
-            'is'                        => CustomModel::q_get_where($this->history_table, array('t_number' => $row->tracking_number, 'status' => 'completed'))->count() == 1 ? true : false,
-
+            'document_name'         => $row->document_name,
+            'tracking_number'       => $row->tracking_number,
+            'encoded_by'            => $row->first_name . ' ' . $row->middle_name . ' ' . $row->last_name . ' ' . $row->extension,
+            'office'                => $row->office,
+            'document_type'         => $row->type_name,
+            'type_id'               => $row->type_id,
+            'description'           => $row->document_description,
+            'qr'                    => env('APP_URL') . '/storage/app/img/qr-code/' . $row->tracking_number . '.png',
+            'status'                => MyDocumentsController::check_status($row->doc_status) ,
+            'destination_type'      => $row->destination_type
 
 
 
@@ -56,6 +57,7 @@ class ViewDocumentController extends Controller
 
 
     public function search(){
+       
         $search = trim($_GET['q']);
         $docs = DocumentsModel::Adminsearch($search);
         return response()->json($docs);

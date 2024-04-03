@@ -161,18 +161,18 @@
                             <td colspan="3" height="40" style="border: 1px solid #000;">
 
                                 <label style="font-size:13px;font-weight:bold;">Document Name : </label> <span style="font-size:13px;" class="document_name"></span><br>
-                                <label style="font-size:13px;font-weight:bold;">Document No : </label> <span style="font-size:13px;" class="print_tracking_number">'.$tracking_number.'</span><br>
-                                <label style="font-size:13px;font-weight:bold;">Document Type : </label> <span style="font-size:13px;" class="document_type">'.$type.'</span><br>
-                                <label style="font-size:13px;font-weight:bold;">Date Received : </label> <span style="font-size:13px;" class="created">'.$created.'</span><br>
+                                <label style="font-size:13px;font-weight:bold;">Document No : </label> <span style="font-size:13px;" class="print_tracking_number"></span><br>
+                                <label style="font-size:13px;font-weight:bold;">Document Type : </label> <span style="font-size:13px;" class="document_type"></span><br>
+                                <label style="font-size:13px;font-weight:bold;">Date Received : </label> <span style="font-size:13px;" class="created"></span><br>
 
                             </td>
 
                             <td colspan="1" height="40" style="border: 1px solid #000;">
 
                                 <div style="margin-bottom: 50px;">
-                                    <label style="font-size:13px;font-weight:bold;">Encoded By : </label> <span style="font-size:13px;" class="encoded_by">'.$name.'</span><br>
-                                    <label style="font-size:13px;font-weight:bold;">Type : </label> <span style="font-size:13px;" class="type">'.$name.'</span>
-
+                                    <label style="font-size:13px;font-weight:bold;">Encoded By : </label> <span style="font-size:13px;" class="encoded_by"></span><br>
+                                    <label style="font-size:13px;font-weight:bold;">Type : </label> <span style="font-size:13px;" class="type"></span></br>
+                                    <label style="font-size:13px;font-weight:bold;">Origin : </label> <span style="font-size:13px;" class="origin"></span>
                                 </div>
                             </td>
 

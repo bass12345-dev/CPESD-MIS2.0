@@ -55,14 +55,15 @@
                           <li><a class="dropdown-item remove_document" href="javascript:;" data-id="'.$row['document_id'].'" data-track="'.$row['tracking_number'].'"  >Remove</a></li>';
                         } ?>
                      <li><a class="dropdown-item print_button" 
-                        data-id="<?php echo $row['document_id']  ?>" 
-                        data-track="<?php echo $row['tracking_number']  ?>" 
-                        data-name="<?php echo $row['document_name']  ?>" 
-                        data-type="<?php echo $row['document_type_name']  ?>" 
-                        data-description="<?php echo $row['description']  ?>" 
-                        data-destination="<?php echo $row['destination_type']  ?>" 
-                        data-received = "<?php echo $row['created']; ?>"
-                        data-encoded-by = "<?php echo  $row['encoded_by']; ?>"
+                        data-id              ="<?php echo $row['document_id']  ?>" 
+                        data-track           ="<?php echo $row['tracking_number']  ?>" 
+                        data-name            ="<?php echo $row['document_name']  ?>" 
+                        data-type            ="<?php echo $row['document_type_name']  ?>" 
+                        data-description     ="<?php echo $row['description']  ?>" 
+                        data-destination     ="<?php echo $row['destination_type']  ?>" 
+                        data-received        ="<?php echo $row['created']; ?>"
+                        data-encoded-by      ="<?php echo  $row['encoded_by']; ?>"
+                        data-origin          ="<?php echo  $row['origin']; ?>"
                         href="javascript:;" >Print Tracking Slip</a></li>
                   </ul>
                </div>

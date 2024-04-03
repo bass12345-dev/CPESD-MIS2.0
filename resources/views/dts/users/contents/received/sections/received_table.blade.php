@@ -28,6 +28,7 @@
                      <ul class="dropdown-menu">
 
                         <li><a class="dropdown-item" id="forward_icon" href="#" data-history-id="{{$row['history_id']}}" data-tracking-number="{{$row['tracking_number']}}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Forward</a></li>
+                        <li><a class="dropdown-item text-danger" id="received_error" href="javascript:;" data-tracking-number="{{$row['tracking_number']}}" data-history-id="{{$row['history_id']}}" >Received Error</a></li>
                      </ul>
                   </div>
                </td>

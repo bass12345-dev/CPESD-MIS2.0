@@ -49,7 +49,8 @@
                <td colspan="1" >
                   <div style="margin-bottom: 40px;">
                      <label >Encoded By : </label> <span><?php echo e($row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension); ?></span><br>
-                     <label >Type : </label> <span><?php echo e($row->destination_type); ?></span>
+                     <label >Type : </label> <span><?php echo e($row->destination_type); ?></span><br>
+                     <label >Origin : </label> <span><?php echo e($row->origin); ?></span><br>
                   </div>
                </td>
             </tr>

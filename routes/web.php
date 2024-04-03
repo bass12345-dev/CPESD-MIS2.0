@@ -140,6 +140,9 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     
     //Search query
     Route::get('/search', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'search']);
+
+    //Received Error
+    Route::post('/r-e', [App\Http\Controllers\dts\user\ReceivedController::class, 'received_error']);
 });
 
 

@@ -7,9 +7,11 @@
 <div class="row d-none result-card">
   <div class="col-md-12 col-12">
     <div class="card flex-fill p-3">
+    <div class="loading"></div>
       <div class="card-header">
         <h5 class="card-title text-danger mb-0"></h5>
       </div>
+     
       <div class="data-container"></div>
       <div class="pagination-container mt-3"></div>
     </div>
@@ -28,7 +30,7 @@
     var q = $('input[name=search]').val();
     $('.result-card').addClass('d-none')
     $('.result').html('');
-
+    
     $.ajax({
       url: base_url + '/dts/us/search?q=' + q,
       method: 'GET',
@@ -36,8 +38,12 @@
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
       },
+      beforeSend : function(){
+          $('.loading').html('<h2>Searching.... Please Wait</h2>')
+      },
       success: function(data) {
         $('.result-card').removeClass('d-none');
+        $('.loading').html('');
         if (data.length > 0) {
           
           let arr = [];
@@ -63,7 +69,7 @@
       },
       error: function() {
         alert('something Wrong');
-        // location.reload();
+        location.reload();
       }
 
     });
@@ -86,29 +92,6 @@
     return html;
   }
 
-  function highlightText(query){
-    
-
-    const searchValue = query.trim();
-    const contentElement = document.querySelector('.data-container');
-
-    
-    if (searchValue !== '') {
-         const content = contentElement.innerHTML;
-         const highlightedContent = content.replace(
-            new RegExp(searchValue, 'gi'),
-            '<span class="highlight">$&</span>'
-         );
-         contentElement.innerHTML = highlightedContent;
-        
-        
-         } else {
-            contentElement.innerHTML = contentElement.textContent;
-           
-            
-         }
-
-  }
 
 
 </script>

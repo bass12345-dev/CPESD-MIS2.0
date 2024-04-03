@@ -103,7 +103,8 @@ class DocumentsModel extends Model
         ->where('document_id', $id)
         ->leftJoin('document_types', 'document_types.type_id', '=', 'documents.doc_type')
         ->leftJoin('users', 'users.user_id', '=', 'documents.u_id')
-        ->leftJoin('offices', 'offices.office_id', '=', 'documents.offi_id')
+        // ->leftJoin('offices', 'offices.office_id', '=', 'documents.offi_id')
+        ->leftJoin('offices as offices', 'offices.office_id', '=', 'documents.origin')
         ->select(   //Documents
             'documents.created as document_created',
             'documents.tracking_number as tracking_number', 
@@ -119,6 +120,8 @@ class DocumentsModel extends Model
             'users.middle_name as middle_name', 
             'users.last_name as last_name', 
             'users.extension as extension', 
+            //Origin
+            'offices.office as origin',
             DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
         ->first();
         return $row;
@@ -308,6 +311,7 @@ class DocumentsModel extends Model
         $rows = DB::table('documents as documents')
         ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
         ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
+        ->leftJoin('offices as offices', 'offices.office_id', '=', 'documents.origin')
         ->select(   'documents.created as d_created', 
                     'documents.doc_status as doc_status',
                     'documents.tracking_number as tracking_number', 
@@ -321,6 +325,9 @@ class DocumentsModel extends Model
                     'users.middle_name as middle_name', 
                     'users.last_name as last_name', 
                     'users.extension as extension',
+
+                    'offices.office as origin',
+
                     DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name")
                     )
         ->where('u_id', session('_id'))

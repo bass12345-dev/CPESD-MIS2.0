@@ -134,6 +134,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+function highlightText(query){
+    
+
+    const searchValue = query.trim();
+    const contentElement = document.querySelector('.data-container');
+
+    
+    if (searchValue !== '') {
+         const content = contentElement.innerHTML;
+         const highlightedContent = content.replace(
+            new RegExp(searchValue, 'gi'),
+            '<span class="highlight">$&</span>'
+         );
+         contentElement.innerHTML = highlightedContent;
+        
+        
+         } else {
+            contentElement.innerHTML = contentElement.textContent;
+           
+            
+         }
+
+  }
+
+
+
+
 
 function add_item(data, url) {
     Swal.showLoading();

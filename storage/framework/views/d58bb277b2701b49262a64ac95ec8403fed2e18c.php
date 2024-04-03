@@ -16,6 +16,20 @@
                   </div>
 
                   <div class="form-group col-md-12 mb-3">
+                     <label for="inputEmail4">Origin</label>
+                     <select class="form-control" name="origin" required>
+                        <option value="">Select Office Origin</option>
+                        <?php
+                           foreach ($offices as $row) :
+                          
+                              echo "<option value='".$row->office_id."' >".$row->office."</option>";
+                              # code...
+                           endforeach;
+                         ?>
+                     </select>      
+                  </div>
+
+                  <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Document Type</label>
                      <select class="form-control" name="document_type" required>
                         <option value="">Select Document Type</option>

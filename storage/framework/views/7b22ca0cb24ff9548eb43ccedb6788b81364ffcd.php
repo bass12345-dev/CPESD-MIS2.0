@@ -21,7 +21,7 @@ $('a.received_document').on('click', function(){
    var t = $(this).data('track');
    Swal.fire({
      title: "Are you sure?",
-     text: 'Click "RECEIVE BUTTON" if the document is on your table',
+     text: 'Click "RECEIVE BUTTON" if the document is on your table | DOCUMENT NO. #'+t,
      icon: "warning",
      showCancelButton: true,
      confirmButtonColor: "#3085d6",

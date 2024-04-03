@@ -5,36 +5,36 @@
    <table class="table table-hover table-striped " style="width: 100%; ">
       <tr>
          <td>Document Name</td>
-         <td class="text-start">{{$doc_data['document_name']}}</td>
+         <td class="text-start"><?php echo e($doc_data['document_name']); ?></td>
       </tr>
       <tr>
          <td>Tracking Number</td>
-         <td>{{$doc_data['tracking_number']}}</td>
+         <td><?php echo e($doc_data['tracking_number']); ?></td>
       </tr>
       <tr>
          <td>Encoded/Added By</td>
-         <td>{{$doc_data['encoded_by']}}</td>
+         <td><?php echo e($doc_data['encoded_by']); ?></td>
       </tr>
       <tr>
          <td>Office</td>
-         <td>{{$doc_data['office']}}</td>
+         <td><?php echo e($doc_data['office']); ?></td>
       </tr>
 
       <tr>
          <td>Document Type</td>
-         <td>{{$doc_data['document_type']}}</td>
+         <td><?php echo e($doc_data['document_type']); ?></td>
       </tr>
       <tr>
          <td>Description</td>
-         <td>{{$doc_data['description']}}</td>
+         <td><?php echo e($doc_data['description']); ?></td>
       </tr>
       <tr>
          <td>Type</td>
-         <td>{{$doc_data['destination_type']}}</td>
+         <td><?php echo e($doc_data['destination_type']); ?></td>
       </tr>
       <tr>
          <td>Qr Code</td>
-         <td><img src="{{$doc_data['qr']}}"></td>
+         <td><img src="<?php echo e($doc_data['qr']); ?>"></td>
       </tr>
       <tr>
          <td>Status</td>
@@ -44,4 +44,4 @@
 
    </table>
 
-</div>
+</div><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/dts/admin/contents/view/sections/document_information.blade.php ENDPATH**/ ?>
