@@ -16,7 +16,7 @@
                    foreach ($actions as $row) :?>
          <tr>
             <td><?php echo e($row->action_name); ?></td>
-            <td><?php echo e($row->created); ?></td>
+            <td class=""> <?php echo date('M d Y',strtotime($row->created)) ?> </td>
             <td>
                <div class="btn-group dropstart">
                   <i class="fa fa-ellipsis-v " class="dropdown-toggle" data-bs-toggle="dropdown"

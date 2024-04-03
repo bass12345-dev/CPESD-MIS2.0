@@ -16,7 +16,7 @@
                    foreach ($offices as $office) :?>
                      <tr>
                         <td class="">{{$office->office}}</td>
-                        <td class="">{{$office->created}}</td>
+                        <td class=""> <?php echo date('M d Y',strtotime($office->created)) ?> </td>
                         <td>    
                            <div class="btn-group dropstart">
                              <i class="fa fa-ellipsis-v " class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false"></i>
