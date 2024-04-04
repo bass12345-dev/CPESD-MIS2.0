@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ManageUsersController extends Controller
 {
-    public $users_table = "users";
+    private $users_table = "users";
     public function index()
     {
         $data['title']      = 'Manage Users';

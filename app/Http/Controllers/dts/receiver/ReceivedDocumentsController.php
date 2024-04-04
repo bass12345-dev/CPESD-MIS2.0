@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReceivedDocumentsController extends Controller
 {
-    public  $history_table        = "history";
+    private  $history_table        = "history";
     
     public function index(){
         $data['title'] = 'All Documents';

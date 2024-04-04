@@ -14,8 +14,8 @@ use Carbon\Carbon;
 
 class ReceivedController extends Controller
 {
-    public  $users_table                    = "users";
-    public  $final_actions_table            = "final_actions";
+    private  $users_table                    = "users";
+    private  $final_actions_table            = "final_actions";
     public function index(){
         $data['title']                      = 'Received Documents';
         $user                               = DB::table('users')->where('user_id', session('_id'))->get()[0];

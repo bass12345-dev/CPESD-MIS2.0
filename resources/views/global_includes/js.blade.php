@@ -19,11 +19,32 @@ var base_url = '<?php echo url('/'); ?>';
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="https://pagination.js.org/dist/2.6.0/pagination.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/js-loading-overlay@1.1.0/dist/js-loading-overlay.min.js"></script>
 <script>
 function reload_page() {
     location.reload();
 }
+
+function loader(){
+
+    JsLoadingOverlay.show({
+	'overlayBackgroundColor': '#666666',
+	'overlayOpacity': 0.6,
+	'spinnerIcon': 'square-loader',
+	'spinnerColor': '#000',
+	'spinnerSize': '3x',
+	'overlayIDName': 'overlay',
+	'spinnerIDName': 'spinner',
+	'offsetY': 0,
+	'offsetX': 0,
+	'lockScroll': false,
+	'containerID': null,
+	'spinnerZIndex':99999,
+	'overlayZIndex':99998
+});
+
+}
+
 
 
 //$(document).ready(function() {
@@ -163,21 +184,20 @@ function highlightText(query){
 
 
 function add_item(data, url) {
-    Swal.showLoading();
+
     $.ajax({
         url: base_url + url,
         method: 'POST',
         data: data,
         dataType: 'json',
-        beforeSend: function() {
-
-
+        beforeSend : function(){
+            loader();
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         },
         success: function(data) {
-            Swal.close();
+            JsLoadingOverlay.hide();
             if (data.response) {
 
                 Swal.fire({
@@ -199,6 +219,7 @@ function add_item(data, url) {
         error: function() {
             alert('something Wrong');
             // location.reload();
+            JsLoadingOverlay.hide();
         }
 
     });
@@ -213,14 +234,14 @@ function update_item(id, data, url) {
         method: 'POST',
         data: data,
         dataType: 'json',
-        beforeSend: function() {
-            Swal.showLoading()
+        beforeSend : function(){
+            loader();
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         },
         success: function(data) {
-            Swal.close();
+            JsLoadingOverlay.hide();
             if (data.response) {
 
                 Swal.fire({
@@ -241,6 +262,7 @@ function update_item(id, data, url) {
         },
         error: function() {
             alert('something Wrong');
+            JsLoadingOverlay.hide();
 
         }
 
@@ -268,14 +290,14 @@ function delete_item(id, url, button_text = '', text = '') {
                     id: id
                 },
                 dataType: 'json',
-                beforeSend: function() {
-                    Swal.showLoading()
+                beforeSend : function(){
+                    loader();
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
                 success: function(data) {
-                    Swal.close();
+                     JsLoadingOverlay.hide();
                     if (data.response) {
 
                         Swal.fire({
@@ -297,6 +319,7 @@ function delete_item(id, url, button_text = '', text = '') {
                 },
                 error: function() {
                     alert('something Wrong');
+                    JsLoadingOverlay.hide();
 
                 }
 

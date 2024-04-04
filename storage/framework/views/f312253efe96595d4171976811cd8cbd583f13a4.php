@@ -51,17 +51,18 @@
           simpleTemplating(data);
           $('.pagination-container').pagination({
             dataSource: data,
-            pageSize:100,
+            pageSize:10,
             showPageNumbers: true,
             showNavigator: true,
             showSizeChanger: true,
             callback: function(data, pagination) {
               var html = simpleTemplating(data,q);
               $('.data-container').html(html);
+              highlightText(q);
             }
           });
           $('.pagination-container').removeClass('d-none');
-          highlightText(q);
+         
         } else {
           $('.data-container').html('<div class="row d-flex justify-content-center text-danger" style="font-size: 20px;">Sorry! We can\'t find the document you\'re looking for</div>');
           $('.pagination-container').addClass('d-none');

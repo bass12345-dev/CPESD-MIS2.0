@@ -11,9 +11,9 @@ use Carbon\Carbon;
 
 class AddDocumentController extends Controller
 {
-    public $document_types_table = "document_types";
-    public $user_table = "users";
-    public $office_table = "offices";
+    private $document_types_table = "document_types";
+    private $user_table = "users";
+    private $office_table = "offices";
     public function index(){
 
      

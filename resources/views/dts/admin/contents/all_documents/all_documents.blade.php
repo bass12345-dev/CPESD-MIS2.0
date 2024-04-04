@@ -125,5 +125,23 @@ Swal.fire({
 });
 
 });
+
+
+$('button#print_slips').on('click', function(){
+
+selected_items = get_selected_items();
+if(selected_items.length  == 0){
+   alert('Please Select at least one')
+}else{
+   var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
+}
+});
+function get_selected_items(){
+   let items = [];
+   $('input[name=document_id]:checked').map(function(item){items.push($(this).val());});
+   return items;
+
+   }
+
 </script>
 @endsection

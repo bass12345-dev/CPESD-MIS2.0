@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public $user_table = "users";
+    private $user_table = "users";
     public function index(){
         $data['user_data']          = CustomModel::q_get_where($this->user_table,array('user_id'=> $_GET['u_id']))->first();
         $data['barangay']           = config('app.barangay');

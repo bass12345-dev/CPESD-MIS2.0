@@ -125,6 +125,24 @@ Swal.fire({
 });
 
 });
+
+
+$('button#print_slips').on('click', function(){
+
+selected_items = get_selected_items();
+if(selected_items.length  == 0){
+   alert('Please Select at least one')
+}else{
+   var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
+}
+});
+function get_selected_items(){
+   let items = [];
+   $('input[name=document_id]:checked').map(function(item){items.push($(this).val());});
+   return items;
+
+   }
+
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('dts.admin.layout.admin_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/dts/admin/contents/all_documents/all_documents.blade.php ENDPATH**/ ?>

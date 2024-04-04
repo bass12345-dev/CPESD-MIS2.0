@@ -83,7 +83,8 @@ class DocumentsModel extends Model
         ->where('tracking_number', $tn)
         ->leftJoin('document_types', 'document_types.type_id', '=', 'documents.doc_type')
         ->leftJoin('users', 'users.user_id', '=', 'documents.u_id')
-        ->leftJoin('offices', 'offices.office_id', '=', 'documents.offi_id')
+        ->leftJoin('offices', 'offices.office_id', '=', 'documents.origin')
+        
         ->first();
         return $row;
     }

@@ -16,7 +16,7 @@
          <td><?php echo e($doc_data['encoded_by']); ?></td>
       </tr>
       <tr>
-         <td>Office</td>
+         <td>Origin</td>
          <td><?php echo e($doc_data['office']); ?></td>
       </tr>
 

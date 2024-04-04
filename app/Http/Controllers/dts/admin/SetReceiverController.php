@@ -8,7 +8,7 @@ use App\Models\CustomModel;
 
 class SetReceiverController extends Controller
 {
-    public $users_table = "users";
+    private $users_table = "users";
     public function index(Request $request)
     {
 

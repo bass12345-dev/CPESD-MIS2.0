@@ -9,9 +9,9 @@ use Carbon\Carbon;
 
 class OfficesController extends Controller
 {   
-    public $office_table    = "offices";
-    public $documents_table = "documents";
-    public $history_table   = "history";
+    private $office_table    = "offices";
+    private $documents_table = "documents";
+    private $history_table   = "history";
     public $now;
     public function __construct()
     {

@@ -9,8 +9,8 @@ use Carbon\Carbon;
 
 class DocTypesController extends Controller
 {   
-    public $doc_types_table = "document_types";
-    public $documents_table = "documents";
+    private $doc_types_table = "document_types";
+    private $documents_table = "documents";
     public $now;
     public function __construct()
     {

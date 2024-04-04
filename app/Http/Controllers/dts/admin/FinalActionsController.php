@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 
 class FinalActionsController extends Controller
 {   
-    public $final_actions_table = "final_actions";
-    public $history_table       = "history";
+    private $final_actions_table = "final_actions";
+    private $history_table       = "history";
     public $now;
     public function __construct()
     {

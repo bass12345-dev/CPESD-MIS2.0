@@ -10,8 +10,8 @@ use Carbon\Carbon;
 
 class ManageProgramController extends Controller
 {
-    public $programs_table = 'programs';
-    public $program_block_table = 'program_block';
+    private $programs_table = 'programs';
+    private $program_block_table = 'program_block';
     public $now;
     public function __construct()
     {

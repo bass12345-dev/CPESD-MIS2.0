@@ -7,8 +7,8 @@ use App\Models\CustomModel;
 use Illuminate\Http\Request;
 class RestoreListController extends Controller
 {
-    public $person_table = 'persons';
-    public $records_table = "records";
+    private $person_table = 'persons';
+    private $records_table = "records";
     public function index(){
         $data['title'] = 'Restore';
         $data['list'] = CustomModel::q_get_where_order($this->person_table,array('status' => 'inactive'),'first_name','asc')->get();

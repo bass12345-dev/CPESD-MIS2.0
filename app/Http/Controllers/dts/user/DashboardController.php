@@ -10,8 +10,8 @@ use Carbon\Carbon;
 class DashboardController extends Controller
 {
 
-    public $documents_table = "documents";
-    public $history_table = "history";
+    private $documents_table = "documents";
+    private $history_table = "history";
     public function index(){
         $data['title'] = 'User Dashboard';
         $data['count'] = $this->countmydoc_dash();

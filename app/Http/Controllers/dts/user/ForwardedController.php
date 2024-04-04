@@ -9,7 +9,7 @@ use App\Models\CustomModel;
 
 class ForwardedController extends Controller
 {
-    public $user_table = "users";
+    private $user_table = "users";
     public function index(){
         $data['title'] = 'Forwarded Documents';
         $data['forwarded_documents'] = $this->get_forward_documents();

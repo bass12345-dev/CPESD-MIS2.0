@@ -11,8 +11,8 @@ use DateTime;
 
 class ViewDocumentController extends Controller
 {
-    public $documents_table = "documents";
-    public $history_table = "history";
+    private $documents_table = "documents";
+    private $history_table = "history";
     public function index()
     {
         $tn = $_GET['tn'];

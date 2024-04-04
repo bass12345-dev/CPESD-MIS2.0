@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {    
-    public  $history_table        = "history";
-    public  $documents_table      = 'documents';
+    private  $history_table        = "history";
+    private  $documents_table      = 'documents';
     public function index(){
         $data['title'] = 'Receiver Dashboard';
         $data['count'] = $this->countmydoc_dash();
