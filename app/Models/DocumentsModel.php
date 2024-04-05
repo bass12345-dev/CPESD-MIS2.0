@@ -71,6 +71,7 @@ class DocumentsModel extends Model
                     'users.last_name as last_name', 
                     'users.extension as extension', 
                     DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
+        ->where('documents.doc_status', 'completed')
         ->orderBy('documents.document_id', 'desc')->limit($limit)->get();
         return $rows;
         
@@ -102,6 +103,7 @@ class DocumentsModel extends Model
     public static function get_document_where_id($id){
         $row = DB::table('documents')
         ->where('document_id', $id)
+        
         ->leftJoin('document_types', 'document_types.type_id', '=', 'documents.doc_type')
         ->leftJoin('users', 'users.user_id', '=', 'documents.u_id')
         // ->leftJoin('offices', 'offices.office_id', '=', 'documents.offi_id')

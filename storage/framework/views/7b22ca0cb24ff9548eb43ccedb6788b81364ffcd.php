@@ -41,6 +41,7 @@ function received_document(id,t){
                   tracking_number : t
                   }
       var url = '/dts/us/receive-document';
+   
       add_item(form,url);
 }
 </script>

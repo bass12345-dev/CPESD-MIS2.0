@@ -39,11 +39,11 @@
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
       },
       beforeSend : function(){
-          $('.loading').html('<h2>Searching.... Please Wait</h2>')
+            loader();
       },
       success: function(data) {
         $('.result-card').removeClass('d-none');
-        $('.loading').html('');
+        JsLoadingOverlay.hide();
         if (data.length > 0) {
           
           let arr = [];

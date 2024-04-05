@@ -46,7 +46,7 @@ Route::middleware(['SessionGuard', 'IsAdmin'])->prefix('dts/admin')->group(funct
     Route::get('/logged-in-history', [App\Http\Controllers\dts\admin\LoggedInHistoryController::class, 'index']);
     Route::get('/view', [App\Http\Controllers\dts\admin\ViewDocumentController::class, 'index']);
     Route::get('/print-slips', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'print_slips']);
-
+    Route::get('/action-logs', [App\Http\Controllers\dts\admin\ActionLogsController::class, 'index']);
     Route::get('/track', function () {
         $data['title'] = 'Admin Search';
         return view('dts.admin.contents.search.search')->with($data);

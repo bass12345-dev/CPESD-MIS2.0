@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dts\user;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\dts\admin\ActionLogsController;
 use App\Models\DocumentsModel;
 use App\Models\CustomModel;
 use Illuminate\Http\Request;
@@ -198,7 +199,7 @@ class MyDocumentsController extends Controller
                 // }
 
                 // $this->create_qr_code($items['tracking_number']);
-
+                ActionLogsController::dts_add_action($action = 'Added Document No. '.$row->tracking_number,$user_type='user',$_id = $row->document_id);
                 $data = array('id'=>$row->document_id,'message' => 'Added Successfully', 'response' => true);
             } else {
 
@@ -286,7 +287,8 @@ class MyDocumentsController extends Controller
     public function receive(Request $request)
     {
         $id                                 = $request->input('id');
-        $tracking_number                    = $request->input('track');
+        $tracking_number                    = $request->input('tracking_number');
+
         
         $items  = array(
 
@@ -296,11 +298,13 @@ class MyDocumentsController extends Controller
         );
 
         $check_cancelled    = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tracking_number, 'doc_status' => 'cancelled'))->count();
-
+        $r = CustomModel::q_get_where('documents',array('tracking_number'=> $tracking_number))->first(); 
         if ($check_cancelled < 1) {
 
             $update_receive = CustomModel::update_item($this->history_table, array('history_id' => $id), $items);
             if ($update_receive) {
+                
+                ActionLogsController::dts_add_action($action = 'Received Document No. '.$tracking_number,$user_type='user',$_id = $id);
                 $data = array('message' => 'Received Succesfully','id'=>$id,'tracking_number' => $tracking_number, 'response' => true);
             } else {
                 $data = array('message' => 'Something Wrong', 'response' => false);
@@ -357,7 +361,10 @@ class MyDocumentsController extends Controller
                 $add1 = CustomModel::insert_item($this->history_table, $info);
 
                 if ($add1) {
-
+                    ActionLogsController::dts_add_action(
+                        $action = 'Forwarded Document No. '.$tracking_number.'to '.$forward_user_row[0]->first_name.' '.$forward_user_row[0]->middle_name.' '.$forward_user_row[0]->last_name.' '.$forward_user_row[0]->extension,
+                        $user_type='user'
+                        ,$_id = $id);
                     $data = array('message' => 'Forwarded Successfully', 'response' => true);
                 } else {
 

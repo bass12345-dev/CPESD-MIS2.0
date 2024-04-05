@@ -19,7 +19,7 @@
                    $i = 1;
                    foreach ($l_i_h as $row) :?>
                      <tr>
-                        <td class="">{{$row->first_name}}</td>
+                        <td class="">{{$row->first_name}} {{$row->middle_name}} {{$row->last_name}} {{$row->extension}}</td>
                         <td class="">{{date('M d Y h:i a',strtotime($row->logged_in_date))}}</td>
                         
                      </tr>

@@ -19,7 +19,7 @@
                    $i = 1;
                    foreach ($l_i_h as $row) :?>
                      <tr>
-                        <td class=""><?php echo e($row->first_name); ?></td>
+                        <td class=""><?php echo e($row->first_name); ?> <?php echo e($row->middle_name); ?> <?php echo e($row->last_name); ?> <?php echo e($row->extension); ?></td>
                         <td class=""><?php echo e(date('M d Y h:i a',strtotime($row->logged_in_date))); ?></td>
                         
                      </tr>
