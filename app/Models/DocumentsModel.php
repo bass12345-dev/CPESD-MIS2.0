@@ -348,6 +348,7 @@ class DocumentsModel extends Model
                     'documents.doc_type as doc_type', 
                     'documents.document_description as document_description', 
                     'documents.destination_type as destination_type',
+                    'documents.origin as origin_id',
                     'document_types.type_name as type_name',
                     'users.first_name as first_name', 
                     'users.middle_name as middle_name', 
@@ -355,6 +356,7 @@ class DocumentsModel extends Model
                     'users.extension as extension',
 
                     'offices.office as origin',
+
 
                     DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name")
                     )

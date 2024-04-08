@@ -20,6 +20,8 @@
       $('input[name=document_name]').val($(this).data('name'));
       $('select[name=document_type]').val($(this).data('type'));
       $('textarea[name=description]').val($(this).data('description'));
+      $('select[name=origin]').val($(this).data('origin'));
+      console.log($(this).data('origin'));
       // $('select[name=type]').val($(this).data('destination'));
    });
 
@@ -54,7 +56,7 @@
       var encoded_by       =     $(this).data('encoded-by');
       var destination      =     $(this).data('destination');
       var description      =     $(this).data('description');
-      var origin      =     $(this).data('origin');
+      var origin           =     $(this).data('origin');
 
       $('#print_slip_modal').find('.document_name').text(name);
       $('#print_slip_modal').find('.print_tracking_number').text(track);

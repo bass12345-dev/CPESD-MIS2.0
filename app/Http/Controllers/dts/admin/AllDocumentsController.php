@@ -191,6 +191,7 @@ class AllDocumentsController extends Controller
     public function cancel_documents(Request $request)
     {
 
+       
         $id = $request->input('id')['id'];
         $message = '';
         $arr = array();
@@ -202,6 +203,7 @@ class AllDocumentsController extends Controller
 
                 $check = CustomModel::q_get_where($this->documents_table,array('document_id' => $row))->first();
                 if($check->doc_status != 'completed'){
+                    ActionLogsController::dts_add_action($action = 'Canceled Document No. '.$check->tracking_number,$user_type='admin',$_id = $row);
                     $update = CustomModel::update_item($this->documents_table, array('document_id' => $row), $items);
                 }else {
                     array_push($arr, $check->document_id);
@@ -209,7 +211,7 @@ class AllDocumentsController extends Controller
                 
                 
             }
-
+            
             $message = count($arr) > 0 ? " Canceled Successfully | Some documents is cannot be cancelled because it's already completed or canceled already" : 'Canceled Succesfully';
             
 
@@ -253,8 +255,9 @@ class AllDocumentsController extends Controller
         );
         $update = CustomModel::update_item($this->documents_table, array('tracking_number' => $tracking_number), $items);
         if ($update) {
-
-
+            $query_row = CustomModel::q_get_where($this->documents_table,array('tracking_number' => $tracking_number))->first();
+            ActionLogsController::dts_add_action($action = 'Canceled Document No. '.$t,$user_type='admin',$_id = $row);
+            $update = CustomModel::update_item($this->documents_table, array('document_id' => $row), $items);
             $data = array('message' => 'Reverted Succesfully', 'response' => true);
         } else {
 

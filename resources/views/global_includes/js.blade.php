@@ -218,7 +218,7 @@ function add_item(data, url) {
         },
         error: function() {
             alert('something Wrong');
-            // location.reload();
+            location.reload();
             JsLoadingOverlay.hide();
         }
 

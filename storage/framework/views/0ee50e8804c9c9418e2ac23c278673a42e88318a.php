@@ -45,10 +45,11 @@
                         ?> -->
                      <li><a class="dropdown-item update_document" 
                         data-tracking-number="<?php echo $row['tracking_number']  ?>" 
-                        data-name="<?php echo $row['document_name']  ?>" 
-                        data-type="<?php echo $row['doc_type']  ?>" 
-                        data-description="<?php echo $row['description']  ?>" 
-                        data-destination="<?php echo $row['destination_type']  ?>" 
+                        data-name            ="<?php echo $row['document_name']  ?>" 
+                        data-type            ="<?php echo $row['doc_type']  ?>" 
+                        data-description     ="<?php echo $row['description']  ?>" 
+                        data-destination     ="<?php echo $row['destination_type']  ?>" 
+                        data-origin          ="<?php echo  $row['origin_id']; ?>"
                         href="javascript:;" class="" data-bs-toggle="modal" data-bs-target="#update_document">Update</a></li>
                      <?php if ($delete_button == false) {
                         echo '

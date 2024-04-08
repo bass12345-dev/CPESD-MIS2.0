@@ -21,6 +21,7 @@ class MyDocumentsController extends Controller
     private  $documents_table      = 'documents';
     private  $users_table          = "users";
     private  $final_actions_table = "final_actions";
+    private  $office_table          = 'offices';
     private  $now;
     
     public function __construct()
@@ -33,6 +34,7 @@ class MyDocumentsController extends Controller
         $data['title']              = 'My Documents';
         $data['documents']          = $this->get_all_documents();
         $data['document_types']     = CustomModel::q_get_order($this->document_types_table, 'type_name', 'asc')->get();
+        $data['offices']            = CustomModel::q_get_order($this->office_table,'office','asc')->get(); 
         return view('dts.users.contents.my_documents.my_documents')->with($data);
     }
 
@@ -92,7 +94,8 @@ class MyDocumentsController extends Controller
                 'name'                         => $key->name,
                 'document_type_name'           => $key->type_name,
                 'encoded_by'                   => $key->first_name.' '. $key->middle_name.' '. $key->last_name.' '. $key->extension,
-                'origin'                       => $key->origin == NULL ? '-' : $key->origin
+                'origin'                       => $key->origin == NULL ? '-' : $key->origin,
+                'origin_id'                    => $key->origin_id
             );
         }
         return $data;
@@ -129,11 +132,11 @@ class MyDocumentsController extends Controller
         $items = array(
 
             'tracking_number'                   => $request->input('tracking_number'),
-            'document_name'                     => $request->input('document_name'),
+            'document_name'                     => trim($request->input('document_name')),
             'u_id'                              => base64_decode($request->input('user_id')),
             'offi_id'                           => $request->input('office_id'),
             'doc_type'                          => $request->input('document_type'),
-            'document_description'              => $request->input('description'),
+            'document_description'              => trim($request->input('description')),
             'created'                           => Carbon::now()->format('Y-m-d H:i:s'),
             'doc_status'                        => 'pending',
             'destination_type'                  => $request->input('type'),
@@ -144,18 +147,13 @@ class MyDocumentsController extends Controller
         $count = CustomModel::q_get_where($this->documents_table,array('tracking_number' => $items['tracking_number']))->count();
 
         if($count == 0) {
-
-        
+            
         $add = CustomModel::insert_item($this->documents_table, $items);
 
         if ($add) {
 
             $row = CustomModel::q_get_where($this->documents_table, array('document_id' => DB::getPdo()->lastInsertId()))->first();
             $receiver = CustomModel::q_get_where($this->users_table, array('is_receiver' => 'yes'))->first();
-           
-            
-          
-
 
             $items1 = array(
                 't_number'                     => $row->tracking_number,
@@ -170,34 +168,9 @@ class MyDocumentsController extends Controller
                 'to_receiver'                  => 'no',
                 'release_date'                 => NULL,
             );
-
-
-
-            // $items2 = array(
-            //     't_number'                     => $row->tracking_number,
-            //     'user1'                        => $row->u_id,
-            //     'office1'                      => $row->offi_id,
-            //     'user2'                        => $receiver->user_id,
-            //     'office2'                      => $row->offi_id,
-            //     'status'                       => 'torec',
-            //     'received_status'              => NULL,
-            //     'received_date'                => NULL,
-            //     'release_status'               => NULL,
-            //     'to_receiver'                  => 'yes',
-            //     'release_date'                 =>  Carbon::now()->format('Y-m-d H:i:s'),
-            //     'remarks'                      => ''
-
-            // );
-
-
             $add1 = CustomModel::insert_item($this->history_table, $items1);
 
             if ($add1) {
-
-                // if ($row->destination_type == 'simple') {
-                //     CustomModel::insert_item($this->history_table, $items2);
-                // }
-
                 // $this->create_qr_code($items['tracking_number']);
                 ActionLogsController::dts_add_action($action = 'Added Document No. '.$row->tracking_number,$user_type='user',$_id = $row->document_id);
                 $data = array('id'=>$row->document_id,'message' => 'Added Successfully', 'response' => true);
@@ -250,13 +223,14 @@ class MyDocumentsController extends Controller
 
             'document_name'         => $request->input('document_name'),
             'doc_type'              => $request->input('document_type'),
-            'document_description'  => $request->input('description'),
+            'document_description'  => trim($request->input('description')),
+            'origin'                => $request->input('origin')
 
         );
         $update = CustomModel::update_item($this->documents_table, array('tracking_number' => $id), $items);
         if ($update) {
-
-
+            $query_row = CustomModel::q_get_where($this->documents_table,array('tracking_number'=> $id))->first();
+            ActionLogsController::dts_add_action($action = 'Updated Document No. '.$id,$user_type='user',$_id = $query_row->document_id);
             $data = array('message' => 'updated Succesfully', 'response' => true);
         } else {
 
@@ -274,6 +248,7 @@ class MyDocumentsController extends Controller
 
         if ($delete->delete()) {
             CustomModel::delete_item($this->history_table, array('t_number' => $tracking_number));
+            ActionLogsController::dts_add_action($action = 'Deleted Document No. '.$tracking_number,$user_type='user',$_id = $id);
             $data = array('message' => 'Deleted Succesfully', 'response' => true);
         } else {
 
@@ -436,8 +411,7 @@ class MyDocumentsController extends Controller
         );
         $update = CustomModel::update_item($this->documents_table, array('document_id' => $id), $items);
         if ($update) {
-
-
+           
             $data = array('message' => 'Cancelled Succesfully', 'response' => true);
         } else {
 
