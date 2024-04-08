@@ -46,7 +46,7 @@ class DashboardController extends Controller
             'cancelled'             => CustomModel::q_get_where($this->document_table,array('doc_status' => 'cancelled'))->count(),
             'added_today'           => DocumentsModel::added_document_date_now($date_now),
             'completed_today'       => DocumentsModel::completed_document_date_now($date_now),
-            'latest'                => DocumentsModel::get_all_documents_with_limit('10')
+            'latest'                => DocumentsModel::get_all_documents_with_limit_completed('10')
 
         );
 

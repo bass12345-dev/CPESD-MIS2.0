@@ -14,6 +14,7 @@ class AddDocumentController extends Controller
     private $document_types_table = "document_types";
     private $user_table = "users";
     private $office_table = "offices";
+    private $documents_table = 'documents';
     public function index(){
 
      
@@ -29,99 +30,87 @@ class AddDocumentController extends Controller
 
     public function get_last(){
 
-        $l = '';
+        #define tracking number variable
+        $tracking_number = '';
+        #count documents added in database
         $verify = DB::table('documents')->count();
+        #get current year
         $current_year = Carbon::now()->format('Y');
-        
+        #ymd format = Year Month Day
+        $ymd_format = Carbon::now()->format('Ymd');
 
+        #CONDITION
+
+        #check if there is document added in database
         if($verify) {
-
-            $last_created = date('Y', strtotime( DB::table('documents')->orderBy('created', 'desc')->get()[0]->created));
-
+            #get last added in database
+            $last_created = date('Y', strtotime( DB::table($this->documents_table)->orderBy('created', 'desc')->first()->created));
+             #current year is greater than the last year added
             if($current_year > $last_created )
                 {      
-                     $l = Carbon::now()->format('Ymd').'001';
-
+                    #set tracking number to 001
+                     $tracking_number = $ymd_format.'001';
+                #current year is less than the last year added
                 }else if ($current_year < $last_created) {
-
-                    $l = DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y-m-d')."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
-                   
-                    
+                    #get last created and then add 1
+                    $tracking_number = DB::table($this->documents_table)
+                                        ->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y-m-d')."' ")
+                                        ->orderBy('created', 'desc')
+                                        ->first()->tracking_number +  1;
+                #current year is equal in last year added                       
                 }else if (Carbon::now()->format('Y') === $last_created){
-
-                    //$x = DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y')."' ")->orderBy('created', 'desc')->get()[0]->tracking_number +  1;
-                    $x = Carbon::now()->format('Ymd').$this->last_three_digits() + 1;
-                    $l = $this->put_zeros($x);
-                   
+                    #get last three digits
+                    $last_digits = $this->last_digits() + 1;
+                    $tracking_number = $ymd_format.$this->put_zeros($last_digits);
                 }
         }else {
-
-            $l = Carbon::now()->format('Ymd').'001';
-
+            $tracking_number = $ymd_format.'001';
         }
-
-    
-
-        return $l;
-        // response()->json((array('number'=> $l,'y'=> date('Y', time()), 'm' => date('m', time()), 'd' => date('d', time()) )));
+        return $tracking_number;
     }
 
 
-    function last_three_digits() { 
+    function last_digits() { 
 
-        $number = DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y')."' ")->orderBy('created', 'desc')->get()[0]->tracking_number;
-        $arr = str_split((string)$number); 
-          
-        $lastThirdDigit = $arr[sizeof($arr)-3]; 
-        $lastSecondDigit = $arr[sizeof($arr)-2]; 
-        $lastDigit = $arr[sizeof($arr)-1]; 
+        $number = DB::table($this->documents_table)
+                    ->whereRaw("YEAR(documents.created) = '".Carbon::now()
+                    ->format('Y')."' ")
+                    ->orderBy('created', 'desc')
+                    ->first()
+                    ->tracking_number;
+        //get digits after year month date format
+        $number = substr($number,8,8);
+        return $number;
+        
 
-        return $lastThirdDigit.$lastSecondDigit.$lastDigit;
+        #Last Method in getting last three digits
+
+        // $arr = str_split($number); 
+        // $lastThirdDigit = $arr[sizeof($arr)-3]; 
+        // $lastSecondDigit = $arr[sizeof($arr)-2]; 
+        // $lastDigit = $arr[sizeof($arr)-1]; 
+
+        // return $lastThirdDigit.$lastSecondDigit.$lastDigit;
         
     } 
 
-    function l($l){
+    function put_zeros($last_digits){
 
-        $x = $this->addOne();
-        $l = $this->put_zeros($x);
+        $tracking_number = '';
+        
+        switch ($last_digits) {
+            case $last_digits < 10:
+                $tracking_number = '00'.$last_digits;
+                break;
+            case $last_digits < 100:
+                $tracking_number = '0'.$last_digits;
+                break;
+            default:
+                $tracking_number = $last_digits;
+                break;
+        }
 
-        return $l;
-
-    }
-
-    function addOne(){
-
-        return DB::table('documents')->whereRaw("YEAR(documents.created) = '".Carbon::now()->format('Y')."' ")->get()[0]->tracking_number +  1;
-
-    }
-
-     function get_created(){
-
-        return date('Y', strtotime( DB::table('documents')->orderBy('created', 'desc')->get()[0]->created));
-
-    }
-
-
-    function put_zeros($x){
-
-        $l = '';
-           if ($x  < 10) {
-
-                        $l = '00'.$x;
-                      
-                    }else if($x < 100 ) {
-
-                        $l = '0'.$x;
-                       
-
-                    }else {
-
-
-                         $l = $x;
-                        
-                    }
-
-                    return $l;
+        return $tracking_number;
 
     }
 }

@@ -19,7 +19,7 @@ class ActionLogsController extends Controller
 
         $items  = array(
             'action'            => $action,
-            'web_type'              => 'dts',
+            'web_type'          => 'dts',
             'user_type'         => $user_type,
             'user_id'           =>  session('_id'),
             '_id'               =>  $_id,
