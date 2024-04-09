@@ -330,4 +330,12 @@ function delete_item(id, url, button_text = '', text = '') {
     });
 
 }
+
+function get_selected_items(){
+   let items = [];
+   $('input[name=document_id]:checked').map(function(item){items.push($(this).val());});
+   return items;
+
+   }
+
 </script><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/global_includes/js.blade.php ENDPATH**/ ?>

@@ -100,13 +100,7 @@
 
    });
 
-   function get_selected_items(){
-   let items = [];
-   $('input[name=document_id]:checked').map(function(item){items.push($(this).val());});
-   return items;
-
-   }
-
+  
 
 
 

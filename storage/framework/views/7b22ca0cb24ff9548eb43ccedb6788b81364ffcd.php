@@ -44,6 +44,22 @@ function received_document(id,t){
    
       add_item(form,url);
 }
+
+
+$('a#received_documents').on('click', function(){
+
+selected_items = get_selected_items();
+
+
+// if(selected_items.length  == 0){
+//    alert('Please Select at least one')
+// }else{
+//    var a = window.open(base_url + '/dts/user/print-slips/?ids='+selected_items, '__blank');
+// }
+
+
+
+});
 </script>
 
 <?php $__env->stopSection(); ?>
