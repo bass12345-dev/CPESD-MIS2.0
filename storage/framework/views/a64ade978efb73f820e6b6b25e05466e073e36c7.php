@@ -18,9 +18,10 @@
 
 $('a#forward_icon').on('click', function(){
    $('input[name=history_id]').val($(this).data('history-id'));
+   $('input[name=tracking_number]').val($(this).data('tracking-number'));
    $('textarea[name=remarks]').val($(this).data('remarks'));
    $('.offcanvas-title').text('Forward Document #' +$(this).data('tracking-number') );
-
+   
 });
 
 

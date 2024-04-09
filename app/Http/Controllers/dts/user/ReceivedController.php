@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DocumentsModel;
 use Illuminate\Http\Request;
 use App\Models\CustomModel;
+use App\Http\Controllers\dts\admin\ActionLogsController;
 
 class ReceivedController extends Controller
 {   
@@ -63,12 +64,13 @@ class ReceivedController extends Controller
             'received_date'     => NULL
         );
 
-        $check_cancelled    = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tracking_number, 'doc_status' => 'cancelled'))->count();
-
-        if ($check_cancelled < 1) {
+        
+        $r = CustomModel::q_get_where('documents',array('tracking_number'=> $tracking_number))->first(); 
+        if ($r->doc_status != 'cancelled') {
 
             $update_receive = CustomModel::update_item($this->history_table, array('history_id' => $history_id), $items);
             if ($update_receive) {
+                ActionLogsController::dts_add_action($action = 'Received Error Document No. '.$tracking_number,$user_type='user',$_id = $r->document_id);
                 $data = array('message' => 'Success','id'=>$history_id,'tracking_number' => $tracking_number, 'response' => true);
             } else {
                 $data = array('message' => 'Something Wrong', 'response' => false);

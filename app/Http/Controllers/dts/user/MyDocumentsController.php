@@ -272,14 +272,13 @@ class MyDocumentsController extends Controller
             'received_date'     => Carbon::now()->format('Y-m-d H:i:s')
         );
 
-        $check_cancelled    = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tracking_number, 'doc_status' => 'cancelled'))->count();
         $r = CustomModel::q_get_where('documents',array('tracking_number'=> $tracking_number))->first(); 
-        if ($check_cancelled < 1) {
+        if ($r->doc_status != 'cancelled') {
 
             $update_receive = CustomModel::update_item($this->history_table, array('history_id' => $id), $items);
             if ($update_receive) {
                 
-                ActionLogsController::dts_add_action($action = 'Received Document No. '.$tracking_number,$user_type='user',$_id = $id);
+                ActionLogsController::dts_add_action($action = 'Received Document No. '.$tracking_number,$user_type='user',$_id = $r->document_id);
                 $data = array('message' => 'Received Succesfully','id'=>$id,'tracking_number' => $tracking_number, 'response' => true);
             } else {
                 $data = array('message' => 'Something Wrong', 'response' => false);
@@ -307,10 +306,10 @@ class MyDocumentsController extends Controller
         $count              = CustomModel::q_get_where($this->history_table, array('t_number' => $tracking_number))->count();
 
 
-        $check_cancelled    = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tracking_number, 'doc_status' => 'cancelled'))->count();
-
-        if ($check_cancelled < 1) {
-
+        
+        $r = CustomModel::q_get_where('documents',array('tracking_number'=> $tracking_number))->first(); 
+        if ($r->doc_status != 'cancelled') {
+            
             $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id, 'received_status' => 1), array('release_status' => 1));
 
             if ($update_release) {
@@ -337,9 +336,9 @@ class MyDocumentsController extends Controller
 
                 if ($add1) {
                     ActionLogsController::dts_add_action(
-                        $action = 'Forwarded Document No. '.$tracking_number.'to '.$forward_user_row[0]->first_name.' '.$forward_user_row[0]->middle_name.' '.$forward_user_row[0]->last_name.' '.$forward_user_row[0]->extension,
+                        $action = 'Forwarded Document No. '.$tracking_number.' to '.$forward_user_row[0]->first_name.' '.$forward_user_row[0]->middle_name.' '.$forward_user_row[0]->last_name.' '.$forward_user_row[0]->extension,
                         $user_type='user'
-                        ,$_id = $id);
+                        ,$_id = $r->document_id);
                     $data = array('message' => 'Forwarded Successfully', 'response' => true);
                 } else {
 
@@ -360,14 +359,21 @@ class MyDocumentsController extends Controller
     {
 
         $id                 = $request->input('history_id');
+        $tracking_number    = $request->input('tracking_number');
         $forward_to         = $request->input('forward') == 'fr' ? $this->get_receiver() : $request->input('forward');
         $is_yes             = $request->input('forward') == 'fr' ? 'yes' : 'no';
 
 
 
+        
+        $r = CustomModel::q_get_where('documents',array('tracking_number'=> $tracking_number))->first(); 
+        $user_row           = CustomModel::q_get_where($this->users_table, array('user_id' => $forward_to))->first();
         $update_release     = CustomModel::update_item($this->history_table, array('history_id' => $id), array('user2' => $forward_to,'to_receiver'=>$is_yes));
-
         if ($update_release) {
+            ActionLogsController::dts_add_action(
+                $action = 'Update Forwarded Document No. '.$tracking_number.' to '.$user_row->first_name.' '.$user_row->middle_name.' '.$user_row->last_name.' '.$user_row->extension,
+                $user_type='user'
+                ,$_id = $r->document_id);
             $data = array('message' => 'Updated Successfully', 'response' => true);
         } else {
             $data = array('message' => 'Something Wrong', 'response' => false);
