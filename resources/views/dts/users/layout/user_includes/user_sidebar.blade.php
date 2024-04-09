@@ -49,11 +49,11 @@
                 </a>
             </li>
 
-            <!-- <li class="sidebar-item <?= $segments[2] == 'outgoing' ? 'active' : '' ?>">
-                <a class="sidebar-link" href="{{url('/dts/user/forwarded')}}">
-                    <i class="align-middle" data-feather="arrow-up-right"></i> <span class="align-middle">Outgoing</span>
+            <li class="sidebar-item <?= $segments[2] == 'action-logs' ? 'active' : '' ?>">
+                <a class="sidebar-link" href="{{url('/dts/user/action-logs')}}">
+                    <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Action Logs</span>
                 </a>
-            </li> -->
+            </li>
      
 
             <li class="sidebar-item <?= $segments[2] == 'track' ? 'active' : '' ?>">

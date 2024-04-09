@@ -104,7 +104,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function () {
     Route::get('/forwarded', [App\Http\Controllers\dts\user\ForwardedController::class, 'index']);
     Route::get('/view', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'index']);
 
-
+    Route::get('/action-logs', [App\Http\Controllers\dts\user\ActionLogsController::class, 'index']);
     Route::get('/my-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'index']);
 
     Route::get('/print-slip', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'print_slip']);
