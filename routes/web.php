@@ -126,6 +126,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     Route::post('/add-d', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'store']);
 
     Route::post('/receive-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive']);
+    Route::post('/receive-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive_documents']);
     Route::post('/forward-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'forward']);
     Route::post('/update-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'update']);
     Route::post('/ck', [App\Http\Controllers\dts\user\ProfileController::class, 'check']);

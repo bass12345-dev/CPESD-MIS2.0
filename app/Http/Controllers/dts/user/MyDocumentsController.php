@@ -289,6 +289,73 @@ class MyDocumentsController extends Controller
         return response()->json($data);
     }
 
+    public function receive_documents(Request $request)
+    {
+
+        $items = $request->input('id')['items'];
+
+        if(is_array($items)){
+
+        foreach ($items as $row) {
+
+            $x = explode('-', $row);
+
+            $history_id = $x[0];
+            $tracking_number = $x[1];
+
+
+            $to_update  = array(
+
+                'status'            => 'received',
+                'received_status'   => 1,
+                'received_date'     => Carbon::now()->format('Y-m-d H:i:s')
+            );
+
+
+            $r = CustomModel::q_get_where('documents',array('tracking_number'=> $tracking_number))->first(); 
+
+            if ($r->doc_status != 'cancelled') {
+
+                $update_receive = CustomModel::update_item($this->history_table, array('history_id' => $history_id), $to_update);
+                if ($update_receive) {
+                    
+                    // ActionLogsController::dts_add_action($action = 'Received Document No. '.$tracking_number,$user_type='user',$_id = $r->document_id);
+                    $data = array('message' => 'Received Succesfully','id'=>$history_id,'tracking_number' => $tracking_number, 'response' => true);
+                } else {
+                    $data = array('message' => 'Something Wrong', 'response' => false);
+                }
+            } else {
+                $data = array('message' => 'This Document is cancelled', 'response' => false);
+            }
+            
+
+
+        }
+
+        }else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+
+        // if (is_array($items)) {
+        //     foreach ($items as $row) {
+        //         $delete                   = CustomModel::q_get_where($this->documents_table, array('document_id' => $row));
+        //         $tracking_number          = $delete->get()[0]->tracking_number;
+        //         $delete->delete();
+        //         CustomModel::delete_item($this->history_table, array('t_number' => $tracking_number));
+        //     }
+
+        //     $data = array('message' => 'Deleted Succesfully', 'response' => true);
+        // } else {
+        //     $data = array('message' => 'Error', 'response' => false);
+        // }
+
+
+
+        return response()->json($data);
+
+    
+    }
+
     public function forward(Request $request)
     {
 

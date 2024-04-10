@@ -23,7 +23,7 @@
 
               <?php $i = 1; foreach ($incoming_documents as $row) :  ?>
                 <tr>
-                <td><input type="checkbox" name="document_id" value="<?php echo $row['document_id'] ?>"></td>
+                <td><input type="checkbox" name="document_id" value="<?php echo $row['history_id'].'-'.$row['tracking_number'] ?>"></td>
                   <td>{{$i++}}</td>
                   <!-- <td>    
                      <a class="btn btn-success received_document" data-track="{{$row['tracking_number']}}"  data-id="{{$row['history_id']}}"><i class="fas fa-hand"></i></a>       
