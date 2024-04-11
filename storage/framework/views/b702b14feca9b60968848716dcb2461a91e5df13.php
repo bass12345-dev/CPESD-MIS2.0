@@ -63,6 +63,7 @@
           $('.pagination-container').removeClass('d-none');
           highlightText(q);
         } else {
+          $('.card-title').text('0 Result/s');
           $('.data-container').html('<div class="row d-flex justify-content-center text-danger" style="font-size: 20px;">Sorry! We can\'t find the document you\'re looking for</div>');
           $('.pagination-container').addClass('d-none');
         }

@@ -22,10 +22,17 @@
 </div>
 @include('watchlisted.admin.contents.view_profile.sections.off_canvas')
 @include('watchlisted.admin.contents.view_profile.sections.update_canvas')
+@include('watchlisted.admin.contents.view_profile.sections.update_status_modal')
 @endsection
 
 @section('js')
 <script>
+$('a#update_status').on('click', function(e){
+	alert('asd');
+
+});
+
+
 $('a#remove').on('click', function(e){
 	var id = $(this).data('id');
 	var url = '/wl/delete-record';

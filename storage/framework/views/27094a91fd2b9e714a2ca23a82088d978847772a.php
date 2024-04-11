@@ -22,10 +22,17 @@
 </div>
 <?php echo $__env->make('watchlisted.admin.contents.view_profile.sections.off_canvas', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('watchlisted.admin.contents.view_profile.sections.update_canvas', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('watchlisted.admin.contents.view_profile.sections.update_status_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
 <script>
+$('a#update_status').on('click', function(e){
+	alert('asd');
+
+});
+
+
 $('a#remove').on('click', function(e){
 	var id = $(this).data('id');
 	var url = '/wl/delete-record';

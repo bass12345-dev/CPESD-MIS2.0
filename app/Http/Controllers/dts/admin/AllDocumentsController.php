@@ -315,11 +315,12 @@ class AllDocumentsController extends Controller
         $add1 = CustomModel::insert_item($this->history_table, $info);
 
         if ($add1) {
-
+            $query_row = CustomModel::q_get_where($this->documents_table,array('tracking_number'=> $tracking_number))->first();
             $update_receive = DB::table('documents')
                 ->where('tracking_number', $tracking_number)
                 ->update(array('doc_status' => 'completed','completed_on'=> Carbon::now()->format('Y-m-d H:i:s')));
-
+            
+            ActionLogsController::dts_add_action($action = 'Completed Document No. '.$query_row->tracking_number,$user_type='user',$_id = $query_row->document_id);
             $data = array('message' => 'Completed Succesfully', 'response' => true);
         } else {
 
