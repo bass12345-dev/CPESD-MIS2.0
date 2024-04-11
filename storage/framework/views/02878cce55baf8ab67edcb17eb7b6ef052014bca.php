@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var datatablesButtons = $("#datatables-buttons").DataTable({
         responsive: true,
         ordering: false,
-
+        
 
         buttons: [{
                 extend: 'print',

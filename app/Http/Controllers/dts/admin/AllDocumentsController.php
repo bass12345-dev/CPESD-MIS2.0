@@ -144,8 +144,10 @@ class AllDocumentsController extends Controller
         if (is_array($id)) {
             foreach ($id as $row) {
                 $delete                   = CustomModel::q_get_where($this->documents_table, array('document_id' => $row));
-                $tracking_number          = $delete->get()[0]->tracking_number;
+                $tracking_number          = $delete->first()->tracking_number;
+                $document_id =              $delete->first()->document_id;
                 $delete->delete();
+                ActionLogsController::dts_add_action($action = 'Deleted Document No. '.$tracking_number,$user_type='user',$_id = $document_id);
                 CustomModel::delete_item($this->history_table, array('t_number' => $tracking_number));
             }
 
