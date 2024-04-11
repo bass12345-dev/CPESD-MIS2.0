@@ -319,7 +319,7 @@ class MyDocumentsController extends Controller
                 $update_receive = CustomModel::update_item($this->history_table, array('history_id' => $history_id), $to_update);
                 if ($update_receive) {
                     
-                    // ActionLogsController::dts_add_action($action = 'Received Document No. '.$tracking_number,$user_type='user',$_id = $r->document_id);
+                    ActionLogsController::dts_add_action($action = 'Received Document No. '.$tracking_number,$user_type='user',$_id = $r->document_id);
                     $data = array('message' => 'Received Succesfully','id'=>$history_id,'tracking_number' => $tracking_number, 'response' => true);
                 } else {
                     $data = array('message' => 'Something Wrong', 'response' => false);

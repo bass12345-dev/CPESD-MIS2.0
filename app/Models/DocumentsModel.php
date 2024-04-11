@@ -398,7 +398,7 @@ class DocumentsModel extends Model
             ->where('status', 'torec')
             ->where('to_receiver', 'no')
             ->where('release_status',NULL )
-            ->orderBy('received_date', 'desc')->get();
+            ->orderBy('tracking_number', 'desc')->get();
             
         return $rows;
     }
@@ -431,7 +431,7 @@ class DocumentsModel extends Model
             ->where('doc_status'  ,'!=', 'cancelled')
             // ->where('documents.destination_type', 'complex')
             ->where('to_receiver' , 'no')
-            ->orderBy('received_date', 'desc')->get();
+            ->orderBy('tracking_number', 'desc')->get();
 
         return $rows;
 
@@ -470,7 +470,7 @@ class DocumentsModel extends Model
              ->where('received_status', NULL)
              ->where('status', 'torec')
              ->where('release_status',NULL )
-             ->orderBy('received_date', 'desc')->get();
+             ->orderBy('tracking_number', 'desc')->get();
 
         return $row;
     }
