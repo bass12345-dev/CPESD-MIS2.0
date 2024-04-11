@@ -256,8 +256,8 @@ class AllDocumentsController extends Controller
         $update = CustomModel::update_item($this->documents_table, array('tracking_number' => $tracking_number), $items);
         if ($update) {
             $query_row = CustomModel::q_get_where($this->documents_table,array('tracking_number' => $tracking_number))->first();
-            ActionLogsController::dts_add_action($action = 'Canceled Document No. '.$t,$user_type='admin',$_id = $row);
-            $update = CustomModel::update_item($this->documents_table, array('document_id' => $row), $items);
+            ActionLogsController::dts_add_action($action = 'Reverted Document No. '.$query_row->tracking_number,$user_type='admin',$_id = $query_row->document_id);
+            $update = CustomModel::update_item($this->documents_table, array('document_id' => $query_row->document_id), $items);
             $data = array('message' => 'Reverted Succesfully', 'response' => true);
         } else {
 
