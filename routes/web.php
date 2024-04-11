@@ -164,7 +164,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/r')->group(function () {
 
     //My Documents
     Route::post('/complete-document', [App\Http\Controllers\dts\receiver\ReceivedController::class, 'complete']);
-
+    
     Route::post('/a-n', [App\Http\Controllers\dts\receiver\IncomingController::class, 'add_note']);
 });
 

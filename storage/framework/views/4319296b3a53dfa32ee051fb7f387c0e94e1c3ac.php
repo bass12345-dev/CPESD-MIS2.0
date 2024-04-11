@@ -34,10 +34,8 @@
   function received_document(id,track) {
     let data = {
       id: id,
-      track : track
+      tracking_number : track
     };
-
-    
 
     var url = '/dts/us/receive-document';
 
@@ -46,14 +44,14 @@
       method: 'POST',
       data: data,
       dataType: 'json',
-      beforeSend: function() {
-        Swal.showLoading()
+      beforeSend : function(){
+            loader();
       },
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
       },
       success: function(data) {
-        
+        JsLoadingOverlay.hide();
         if(data.response) {
           Swal.fire({
                   position: "top-end",
@@ -67,11 +65,12 @@
           $('#forward_form').find('input[name=t_number]').val(data.tracking_number);
         }else {
           alert('something Wrong');
-          location.reload();
+          
+          // location.reload();
         }
       },
       error: function() {
-        Swal.close();
+        JsLoadingOverlay.hide();
         alert('something Wrong')
       }
 
