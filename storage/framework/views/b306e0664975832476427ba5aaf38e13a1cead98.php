@@ -6,11 +6,14 @@
 <?php echo $__env->make('dts.receiver.contents.received.sections.final_action_off_canvas', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
+<?php echo $__env->make('dts.includes.datatable_with_select', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
+
+//MULTIPLE ACTIONS
 $('button#delete').on('click', function(){
     var button_text = 'Delete selected items';
     var url = '/dts/delete-documents';
-    let items = get_selected_items();
+    let items = get_select_items_datatable();
     var data = {id : items};
 
     if(items.length  == 0){
@@ -26,58 +29,20 @@ $('button#cancel').on('click', function(){
 
    var button_text = 'Cancel selected items';
    var url = '/dts/cancel-documents';
-   let items = get_selected_items();
+   var items = get_select_items_datatable();
    var data = {id : items};
    if(items.length  == 0){
       alert('Please Select at least one')
     }else{
       delete_item(data,url,button_text);
    }
-
-
-});
-
-function get_selected_items(){
-
-   let items = [];
-   $('input[name=document_id]:checked').map(function(item){items.push($(this).val());});
-   return items;
-
-}
-
-
-
-
-
-$('a#forward_icon').on('click', function(){
-   $('input[name=id]').val($(this).data('history-id'));
-   $('input[name=t_number]').val($(this).data('tracking-number'));
-   $('.offcanvas-title').text('Document #' +$(this).data('tracking-number') )
 });
 
 
-$('#forward_form').on('submit', function (e) {
-   e.preventDefault();
-   var url = '/dts/complete-document';
-   var form = $(this).serialize();
-   add_item(form,url);
 
-});
 
-$('input[name="dates"]').daterangepicker();
 
-$('button#filter').on('click', function(){
-   var dates         = $('input[name="dates"]').val();
-   var document_type = $('select[name="select_document_types"]').val();
-   var document_status = $('select[name="select_document_status"]').val();
-   var date = dates.split(' - ');
-   var from = date[0];
-   var to = date[1];
-   
-   window.location.href = base_url + '/dts/admin/all-documents?from='+from+'&&to='+to+'&&type='+document_type+'&&status='+document_status;
-  
-});
-
+//INDIVIDUAL ACTIONS 
 
 $('a#cancel_document').on('click', function(){
 var t = $(this).data('tracking-number');
@@ -127,21 +92,33 @@ Swal.fire({
 });
 
 
-$('button#print_slips').on('click', function(){
 
-selected_items = get_selected_items();
+//FILTER
+
+$('input[name="dates"]').daterangepicker();
+
+$('button#filter').on('click', function(){
+   var dates         = $('input[name="dates"]').val();
+   var document_type = $('select[name="select_document_types"]').val();
+   var document_status = $('select[name="select_document_status"]').val();
+   var date = dates.split(' - ');
+   var from = date[0];
+   var to = date[1];
+   
+   window.location.href = base_url + '/dts/admin/all-documents?from='+from+'&&to='+to+'&&type='+document_type+'&&status='+document_status;
+  
+});
+
+
+//PRINT
+$('button#print_slips').on('click', function(){
+var selected_items = get_select_items_datatable();
 if(selected_items.length  == 0){
    alert('Please Select at least one')
 }else{
    var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
 }
 });
-function get_selected_items(){
-   let items = [];
-   $('input[name=document_id]:checked').map(function(item){items.push($(this).val());});
-   return items;
-
-   }
 
 </script>
 <?php $__env->stopSection(); ?>

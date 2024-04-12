@@ -40,10 +40,11 @@
       </div>
       </div> -->
 
-   <table class="table table-hover table-striped m-2 " id="datatables-buttons" style="width: 100%; ">
+   <table class="table table-hover table-striped m-2 " id="datatable_with_select" style="width: 100%; ">
       <thead>
          <tr>
-            <th class=""><input type="checkbox" name="check_all" value="true"></th>
+            <th></th>
+            <!-- <th class=""><input type="checkbox" name="check_all" value="true"></th> -->
             <th class="">#</th>
             <th class="">Tracking Number</th>
             <th class="">Document Name</th>
@@ -58,7 +59,8 @@
             $i = 1;
             foreach ($documents as $row) :?>
          <tr>
-            <td><input type="checkbox" name="document_id" value="<?php echo $row['document_id'] ?>"></td>
+            <td><?php echo e($row['document_id']); ?></td>
+            <!-- <td><input type="checkbox" name="document_id" value="<?php echo $row['document_id'] ?>"></td> -->
             <td>
                <?php echo $i++; ?>
             </td>

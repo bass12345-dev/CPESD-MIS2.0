@@ -4,6 +4,7 @@
 
 <script type="text/javascript">
 var base_url = '<?php echo url('/'); ?>';
+var table;
 </script>
 <script src=" {{ asset('assets/js/app.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
@@ -20,6 +21,7 @@ var base_url = '<?php echo url('/'); ?>';
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="https://pagination.js.org/dist/2.6.0/pagination.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-loading-overlay@1.1.0/dist/js-loading-overlay.min.js"></script>
+<script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
 <script>
 function reload_page() {
     location.reload();
@@ -131,26 +133,6 @@ $('form#update_password_strong').on('submit', function(e){
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Datatables with Buttons
-    var datatablesButtons = $("#datatables-buttons").DataTable({
-        responsive: true,
-        ordering: false,
-        
-
-        buttons: [{
-                extend: 'print',
-                title: 'All Documents'
-            },
-            {
-                extend: 'csv',
-            }
-
-        ],
-        // scrollX: true
-    });
-    datatablesButtons.buttons().container().appendTo("#datatables-buttons_wrapper .col-md-6:eq(0)");
-});
 
 
 

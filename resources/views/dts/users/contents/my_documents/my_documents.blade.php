@@ -13,8 +13,12 @@
 @include('dts.users.contents.my_documents.modals.update_document_modal')
 @endsection
 @section('js')
-
+@include('dts.includes.datatable_with_select')
 <script>
+
+
+
+
    $('a.update_document').on('click', function() {
       $('input[name=t_number]').val($(this).data('tracking-number'));
       $('input[name=document_name]').val($(this).data('name'));
@@ -69,7 +73,9 @@
       $('#print_slip_modal').modal('show');
 
      
-   })
+   });
+
+
 
 
 
@@ -89,15 +95,12 @@
 
    $('a#print_slips').on('click', function(){
 
-      selected_items = get_selected_items();
+      var selected_items = get_select_items_datatable();
       if(selected_items.length  == 0){
          alert('Please Select at least one')
       }else{
-         var a = window.open(base_url + '/dts/user/print-slips/?ids='+selected_items, '__blank');
+         var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
       }
-
-      
-
    });
 
   

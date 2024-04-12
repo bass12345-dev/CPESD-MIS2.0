@@ -36,7 +36,6 @@
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
-<script>
-</script>
+<?php echo $__env->make('dts.includes.datatable', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('dts.admin.layout.admin_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/dts/admin/contents/action_logs/action_logs.blade.php ENDPATH**/ ?>

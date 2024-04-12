@@ -12,6 +12,7 @@
 </div>
 @endsection
 @section('js')
+@include('dts.includes.datatable')
 <script>
 $('a#remove').on('click', function(){
    var id = $(this).data('id');

@@ -10,7 +10,7 @@
 </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
-
+<?php echo $__env->make('dts.includes.datatable_with_select', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
 
 
@@ -48,7 +48,7 @@
 
 $('a#received_documents').on('click', function(){
 
-selected_items = get_selected_items();
+selected_items = get_select_items_datatable();
 
 
 if(selected_items.length  == 0){

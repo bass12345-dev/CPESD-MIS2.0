@@ -12,6 +12,7 @@
 </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
+<?php echo $__env->make('dts.includes.datatable', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
 $('a#remove').on('click', function(){
    var id = $(this).data('id');

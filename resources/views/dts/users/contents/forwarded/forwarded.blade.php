@@ -12,7 +12,7 @@
 @include('dts.users.contents.forwarded.sections.remarks_update_modal')
 @endsection
 @section('js')
-
+@include('dts.includes.datatable')
 <script>
 
 

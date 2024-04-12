@@ -27,7 +27,7 @@
                     <option value="fr" class="bg-danger text-white">To Final Receiver</option>
                     <?php foreach ($users as $row) : ?>
                       <?php $is_disabled = $row->user_id == $user_data->user_id ? 'disabled' : ''   ?>
-                      <option value="{{$row->user_id}}" {{$is_disabled}}>{{$row->first_name}} {{$row->middle_name}} {{$row->last_name}} {{$row->extension}} </option>
+                      <option value="<?php echo e($row->user_id); ?>" <?php echo e($is_disabled); ?>><?php echo e($row->first_name); ?> <?php echo e($row->middle_name); ?> <?php echo e($row->last_name); ?> <?php echo e($row->extension); ?> </option>
                     <?php endforeach; ?>
 
                   </select>
@@ -51,4 +51,4 @@
 
     </div>
   </div>
-</div>
+</div><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/dts/users/contents/received/sections/forward_modal.blade.php ENDPATH**/ ?>

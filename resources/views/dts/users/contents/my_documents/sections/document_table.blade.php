@@ -5,10 +5,11 @@
       <hr>
    </div>
    <!-- @include('dts.users.contents.my_documents.sections.filter.filter') -->
-   <table class="table table-hover table-striped " id="datatables-buttons" style="width: 100%; "  >
+   <table class="table table-hover table-striped " id="datatable_with_select" style="width: 100%; "  >
       <thead>
          <tr>
-            <th class=""><input type="checkbox" name="check_all" value="true"></th>
+            <th></th>
+            <!-- <th class=""><input type="checkbox" name="check_all" value="true"></th> -->
             <th >#</th>
             <th >Tracking Number</th>
             <th >Document Name</th>
@@ -26,7 +27,8 @@
               
               ?>
          <tr>
-            <td><input type="checkbox" name="document_id" value="<?php echo $row['document_id'] ?>"></td>
+            <td><?php echo $row['document_id'] ?></td>
+            <!-- <td><input type="checkbox" name="document_id" value="<?php echo $row['document_id'] ?>"></td> -->
             <td>{{$i++}}</td>
             <td><?php echo $row['tracking_number']; ?></td>
             <td><a href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}" data-toggle="tooltip" data-placement="top" title="View <?php echo $row['tracking_number'] ?>"><?php echo $row['document_name']; ?></a> </td>
@@ -73,4 +75,5 @@
          <?php endforeach; ?>    
       </tbody>
    </table>
+
 </div>

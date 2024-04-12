@@ -1,22 +1,28 @@
 <div class="card flex-fill p-3">
    <div class="card-header">
       <h5 class="card-title mb-0">Documents</h5>
+      <button class="btn btn-primary mt-2" id="multiple_forward">Forward</button> 
+      <button class="btn btn-danger mt-2">Received Error</button> 
+      <hr>
    </div>
-   <table class="table table-hover table-striped " id="datatables-buttons" style="width: 100%; ">
+   <table class="table table-hover table-striped " id="datatable_with_select" style="width: 100%; ">
       <thead>
          <tr>
-
-            <th class="">Tracking Number</th>
-            <th class="">Document Name</th>
-            <th class="">Document Type</th>
-            <th class="">Remarks</th>
-            <th class="">Received Date - Time</th>
-            <th class="">Actions</th>
+            <th></th>
+            <th>#</th>
+            <th>Tracking Number</th>
+            <th>Document Name</th>
+            <th>Document Type</th>
+            <th>Remarks</th>
+            <th>Received Date - Time</th>
+            <th>Actions</th>
          </tr>
       </thead>
       <tbody>
-         <?php foreach ($received_documents as $row) : ?>
+         <?php $i=1; foreach ($received_documents as $row) : ?>
             <tr>
+               <td><?php echo $row['history_id'].'-'.$row['tracking_number'] ?></td>
+               <td><?php echo e($i++); ?></td>
                <td><?php echo e($row['tracking_number']); ?></td>
                <td><a href="<?php echo e(url('/dts/user/view?tn='.$row['tracking_number'])); ?>" data-toggle="tooltip" data-placement="top" title="View <?php echo $row['tracking_number'] ?>"><?php echo $row['document_name']; ?></a></td>
                <td><?php echo e($row['type_name']); ?></td>

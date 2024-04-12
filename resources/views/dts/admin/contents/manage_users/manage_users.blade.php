@@ -10,7 +10,7 @@
 
 @endsection
 @section('js')
-
+@include('dts.includes.datatable')
 <script>
 $('li.set-inactive').on('click', function(){
 var id = $(this).data('id');

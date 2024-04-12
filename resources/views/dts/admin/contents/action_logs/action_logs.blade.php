@@ -36,6 +36,5 @@
 
 @endsection
 @section('js')
-<script>
-</script>
+@include('dts.includes.datatable')
 @endsection

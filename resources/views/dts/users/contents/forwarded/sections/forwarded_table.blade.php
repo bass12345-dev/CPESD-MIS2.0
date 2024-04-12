@@ -5,20 +5,21 @@
          <table class="table table-hover table-striped " id="datatables-buttons" style="width: 100%; "  >
             <thead>
                <tr>
-                
-                  <th class="">Tracking Number</th>
-                  <th class="">Document Name</th>
-                  <th class="">Forwarded To</th>
-                  <th class="">Document Type</th>
-                  <th class="">Remarks</th>
-                  <th class="">Released Date - Time</th>
+                  <th>#</th>
+                  <th>Tracking Number</th>
+                  <th>Document Name</th>
+                  <th>Forwarded To</th>
+                  <th>Document Type</th>
+                  <th>Remarks</th>
+                  <th>Released Date - Time</th>
                   <th>Actions</th>
                </tr>
             </thead>
             <tbody>
 
-              <?php foreach ($forwarded_documents as $row) :  ?>
+              <?php $i = 1; foreach ($forwarded_documents as $row) :  ?>
                 <tr>
+                  <td>{{$i++}}</td>
                   <td>{{$row['tracking_number']}}</td>
                   <td><a href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}" data-toggle="tooltip" data-placement="top" title="View <?php echo $row['tracking_number'] ?>"><?php echo $row['document_name']; ?></a></td>
                   <td>{{$row['forwarded_to']}}</td>

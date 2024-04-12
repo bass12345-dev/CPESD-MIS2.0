@@ -10,7 +10,7 @@
 </div>
 @endsection
 @section('js')
-
+@include('dts.includes.datatable_with_select')
 <script>
 
 
@@ -48,7 +48,7 @@
 
 $('a#received_documents').on('click', function(){
 
-selected_items = get_selected_items();
+selected_items = get_select_items_datatable();
 
 
 if(selected_items.length  == 0){

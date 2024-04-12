@@ -4,10 +4,11 @@
                <a class="btn btn-success" href="javascript:;" id="received_documents"><i class="fas fa-hand"></i> Receive </a>
                <hr>
             </div>
-         <table class="table table-hover table-striped " id="datatables-buttons" style="width: 100%; "  >
+         <table class="table table-hover table-striped " id="datatable_with_select" style="width: 100%; "  >
             <thead>
                <tr>
-               <th class=""><input type="checkbox" name="check_all" value="true"></th>
+                  <th></th>
+               <!-- <th class=""><input type="checkbox" name="check_all" value="true"></th> -->
                   <th>#</th>
                   <!-- <th class="">Action</th> -->
                   <th>Tracking Number</th>
@@ -23,7 +24,8 @@
 
               <?php $i = 1; foreach ($incoming_documents as $row) :  ?>
                 <tr>
-                <td><input type="checkbox" name="document_id" value="<?php echo $row['history_id'].'-'.$row['tracking_number'] ?>"></td>
+                  <td><?php echo $row['history_id'].'-'.$row['tracking_number'] ?></td>
+                <!-- <td><input type="checkbox" name="document_id" value="<?php echo $row['history_id'].'-'.$row['tracking_number'] ?>"></td> -->
                   <td><?php echo e($i++); ?></td>
                   <!-- <td>    
                      <a class="btn btn-success received_document" data-track="<?php echo e($row['tracking_number']); ?>"  data-id="<?php echo e($row['history_id']); ?>"><i class="fas fa-hand"></i></a>       

@@ -9,11 +9,33 @@
    </div>
 </div>
 @include('dts.users.contents.received.sections.forward_offcanvas')
-
+@include('dts.users.contents.received.sections.forward_modal')
 @endsection
 @section('js')
-
+@include('dts.includes.datatable_with_select')
 <script>
+
+//MULTIPLE ACTIONS
+$('button#multiple_forward').on('click', function(){
+   $('#forward_modal').modal('show');
+   let array = get_select_items_datatable();
+   let html = '';
+   $('input[name=history_track1]').val(array);
+   array.forEach(element => {
+      const myArray = element.split("-");
+      const first = myArray[0];
+      const second = myArray[1];
+      html += '<li class="text-danger h3">'+second+'</li>';
+   });
+   $('.display_tracking_number').html(html);
+});
+
+
+
+
+
+
+//INDIVIDUAL ACTIONS
 $('a#forward_icon').on('click', function(){
    $('input[name=history_id]').val($(this).data('history-id'));
    $('input[name=tracking_number]').val($(this).data('tracking-number'));

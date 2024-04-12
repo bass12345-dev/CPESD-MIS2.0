@@ -13,6 +13,7 @@
 @include('dts.users.contents.my_documents.modals.print_modal')
 @endsection
 @section('js')
+@include('dts.includes.datatable')
 <script type="text/javascript">
    $('#add_document').on('submit', function(e) {
       e.preventDefault();

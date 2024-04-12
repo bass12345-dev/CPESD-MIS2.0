@@ -12,7 +12,7 @@
 <?php echo $__env->make('dts.users.contents.forwarded.sections.remarks_update_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
-
+<?php echo $__env->make('dts.includes.datatable', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
 
 
