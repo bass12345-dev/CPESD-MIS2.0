@@ -31,6 +31,29 @@ $('button#multiple_forward').on('click', function(){
 });
 
 
+$('#forward_form2').on('submit', function (e) {
+   e.preventDefault();
+   var url = '/dts/us/forward-documents';
+   var form = $(this).serialize();
+
+   Swal.fire({
+     title: "Are you sure?",
+     text: "",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Foward Document"
+   }).then((result) => {
+     if (result.isConfirmed) {
+      add_item(form,url);
+      $('#forward_form2').find('button').attr('disabled',true);
+     }
+   });
+ 
+});
+
+
 
 
 
