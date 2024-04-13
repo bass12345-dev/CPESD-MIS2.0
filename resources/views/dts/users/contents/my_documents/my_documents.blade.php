@@ -99,7 +99,7 @@
       if(selected_items.length  == 0){
          alert('Please Select at least one')
       }else{
-         var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
+         var a = window.open(base_url + '/dts/user/print-slips/?ids='+selected_items, '__blank');
       }
    });
 

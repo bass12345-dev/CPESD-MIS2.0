@@ -19,7 +19,7 @@
 							 if(session('is_receiver') == 'yes') {
 
 								echo '<li class="nav-item ">
-							<a href="'.url("/dts/receiver/dashboard").'" class="btn btn-success">Receiver\'s Panel  <span class="badge bg-danger to_receive">0</span></a>
+							<a href="'.url("/dts/receiver/dashboard").'" class="btn btn-success">Final Receiver\'s Panel  <span class="badge bg-danger to_receive">0</span></a>
 						</li>';
 							}
 						 ?>
