@@ -128,6 +128,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     Route::post('/receive-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive']);
     Route::post('/receive-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive_documents']);
     Route::post('/forward-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'forward']);
+    Route::post('/forward-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'forward_documents']);
     Route::post('/update-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'update']);
     Route::post('/ck', [App\Http\Controllers\dts\user\ProfileController::class, 'check']);
     //Update User Password
@@ -146,6 +147,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
 
     //Received Error
     Route::post('/r-e', [App\Http\Controllers\dts\user\ReceivedController::class, 'received_error']);
+    Route::post('/r-es', [App\Http\Controllers\dts\user\ReceivedController::class, 'received_errors']);
 });
 
 

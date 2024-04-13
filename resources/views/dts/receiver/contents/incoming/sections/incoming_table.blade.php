@@ -21,13 +21,13 @@
                 <tr>
                   <td>    
                      <a class="btn btn-success received_document" data-track="{{$row['tracking_number']}}"  data-id="{{$row['history_id']}}"><i class="fas fa-hand"></i></a> 
-                     <a class="btn btn-secondary add-note" data-note="{{$row['note']}}" data-id="{{$row['document_id']}}"><i class="fas fa-sticky-note  "></i></a>       
+                     <!-- <a class="btn btn-secondary add-note" data-note="{{$row['note']}}" data-id="{{$row['document_id']}}"><i class="fas fa-sticky-note  "></i></a>        -->
                   </td>
                   <td>{{$row['tracking_number']}}</td>
                   <td><a href="{{url('/dts/user/view?tn='.$row['tracking_number'])}}" data-toggle="tooltip" data-placement="top" title="View <?php echo $row['tracking_number'] ?>"><?php echo $row['document_name']; ?></a></td>
                   <td>{{$row['from']}}</td>
                   <td>{{$row['type_name']}}</td>
-                  <td><a href="javascript:;" id="view_remarks" data-remarks="{{$row['remarks']}}" >View Remarks</a></td>
+                  <td>{{$row['remarks']}}</td>
                   <td>{{$row['released_date']}}</td>
                  
                 </tr>

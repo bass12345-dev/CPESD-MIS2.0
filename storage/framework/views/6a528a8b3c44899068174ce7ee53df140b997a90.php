@@ -2,7 +2,7 @@
    <div class="card-header">
       <h5 class="card-title mb-0">Documents</h5>
       <button class="btn btn-primary mt-2" id="multiple_forward">Forward</button> 
-      <button class="btn btn-danger mt-2">Received Error</button> 
+      <button class="btn btn-danger mt-2" id="received_error">Received Error</button> 
       <hr>
    </div>
    <table class="table table-hover table-striped " id="datatable_with_select" style="width: 100%; ">
@@ -15,7 +15,7 @@
             <th>Document Type</th>
             <th>Remarks</th>
             <th>Received Date - Time</th>
-            <th>Actions</th>
+            <!-- <th>Actions</th> -->
          </tr>
       </thead>
       <tbody>
@@ -28,7 +28,7 @@
                <td><?php echo e($row['type_name']); ?></td>
                <td><a href="javascript:;" id="view_remarks" data-remarks="<?php echo e($row['remarks']); ?>">View Remarks</a></td>
                <td><?php echo e($row['received_date']); ?></td>
-               <td>
+               <!-- <td>
                   <div class="btn-group dropstart">
                      <i class="fa fa-ellipsis-v " class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
                      <ul class="dropdown-menu">
@@ -37,7 +37,7 @@
                         <li><a class="dropdown-item text-danger" id="received_error" href="javascript:;" data-tracking-number="<?php echo e($row['tracking_number']); ?>" data-history-id="<?php echo e($row['history_id']); ?>" >Received Error</a></li>
                      </ul>
                   </div>
-               </td>
+               </td> -->
             </tr>
          <?php endforeach; ?>
       </tbody>

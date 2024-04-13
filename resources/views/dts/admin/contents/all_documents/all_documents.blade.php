@@ -91,6 +91,22 @@ Swal.fire({
 
 });
 
+$('a#forward_icon').on('click', function(){
+   $('input[name=id]').val($(this).data('history-id'));
+   $('input[name=t_number]').val($(this).data('tracking-number'));
+   $('.offcanvas-title').text('Document #' +$(this).data('tracking-number') )
+});
+
+
+$('#forward_form').on('submit', function (e) {
+   e.preventDefault();
+   var url = '/dts/complete-document';
+   var form = $(this).serialize();
+   add_item(form,url);
+
+});
+
+
 
 
 //FILTER

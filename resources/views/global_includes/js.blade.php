@@ -141,7 +141,7 @@ function highlightText(query){
     
 
     const searchValue = query.trim();
-    const contentElement = document.querySelector('.data-container');
+    const contentElement = document.querySelector('.details');
 
     
     if (searchValue !== '') {
@@ -200,7 +200,7 @@ function add_item(data, url) {
         },
         error: function() {
             alert('something Wrong');
-            location.reload();
+            // location.reload();
             JsLoadingOverlay.hide();
         }
 
@@ -302,7 +302,7 @@ function delete_item(id, url, button_text = '', text = '') {
                 },
                 error: function() {
                     alert('something Wrong');
-                    location.reload();
+                    // location.reload();
                     JsLoadingOverlay.hide();
 
                 }

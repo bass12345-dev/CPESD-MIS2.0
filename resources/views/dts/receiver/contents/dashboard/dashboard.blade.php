@@ -3,6 +3,7 @@
 @section('content')
 @include('global_includes.title')
 @include('dts.receiver.contents.dashboard.sections.count_section')
+@include('dts.receiver.contents.dashboard.sections.section2')
 @endsection
 @section('js')
 

@@ -8,7 +8,7 @@
 @section('js')
 
 
-
+@include('dts.includes.datatable')
 <script type="text/javascript">
 
 $('a#forward_icon').on('click', function(){

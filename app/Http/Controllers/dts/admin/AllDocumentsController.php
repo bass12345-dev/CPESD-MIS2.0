@@ -205,8 +205,8 @@ class AllDocumentsController extends Controller
 
                 $check = CustomModel::q_get_where($this->documents_table,array('document_id' => $row))->first();
                 if($check->doc_status != 'completed'){
-                    ActionLogsController::dts_add_action($action = 'Canceled Document No. '.$check->tracking_number,$user_type='admin',$_id = $row);
                     $update = CustomModel::update_item($this->documents_table, array('document_id' => $row), $items);
+                    ActionLogsController::dts_add_action($action = 'Canceled Document No. '.$check->tracking_number,$user_type='admin',$_id = $row);
                 }else {
                     array_push($arr, $check->document_id);
                 }

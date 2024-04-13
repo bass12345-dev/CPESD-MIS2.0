@@ -55,8 +55,33 @@ class ReceivedController extends Controller
        
         $history_id = $request->input('history_id');
         $tracking_number = $request->input('tracking_number');
-        
+        $resp = $this->received_error_process($history_id,$tracking_number);
+        return response()->json($resp);
 
+    }
+
+    public function received_errors(Request $request){
+        
+        $items = $request->input('id')['items'];
+
+        if (is_array($items)) {
+
+            foreach ($items as $row) {
+
+                $x = explode('-', $row);
+
+                $history_id = $x[0];
+                $tracking_number = $x[1];
+                $resp = $this->received_error_process($history_id,$tracking_number);
+
+            }
+        }
+        return response()->json($resp);
+    }
+
+
+
+    private function received_error_process($history_id,$tracking_number){
         $items  = array(
 
             'status'            => 'torec',
@@ -78,7 +103,7 @@ class ReceivedController extends Controller
         } else {
             $data = array('message' => 'This Document is cancelled', 'response' => false);
         }
-        return response()->json($data);
 
+        return $data;
     }
 }

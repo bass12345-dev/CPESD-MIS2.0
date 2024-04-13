@@ -10,7 +10,7 @@
 
 
 @section('js')
-
+@include('dts.includes.datatable')
 <script type="text/javascript">
   $('a.received_document').on('click', function() {
 

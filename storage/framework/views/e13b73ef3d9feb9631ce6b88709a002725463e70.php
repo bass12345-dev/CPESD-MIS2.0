@@ -8,7 +8,7 @@
 <?php $__env->startSection('js'); ?>
 
 
-
+<?php echo $__env->make('dts.includes.datatable', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script type="text/javascript">
 
 $('a#forward_icon').on('click', function(){

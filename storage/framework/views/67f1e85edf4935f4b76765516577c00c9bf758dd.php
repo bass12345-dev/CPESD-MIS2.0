@@ -24,11 +24,11 @@
             </a>
 					</li> -->
 
-			<li class="sidebar-item <?= $segments[2] == 'all-documents' ? 'active' : '' ?>">
+			<!-- <li class="sidebar-item <?= $segments[2] == 'all-documents' ? 'active' : '' ?>">
 				<a class="sidebar-link" href="<?php echo e(url('/dts/receiver/all-documents')); ?>">
 					<i class="align-middle" data-feather="file"></i> <span class="align-middle">All Documents</span>
 				</a>
-			</li>
+			</li> -->
 
 			<li class="sidebar-item <?= $segments[2] == 'incoming' ? 'active' : '' ?>">
 				<a class="sidebar-link" href="<?php echo e(url('/dts/receiver/incoming')); ?>">

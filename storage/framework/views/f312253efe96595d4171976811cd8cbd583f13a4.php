@@ -56,7 +56,7 @@
             showNavigator: true,
             showSizeChanger: true,
             callback: function(data, pagination) {
-              var html = simpleTemplating(data,q);
+              var html = simpleTemplating(data);
               $('.data-container').html(html);
               highlightText(q);
             }
@@ -84,7 +84,7 @@
     $.each(data, function(index, item) {
       
       html += '<li class="list-group-item">\
-      <details open>\
+      <details class="details" open>\
           <summary ><a href="'+ base_url + '/dts/user/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
           <p>'+item.document_description+'</p>\
         </details>\

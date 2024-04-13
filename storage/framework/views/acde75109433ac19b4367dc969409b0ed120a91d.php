@@ -17,17 +17,26 @@
 
 //MULTIPLE ACTIONS
 $('button#multiple_forward').on('click', function(){
-   $('#forward_modal').modal('show');
+   
+   
    let array = get_select_items_datatable();
    let html = '';
-   $('input[name=history_track1]').val(array);
-   array.forEach(element => {
-      const myArray = element.split("-");
-      const first = myArray[0];
-      const second = myArray[1];
-      html += '<li class="text-danger h3">'+second+'</li>';
-   });
-   $('.display_tracking_number').html(html);
+
+   if(array.length > 0){
+      $('#forward_modal').modal('show');
+      $('input[name=history_track1]').val(array);
+      array.forEach(element => {
+         const myArray = element.split("-");
+         const first = myArray[0];
+         const second = myArray[1];
+         html += '<li class="text-danger h3">'+second+'</li>';
+      });
+      $('.display_tracking_number').html(html);
+   }else {
+      alert('Please Select at least one')
+   }
+
+  
 });
 
 
@@ -53,6 +62,24 @@ $('#forward_form2').on('submit', function (e) {
  
 });
 
+
+
+$('button#received_error').on('click', function(){
+   
+   selected_items = get_select_items_datatable();
+
+
+      if(selected_items.length  == 0){
+         alert('Please Select at least one')
+      }else{
+         var url = '/dts/us/r-es';
+         let form = {
+               items : selected_items
+         }
+         delete_item(form, url, button_text = 'Submit', text = 'The documents that you\'ve selected will be back to incoming section')
+      
+      }
+});
 
 
 
