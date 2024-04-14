@@ -9,4 +9,5 @@
 </div>
 @endsection
 @section('js')
+@include('dts.includes.datatable')
 @endsection

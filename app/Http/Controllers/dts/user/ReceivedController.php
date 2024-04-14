@@ -99,7 +99,7 @@ class ReceivedController extends Controller
                 $where = array('tracking_number' => $tracking_number);
                 $update_outgoing = CustomModel::update_item($this->documents_table,$where,$info);
                 ActionLogsController::dts_add_action($action = 'Outgoing Document No. '.$r->tracking_number,$user_type='user',$_id = $r->document_id);
-                $data = array('message' => 'Completed Succesfully', 'response' => true);
+                $data = array('message' => 'Updated Succesfully', 'response' => true);
 
             }else {
                 $data = array('message' => 'This Document is cancelled', 'response' => false);

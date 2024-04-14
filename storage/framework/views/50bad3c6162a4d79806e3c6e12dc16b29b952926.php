@@ -34,7 +34,7 @@
         ],
         // scrollX: true
     });
-    table.buttons().container().appendTo("#datatables-buttons_wrapper .col-md-6:eq(0)");
+    table.buttons().container().appendTo("#datatable_with_select_wrapper .col-md-6:eq(0)");
 });
 
 function get_select_items_datatable(){

@@ -3,7 +3,7 @@
       <h5 class="card-title mb-0">Documents</h5>
       <button class="btn btn-primary mt-2" id="multiple_forward">Forward</button> 
       <button class="btn btn-danger mt-2" id="received_error">Received Error</button> 
-      <button class="btn btn-secondary mt-2" id="outgoing">Outgoing</button> 
+      <!-- <button class="btn btn-secondary mt-2" id="outgoing">Outgoing</button>  -->
       <hr>
    </div>
    <table class="table table-hover table-striped " id="datatable_with_select" style="width: 100%; ">

@@ -6,33 +6,23 @@
 @endsection
 
 @section('js')
+@include('dts.includes.datatable_with_select')
 <script>
 
 
-$('input[name=check_all]').on('change', function(){
 
-var check = $('input[name=check_all]:checked').val();
-if(check == 'true'){
-   $('input[name=person_id]').prop('checked', true);
-}else {
-   $('input[name=person_id]').prop('checked', false);
-} 
-});
 
 $('button#remove').on('click', function(){
-    let items = [];
-    var button_text = 'Remove selected items';
-    $('input[name=person_id]:checked').map(function(item){
-
-        items.push($(this).val());
-    });
+    var button_text = 'Submit';
+    text = 'Selected individuals will be stored in restore section';
+    let items = get_select_items_datatable();
 
     var url = '/wl/ch-stat';
     var data = {
                 id : items,
                 status : 'inactive'
     };
-    delete_item(data,url,button_text);
+    delete_item(data,url,button_text,text);
 });
 </script>
 @endsection

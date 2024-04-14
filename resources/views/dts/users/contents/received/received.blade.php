@@ -18,8 +18,6 @@
 
 //MULTIPLE ACTIONS
 $('button#multiple_forward').on('click', function(){
-   
-   
    let array = get_select_items_datatable();
    let html = '';
 
@@ -36,8 +34,6 @@ $('button#multiple_forward').on('click', function(){
    }else {
       alert('Please Select at least one')
    }
-
-  
 });
 
 

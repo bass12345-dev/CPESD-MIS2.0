@@ -31,7 +31,7 @@
 
 			<li class="sidebar-item <?= $segments[2] == 'restore' ? 'active' : '' ?>">
 				<a class="sidebar-link" href="{{url('/watchlisted/admin/restore')}}">
-					<i class="fa fa-refresh align-middle"></i> <span class="align-middle">Removed</span>
+					<i class="fa fa-refresh align-middle"></i> <span class="align-middle">Restore</span>
 				</a>
 			</li>
 

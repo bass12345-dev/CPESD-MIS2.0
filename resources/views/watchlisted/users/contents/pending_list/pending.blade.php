@@ -9,6 +9,7 @@
 </div>
 @endsection
 @section('js')
+@include('dts.includes.datatable_with_select')
 <script>
 
 
@@ -16,7 +17,7 @@
 
       var button_text = 'Delete selected items';
       var url = '/wl/user/d-p';
-      let items = get_selected_items();
+      let items = get_select_items_datatable();
 
       var data = {
          id: items

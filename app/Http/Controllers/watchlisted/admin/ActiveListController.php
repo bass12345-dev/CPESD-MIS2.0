@@ -23,7 +23,7 @@ class ActiveListController extends Controller
     }
     public function index()
     {
-        $data['title'] = 'List';
+        $data['title'] = 'Active List';
         $data['list'] = CustomModel::q_get_where_order($this->person_table, array('status' => 'active'), 'first_name', 'asc')->get();
         return view('watchlisted.admin.contents.list.list')->with($data);
     }

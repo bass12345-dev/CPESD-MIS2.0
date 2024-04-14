@@ -6,13 +6,15 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
+<?php echo $__env->make('dts.includes.datatable', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('dts.includes.datatable_with_select', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
 
 $('button#delete').on('click', function() {
 
 var button_text = 'Delete selected items';
 var url = '/wl/delete';
-let items = get_selected_items();
+let items = get_select_items_datatable();
 
 var data = {
    id: items
@@ -28,7 +30,7 @@ $('button#approve').on('click', function() {
 
 var button_text = 'Approve selected items';
 var url = '/wl/app-p';
-let items = get_selected_items();
+let items = get_select_items_datatable();
 
 var data = {
    id: items
