@@ -102,6 +102,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function () {
     Route::get('/incoming', [App\Http\Controllers\dts\user\IncomingController::class, 'index']);
     Route::get('/received', [App\Http\Controllers\dts\user\ReceivedController::class, 'index']);
     Route::get('/forwarded', [App\Http\Controllers\dts\user\ForwardedController::class, 'index']);
+    Route::get('/outgoing', [App\Http\Controllers\dts\user\OutgoingController::class, 'index']);
     Route::get('/view', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'index']);
 
     Route::get('/action-logs', [App\Http\Controllers\dts\user\ActionLogsController::class, 'index']);
@@ -148,6 +149,8 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     //Received Error
     Route::post('/r-e', [App\Http\Controllers\dts\user\ReceivedController::class, 'received_error']);
     Route::post('/r-es', [App\Http\Controllers\dts\user\ReceivedController::class, 'received_errors']);
+
+    Route::post('/out-d', [App\Http\Controllers\dts\user\ReceivedController::class, 'outgoing_documents']);
 });
 
 

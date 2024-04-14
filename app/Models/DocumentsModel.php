@@ -429,6 +429,7 @@ class DocumentsModel extends Model
             ->where('release_status',NULL )
             ->where('status' , 'received')
             ->where('doc_status'  ,'!=', 'cancelled')
+            ->where('doc_status'  ,'!=', 'outgoing')
             // ->where('documents.destination_type', 'complex')
             ->where('to_receiver' , 'no')
             ->orderBy('tracking_number', 'desc')->get();

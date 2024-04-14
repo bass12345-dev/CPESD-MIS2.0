@@ -49,6 +49,12 @@
                 </a>
             </li>
 
+            <li class="sidebar-item <?= $segments[2] == 'outgoing' ? 'active' : '' ?>">
+                <a class="sidebar-link" href="<?php echo e(url('/dts/user/outgoing')); ?>">
+                    <i class="align-middle" data-feather="arrow-up"></i> <span class="align-middle">Outgoing</span>
+                </a>
+            </li>
+
             <li class="sidebar-item <?= $segments[2] == 'action-logs' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="<?php echo e(url('/dts/user/action-logs')); ?>">
                     <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Action Logs</span>

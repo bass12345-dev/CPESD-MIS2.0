@@ -51,7 +51,7 @@
           simpleTemplating(data);
           $('.pagination-container').pagination({
             dataSource: data,
-            pageSize:10,
+            pageSize:25,
             showPageNumbers: true,
             showNavigator: true,
             showSizeChanger: true,
@@ -86,6 +86,7 @@
       html += '<li class="list-group-item">\
       <details class="details" open>\
           <summary ><a href="'+ base_url + '/dts/user/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
+          <b><span>#'+item.tracking_number+'</span></b>\
           <p>'+item.document_description+'</p>\
         </details>\
       </li>';

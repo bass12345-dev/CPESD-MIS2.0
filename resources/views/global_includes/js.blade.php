@@ -141,7 +141,7 @@ function highlightText(query){
     
 
     const searchValue = query.trim();
-    const contentElement = document.querySelector('.details');
+    const contentElement = document.querySelector('.data-container');
 
     
     if (searchValue !== '') {

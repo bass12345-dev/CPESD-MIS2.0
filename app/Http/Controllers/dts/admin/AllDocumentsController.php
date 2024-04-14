@@ -126,6 +126,9 @@ class AllDocumentsController extends Controller
                     $status = '<span class="badge p-2 bg-warning">Canceled</span>';
                 break;
             
+            case 'outgoing': 
+                    $status = '<span class="badge p-2 bg-secondary">Outgoing</span>';
+                break;
             default:
                 # code...
                 break;

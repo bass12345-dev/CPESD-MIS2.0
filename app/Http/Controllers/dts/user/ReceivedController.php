@@ -79,6 +79,36 @@ class ReceivedController extends Controller
         return response()->json($resp);
     }
 
+    public function outgoing_documents(Request $request){
+
+        $items = $request->input('history_track2');
+        $note  = $request->input('note');
+        $array      = explode(',',$items);
+
+        foreach ($array as $row) {
+
+            $x                  = explode('-', $row);
+            $history_id         = $x[0];
+            $tracking_number    = $x[1];
+            $r                  = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tracking_number))->first();
+            if ($r->doc_status != 'cancelled') {
+                $info = array(
+                            'doc_status' => 'outgoing',
+                            'note'       => $note
+                );
+                $where = array('tracking_number' => $tracking_number);
+                $update_outgoing = CustomModel::update_item($this->documents_table,$where,$info);
+                ActionLogsController::dts_add_action($action = 'Outgoing Document No. '.$r->tracking_number,$user_type='user',$_id = $r->document_id);
+                $data = array('message' => 'Completed Succesfully', 'response' => true);
+
+            }else {
+                $data = array('message' => 'This Document is cancelled', 'response' => false);
+            }
+           
+        }
+        return response()->json($data);
+    }
+
 
 
     private function received_error_process($history_id,$tracking_number){

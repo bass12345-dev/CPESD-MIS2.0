@@ -10,6 +10,7 @@
 </div>
 <?php echo $__env->make('dts.users.contents.received.sections.forward_offcanvas', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('dts.users.contents.received.sections.forward_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('dts.users.contents.received.sections.outgoing_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
 <?php echo $__env->make('dts.includes.datatable_with_select', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -76,9 +77,54 @@ $('button#received_error').on('click', function(){
          let form = {
                items : selected_items
          }
+       
          delete_item(form, url, button_text = 'Submit', text = 'The documents that you\'ve selected will be back to incoming section')
-      
       }
+});
+
+
+$('button#outgoing').on('click', function(){
+   
+   let array = get_select_items_datatable();
+   let html = '';
+
+   if(array.length > 0){
+      $('#outgoing_modal').modal('show');
+      $('input[name=history_track2]').val(array);
+      array.forEach(element => {
+         const myArray = element.split("-");
+         const first = myArray[0];
+         const second = myArray[1];
+         html += '<li class="text-danger h3">'+second+'</li>';
+      });
+      $('.display_tracking_number1').html(html);
+   }else {
+      alert('Please Select at least one')
+   }
+
+});
+
+
+$('#outgoing_form').on('submit', function (e) {
+   e.preventDefault();
+   var url = '/dts/us/out-d';
+   var form = $(this).serialize();
+
+   Swal.fire({
+     title: "Are you sure?",
+     text: "",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Submit"
+   }).then((result) => {
+     if (result.isConfirmed) {
+      add_item(form,url);
+      $('#outgoing_form').find('button').attr('disabled',true);
+     }
+   });
+ 
 });
 
 
