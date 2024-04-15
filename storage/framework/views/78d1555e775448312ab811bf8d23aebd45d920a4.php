@@ -17,6 +17,54 @@
 <script>
 
 
+   $(document).ready(function(){
+      var document_table = $("#my_document_table").DataTable({
+          responsive: true,
+         ordering: false,
+         processing: true,
+         searchDelay: 500,
+
+         pageLength: 25,
+         language: { "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="<?php echo e(asset("assets/img/peso_logo.png")); ?>"></div>' },
+         layout: {
+        topStart: {
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+        }
+    },
+  
+            ajax: {
+                url: "https://preview.keenthemes.com/api/datatables.php",
+            },
+            columns: [
+                { data: 'RecordID' },
+                { data: 'Name' },
+                { data: 'Email' },
+                { data: 'Company' },
+                { data: 'CreditCardNumber' },
+                { data: 'Datetime' },
+                { data: 'Datetime' },
+                { data: null },
+            ],
+
+            'columnDefs': [
+         {
+            'targets': 0,
+            'checkboxes': {
+               'selectRow': true
+            }
+         }
+      ],
+
+      'select': {
+         'style': 'multi'
+      },
+         
+         
+
+      });
+      
+   })
+
 
 
    $('a.update_document').on('click', function() {
