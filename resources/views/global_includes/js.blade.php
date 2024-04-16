@@ -21,7 +21,8 @@ var table;
 <script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-
+<script src="https://cdn.datatables.net/select/2.0.0/js/dataTables.select.js"></script>
+<script src="https://cdn.datatables.net/select/2.0.0/js/select.dataTables.js"></script>
 
 <script>
 function reload_page() {

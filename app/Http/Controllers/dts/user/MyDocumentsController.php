@@ -32,10 +32,45 @@ class MyDocumentsController extends Controller
     public function index()
     {
         $data['title'] = 'My Documents';
-        $data['documents'] = $this->get_all_documents();
+        // $data['documents'] = $this->get_all_documents();
         $data['document_types'] = CustomModel::q_get_order($this->document_types_table, 'type_name', 'asc')->get();
         $data['offices'] = CustomModel::q_get_order($this->office_table, 'office', 'asc')->get();
         return view('dts.users.contents.my_documents.my_documents')->with($data);
+    }
+
+
+    public function get_my_documents(){
+
+        $items = array();
+        $rows = DocumentsModel::get_my_documents();
+        $i = 1;
+        foreach ($rows as $value => $key) {
+    
+                $delete_button = CustomModel::q_get_where($this->history_table, array('t_number' => $key->tracking_number))->count() > 1 ? true : false;
+                $status = $this->check_status($key->doc_status);
+    
+                $items['data'][] = array(
+                    'number' => $i++,
+                    'tracking_number' => $key->tracking_number,
+                    'document_name' => $key->document_name,
+                    'type_name' => $key->type_name,
+                    'created' => date('M d Y - h:i a', strtotime($key->d_created)),
+                    'a' => $delete_button,
+                    'document_id' => $key->document_id,
+                    'is' => $status,
+                    'doc_type' => $key->doc_type,
+                    'description' => $key->document_description,
+                    'destination_type' => $key->destination_type,
+                    'doc_status' => $key->doc_status,
+                    'name' => $key->name,
+                    'document_type_name' => $key->type_name,
+                    'encoded_by' => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
+                    'origin' => $key->origin == NULL ? '-' : $key->origin,
+                    'origin_id' => $key->origin_id
+                );
+        }
+
+        return response()->json($items);
     }
 
     public function print_slips()
@@ -68,39 +103,39 @@ class MyDocumentsController extends Controller
 
 
 
-    function get_all_documents()
-    {
+    // function get_all_documents()
+    // {
 
-        $rows = DocumentsModel::get_my_documents();
-        $data = [];
-        $i = 1;
-        foreach ($rows as $value => $key) {
+    //     $rows = DocumentsModel::get_my_documents();
+    //     $data = [];
+    //     $i = 1;
+    //     foreach ($rows as $value => $key) {
 
-            $delete_button = CustomModel::q_get_where($this->history_table, array('t_number' => $key->tracking_number))->count() > 1 ? true : false;
-            $status = $this->check_status($key->doc_status);
+    //         $delete_button = CustomModel::q_get_where($this->history_table, array('t_number' => $key->tracking_number))->count() > 1 ? true : false;
+    //         $status = $this->check_status($key->doc_status);
 
-            $data[] = array(
-                'number' => $i++,
-                'tracking_number' => $key->tracking_number,
-                'document_name' => $key->document_name,
-                'type_name' => $key->type_name,
-                'created' => date('M d Y - h:i a', strtotime($key->d_created)),
-                'a' => $delete_button,
-                'document_id' => $key->document_id,
-                'is' => $status,
-                'doc_type' => $key->doc_type,
-                'description' => $key->document_description,
-                'destination_type' => $key->destination_type,
-                'doc_status' => $key->doc_status,
-                'name' => $key->name,
-                'document_type_name' => $key->type_name,
-                'encoded_by' => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
-                'origin' => $key->origin == NULL ? '-' : $key->origin,
-                'origin_id' => $key->origin_id
-            );
-        }
-        return $data;
-    }
+    //         $data[] = array(
+    //             'number' => $i++,
+    //             'tracking_number' => $key->tracking_number,
+    //             'document_name' => $key->document_name,
+    //             'type_name' => $key->type_name,
+    //             'created' => date('M d Y - h:i a', strtotime($key->d_created)),
+    //             'a' => $delete_button,
+    //             'document_id' => $key->document_id,
+    //             'is' => $status,
+    //             'doc_type' => $key->doc_type,
+    //             'description' => $key->document_description,
+    //             'destination_type' => $key->destination_type,
+    //             'doc_status' => $key->doc_status,
+    //             'name' => $key->name,
+    //             'document_type_name' => $key->type_name,
+    //             'encoded_by' => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
+    //             'origin' => $key->origin == NULL ? '-' : $key->origin,
+    //             'origin_id' => $key->origin_id
+    //         );
+    //     }
+    //     return $data;
+    // }
 
     public static function check_status($doc_status)
     {

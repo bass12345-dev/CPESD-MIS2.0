@@ -122,6 +122,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function () {
 Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
 
     //My Documents
+    Route::post('/my-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'get_my_documents']);
     Route::post('/update-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update']);
     Route::post('/delete-my-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'delete']);
     Route::post('/add-d', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'store']);
