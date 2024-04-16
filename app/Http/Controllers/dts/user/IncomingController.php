@@ -11,7 +11,6 @@ class IncomingController extends Controller
     
     public function index(){
         $data['title'] = 'Incoming Documents';
-        $data['incoming_documents']	= $this->get_incoming_documents();
         return view('dts.users.contents.incoming.incoming')->with($data);
     }
 
@@ -19,12 +18,14 @@ class IncomingController extends Controller
 
         $data = [];
         $rows = DocumentsModel::get_incoming_documents();
+        $i = 1;
         foreach ($rows as $value => $key) {
 
           
 
             $data[] = array(
-
+                    'number'            => $i++,
+                    'his+tn'            => $key->history_id.'-'.$key->tracking_number,
                     'tracking_number'   => $key->tracking_number,
                     'document_name'     => $key->document_name,
                     'type_name'         => $key->type_name,
@@ -37,7 +38,7 @@ class IncomingController extends Controller
             );
         }
 
-        return $data;
+        return response()->json($data);
 
     }
 

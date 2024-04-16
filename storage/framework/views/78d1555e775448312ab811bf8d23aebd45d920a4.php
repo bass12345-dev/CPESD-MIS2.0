@@ -20,18 +20,17 @@
 
 
    $(document).ready(function(){
-      var document_table = $("#my_document_table").DataTable({
-          responsive: true,
+      table = $("#my_document_table").DataTable({
+         responsive: true,
          ordering: false,
          processing: true,
          searchDelay: 500,
          pageLength: 25,
          language: { "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="<?php echo e(asset("assets/img/peso_logo.png")); ?>"></div>' },
-         layout: {
-         topStart: {
-               buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-               }
-            },
+         dom: 'Bfrtip',
+         buttons: [
+            'copy', 'print','csv'
+         ],
             ajax: {
                 url: base_url + "/dts/us/my-documents",
                 method: 'POST',
@@ -47,9 +46,29 @@
                 { data: 'type_name' },
                 { data: 'created' },
                 { data: 'is' },
-                { data: null, 
-                  render: function (data, type, row, meta) {
-                  return '<div class="btn-group dropstart">\
+                { data: null},
+            ],
+            'select': {
+               'style': 'multi',
+           
+            },
+            columnDefs: [
+
+               {
+                  'targets': 0,
+                  'checkboxes': {
+                     'selectRow': true
+                  }
+               },
+
+               {
+                    targets: -1,
+                    data: null,
+                    orderable: false,
+                    className: 'text-center',
+                    render: function (data, type, row) {
+
+                     return '<div class="btn-group dropstart">\
                               <i class="fa fa-ellipsis-v " class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false"></i>\
                                  <ul class="dropdown-menu">\
                                  <li><a class="dropdown-item update_document" \
@@ -73,56 +92,32 @@
                                     data-origin          ="'+row.origin+'"\
                                     href="javascript:;" >Print Tracking Slip</a></li>\
                                  </ul>\
-                            </div>';
-                  } 
-                },
-            ],
-            'select': {
-               'style': 'multi',
-           
-            },
-            columnDefs: [
+                            </div>'
 
-               {
-            orderable: false,
-            render: DataTable.render.select(),
-            targets: 0
-        },
+                    }
+                  }
+
                
-                       
-               {
-                    targets: -1,
-                    data: null,
-                    orderable: false,
-                    className: 'text-end',
-                    render: function (data, type, row) {
-                        return `
-                            
-                        `;
-                    },
-                },
                ]
-            
-
-          
-         
-         
 
       });
+
+      
       
    })
 
 
 
-   $('a.update_document').on('click', function() {
+   $(document).on('click', 'a.update_document', function (e) {
+      
       $('input[name=t_number]').val($(this).data('tracking-number'));
       $('input[name=document_name]').val($(this).data('name'));
       $('select[name=document_type]').val($(this).data('type'));
       $('textarea[name=description]').val($(this).data('description'));
       $('select[name=origin]').val($(this).data('origin'));
-      console.log($(this).data('origin'));
-      // $('select[name=type]').val($(this).data('destination'));
-   });
+      $('select[name=type]').val($(this).data('destination'));
+});
+
 
    $('#update_document').on('submit', function(e) {
       e.preventDefault();
@@ -145,8 +140,7 @@
 
    });
 
-   $('a.print_button').on('click', function(){
-      
+   $(document).on('click', 'a.print_button', function (e) {
       var id               =     $(this).data('id');
       var name             =     $(this).data('name');
       var track            =     $(this).data('track');

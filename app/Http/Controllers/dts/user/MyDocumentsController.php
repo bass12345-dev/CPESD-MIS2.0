@@ -306,6 +306,8 @@ class MyDocumentsController extends Controller
     public function receive_documents(Request $request)
     {
         $items = $request->input('id')['items'];
+
+        
         if (is_array($items)) {
 
             foreach ($items as $row) {
