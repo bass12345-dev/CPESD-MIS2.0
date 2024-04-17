@@ -128,8 +128,12 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     Route::post('/add-d', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'store']);
 
     //Incoming
-    Route::post('/incoming-documents', [App\Http\Controllers\dts\user\IncomingController::class, 'get_incoming_documents']);
+    Route::get('/incoming-documents', [App\Http\Controllers\dts\user\IncomingController::class, 'get_incoming_documents']);
 
+    //Receive Documents
+    Route::get('/received-documents', [App\Http\Controllers\dts\user\ReceivedController::class, 'get_received_documents']);
+    //Forward Documents
+    Route::get('/forwarded-documents', [App\Http\Controllers\dts\user\ForwardedController::class, 'get_forwarded_documents']);
 
     Route::post('/receive-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive']);
     Route::post('/receive-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive_documents']);

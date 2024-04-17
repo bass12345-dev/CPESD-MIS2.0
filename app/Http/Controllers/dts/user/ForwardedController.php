@@ -12,21 +12,21 @@ class ForwardedController extends Controller
     private $user_table = "users";
     public function index(){
         $data['title'] = 'Forwarded Documents';
-        $data['forwarded_documents'] = $this->get_forward_documents();
         $data['user_data']          = CustomModel::q_get_where($this->user_table,array('user_id' => session('_id')))->first();
         $data['users']              = CustomModel::q_get_where($this->user_table,array('user_status' => 'active'))->get();
         return view('dts.users.contents.forwarded.forwarded')->with($data);
     }
 
     
-	public function get_forward_documents(){
+	public function get_forwarded_documents(){
 
         $data = [];
+        $i = 1;
         $rows = DocumentsModel::get_forwarded_documents();
         foreach ($rows as $value => $key) {
  
              $data[] = array(
- 
+                     'number'            => $i++,
                      'tracking_number'   => $key->tracking_number,
                      'history_id'        => $key->history_id,
                      'document_name'     => $key->document_name,
@@ -38,7 +38,7 @@ class ForwardedController extends Controller
              );
          }
  
-        return $data; 
+        return response()->json($data);
  
       }
 }

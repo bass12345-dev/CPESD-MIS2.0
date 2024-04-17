@@ -200,18 +200,20 @@ function add_item(data, url) {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                table.ajax.reload();
 
             } else {
 
-                alert(data.message)
+                alert(data.message);
+                setTimeout(reload_page, 2000)
 
             }
 
-            setTimeout(reload_page, 2000)
+            
         },
         error: function() {
             alert('something Wrong');
-            // location.reload();
+            location.reload();
             JsLoadingOverlay.hide();
         }
 
@@ -245,13 +247,17 @@ function update_item(id, data, url) {
                     timer: 1500
                 });
 
+                table.ajax.reload();
+
+
             } else {
 
-                alert(data.message)
+                alert(data.message);
+                setTimeout(reload_page, 2000);
 
             }
 
-            setTimeout(reload_page, 2000)
+            
         },
         error: function() {
             alert('something Wrong');
@@ -315,7 +321,7 @@ function delete_item(id, url, button_text = '', text = '') {
                 },
                 error: function() {
                     alert('something Wrong');
-                    // location.reload();
+                    location.reload();
                     JsLoadingOverlay.hide();
 
                 }

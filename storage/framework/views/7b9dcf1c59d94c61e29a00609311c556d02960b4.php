@@ -6,7 +6,7 @@
   <div class="offcanvas-body">
     <form id="forward_form">
                <div class="form-row mb-2">
-                  <input type="hidden" value="<?php echo e($user_data->user_id); ?>" name="id">
+                
                    <input type="hidden" name="history_id">
                    <input type="hidden" name="tracking_number">
                    <div class="form-group col-md-12 mb-2">

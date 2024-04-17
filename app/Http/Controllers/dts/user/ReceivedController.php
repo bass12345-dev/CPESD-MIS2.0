@@ -16,7 +16,6 @@ class ReceivedController extends Controller
     public function index(){
         $data['title']              = 'Received Documents';
         $data['user_data']          = CustomModel::q_get_where($this->user_table,array('user_id' => session('_id')))->first();
-        $data['received_documents'] = $this->get_received_documents();
         $data['users']              = CustomModel::q_get_where($this->user_table,array('user_status' => 'active'))->get();
         return view('dts.users.contents.received.received')->with($data);
     }
@@ -25,15 +24,14 @@ class ReceivedController extends Controller
     public function get_received_documents(){
 
 
-        $data = [];
-
+       $data = [];
        $rows = DocumentsModel::get_received_documents();
-
+       $i = 1;
        foreach ($rows as $value => $key) {
 
          
             $data[] = array(
-
+                    'his_tn'            => $key->history_id.'-'.$key->tracking_number,
                     'tracking_number'   => $key->tracking_number,
                     't_'                => $key->tracking_number,
                     'document_name'     => $key->document_name,
@@ -43,11 +41,11 @@ class ReceivedController extends Controller
                     'document_id'       => $key->document_id,
                     'a'                 => $key->user_type == 'admin' ? false : true,
                     'remarks'           => $key->remarks,
+                    'number'            => $i++
             );
         }
 
-        return $data;
-
+       return response()->json($data);
 
     }
 
