@@ -12,7 +12,71 @@
 <?php $__env->startSection('js'); ?>
 <?php echo $__env->make('dts.includes.datatable_with_select', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
-   document.addEventListener("DOMContentLoaded", function() { table = $("#datatable_with_select").DataTable({ responsive: true, ordering: false, processing: true, pageLength: 25, language: { "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="<?php echo e(asset("assets/img/peso_logo.png")); ?>"></div>' }, dom: 'Bfrtip', buttons: [ 'copy', 'print','csv' ], ajax: { url: base_url + "/dts/us/incoming-documents", method: 'GET', headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), }, dataSrc:"" }, columns: [ { data: 'his+tn', }, { data: 'number' }, { data: 'tracking_number' }, { data: null }, { data: 'from' }, { data: 'type_name' }, { data: 'remarks' }, { data: 'released_date' }, ], 'select': { 'style': 'multi', }, columnDefs: [ { 'targets': 0, 'checkboxes': { 'selectRow': true }, }, { targets : 3, data: null, render: function (data, type, row) { return '<a href="'+base_url+'/dts/user/view?tn='+row.tracking_number+'" data-toggle="tooltip" data-placement="top" title="View '+row.tracking_number+' ?>">'+row.document_name+'</a>'; } } ] }); }); $('a#received_documents').on('click', function(){ selected_items = get_select_items_datatable(); if(selected_items.length  == 0){ alert('Please Select at least one'); }else{ var url = '/dts/us/receive-documents'; let form = { items : selected_items }; delete_item(form, url, button_text = 'Receive Document', text = '') } });
+ document.addEventListener("DOMContentLoaded", function () {
+   table = $("#datatable_with_select").DataTable({
+      responsive: true,
+      ordering: false,
+      processing: true,
+      pageLength: 25,
+      language: {
+         "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="<?php echo e(asset("assets/img/peso_logo.png")); ?>"></div>'
+      },
+      dom: 'Bfrtip',
+      buttons: ['copy', 'print', 'csv'],
+      ajax: {
+         url: base_url + "/dts/us/incoming-documents",
+         method: 'GET',
+         headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+         },
+         dataSrc: ""
+      },
+      columns: [{
+         data: 'his+tn',
+      }, {
+         data: 'number'
+      }, {
+         data: 'tracking_number'
+      }, {
+         data: null
+      }, {
+         data: 'from'
+      }, {
+         data: 'type_name'
+      }, {
+         data: 'remarks'
+      }, {
+         data: 'released_date'
+      }, ],
+      'select': {
+         'style': 'multi',
+      },
+      columnDefs: [{
+         'targets': 0,
+         'checkboxes': {
+            'selectRow': true
+         },
+      }, {
+         targets: 3,
+         data: null,
+         render: function (data, type, row) {
+            return '<a href="' + base_url + '/dts/user/view?tn=' + row.tracking_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.tracking_number + ' ?>">' + row.document_name + '</a>';
+         }
+      }]
+   });
+});
+$('a#received_documents').on('click', function () {
+   selected_items = get_select_items_datatable();
+   if (selected_items.length == 0) {
+      alert('Please Select at least one');
+   } else {
+      var url = '/dts/us/receive-documents';
+      let form = {
+         items: selected_items
+      };
+      delete_item(form, url, button_text = 'Receive Document', text = '')
+   }
+}); 
 </script>
 
 <?php $__env->stopSection(); ?>

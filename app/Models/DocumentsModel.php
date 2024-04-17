@@ -456,6 +456,7 @@ class DocumentsModel extends Model
                         'history.history_id as history_id',
                         'history.remarks as remarks',
                         //User
+                        'users.user_id as user_id',
                         'users.user_type as user_type',
                         'users.first_name as first_name', 
                         'users.middle_name as middle_name', 

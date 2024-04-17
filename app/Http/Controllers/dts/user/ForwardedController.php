@@ -32,7 +32,8 @@ class ForwardedController extends Controller
                      'document_name'     => $key->document_name,
                      'type_name'         => $key->type_name,
                      'released_date'     => date('M d Y - h:i a', strtotime($key->release_date)) ,
-                     'forwarded_to'              => $key->first_name.' '.$key->middle_name.' '.$key->last_name.' '.$key->extension,
+                     'forward_to_id'     => $key->user_id,
+                     'forwarded_to'      => $key->first_name.' '.$key->middle_name.' '.$key->last_name.' '.$key->extension,
                      'document_id'       => $key->document_id,
                      'remarks'           => $key->remarks,
              );

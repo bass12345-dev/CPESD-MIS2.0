@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
                return '<div class="btn-group dropstart">\
                              <i class="fa fa-ellipsis-v " class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false"></i>\
                              <ul class="dropdown-menu">\
-                                  <li><a class="dropdown-item " id="forward_icon" data-remarks="'+row.remarks+'" data-history-id="'+row.history_id+'" data-tracking-number="'+row.tracking_number+'"  href="javascript:;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" >Update Forward To</a></li>\
+                                  <li><a class="dropdown-item " id="forward_icon"  data-remarks="'+row.remarks+'" data-history-id="'+row.history_id+'" data-tracking-number="'+row.tracking_number+'"  href="javascript:;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" >Update Forward To</a></li>\
                                  \
                                 </ul>\
                            </div>';
@@ -92,6 +92,7 @@ $(document).on('click', 'a#forward_icon', function(){
    $('input[name=history_id]').val($(this).data('history-id'));
    $('input[name=tracking_number]').val($(this).data('tracking-number'));
    $('textarea[name=remarks]').val($(this).data('remarks'));
+  
    $('.offcanvas-title').text('Forward Document #' +$(this).data('tracking-number') );
 });
 
@@ -132,9 +133,13 @@ $('#forward_form').on('submit', function (e) {
      confirmButtonText: "Foward Document"
    }).then((result) => {
      if (result.isConfirmed) {
-
-      add_item(form,url);
       $('#forward_form').find('button').attr('disabled',true);
+      add_item(form,url);
+      $('#forward_form').find('button').attr('disabled',false);
+      $('select[name=forward]').val('');
+      let closeCanvas = document.querySelector('[data-bs-dismiss="offcanvas"]');
+      closeCanvas.click();
+      
      }
    });
 

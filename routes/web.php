@@ -132,8 +132,23 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
 
     //Receive Documents
     Route::get('/received-documents', [App\Http\Controllers\dts\user\ReceivedController::class, 'get_received_documents']);
+        //Received Error
+        Route::post('/r-e', [App\Http\Controllers\dts\user\ReceivedController::class, 'received_error']);
+        Route::post('/r-es', [App\Http\Controllers\dts\user\ReceivedController::class, 'received_errors']);
+         //Cancel Document
+        Route::post('/c-doc', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'cancel_document']);
+
+
     //Forward Documents
     Route::get('/forwarded-documents', [App\Http\Controllers\dts\user\ForwardedController::class, 'get_forwarded_documents']);
+        //Update Forward
+        Route::post('/u-f-d', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_forwarded']);
+        //Update Remarks
+        Route::post('/u-f-r', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_remarks']);
+
+    //
+    Route::get('/my-action-logs', [App\Http\Controllers\dts\user\ActionLogsController::class, 'action_logs']);
+
 
     Route::post('/receive-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive']);
     Route::post('/receive-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive_documents']);
@@ -143,21 +158,13 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     Route::post('/ck', [App\Http\Controllers\dts\user\ProfileController::class, 'check']);
     //Update User Password
     Route::post('/u-p', [App\Http\Controllers\dts\user\ProfileController::class, 'update_password']);
-    //Update Forward
-    Route::post('/u-f-d', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_forwarded']);
-    //Update Remarks
-    Route::post('/u-f-r', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_remarks']);
-    //Cancel Document
-    Route::post('/c-doc', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'cancel_document']);
+   
+   
     //Get Incoming in Receiver
     Route::get('/g-r-i', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'get_receiver_incoming']);
     
     //Search query
     Route::get('/search', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'search']);
-
-    //Received Error
-    Route::post('/r-e', [App\Http\Controllers\dts\user\ReceivedController::class, 'received_error']);
-    Route::post('/r-es', [App\Http\Controllers\dts\user\ReceivedController::class, 'received_errors']);
 
     Route::post('/out-d', [App\Http\Controllers\dts\user\ReceivedController::class, 'outgoing_documents']);
 });
