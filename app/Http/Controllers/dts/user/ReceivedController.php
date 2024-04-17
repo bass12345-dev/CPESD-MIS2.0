@@ -97,7 +97,6 @@ class ReceivedController extends Controller
             if ($r->doc_status != 'cancelled') {
                 $info = array(
                             'doc_status' => 'outgoing',
-                            'note'       => $note
                 );
                 $add_items = array(
                             'doc_id'        => $r->document_id,

@@ -10,6 +10,7 @@
 </div>
 @endsection
 @section('js')
+@include('dts.includes.datatable_with_select')
 <script>
    document.addEventListener("DOMContentLoaded", function () {
    table = $("#datatables-buttons").DataTable({
@@ -30,34 +31,66 @@
          },
          dataSrc: ""
       },
-   //    columns: [
-   //       {
-   //       data: 'number',
-   //    }, 
-   //    {
-   //       data: null,
-   //    }, 
-   //    {
-   //       data: 'name',
-   //    }, 
-   //    {
-   //       data: 'document_number',
-   //    }, 
-   // ],
-   //    columnDefs: [ 
-   //          {
-   //             targets: 1,
-   //             data: null,
-   //             render: function (data, type, row) {
-   //                return '<a href="' + base_url + '/dts/user/view?tn=' + row.document_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.document_number + ' ?>">' + row.document_name + '</a>';
-   //             }
-   //          },
-
-           
-
-   // ]
+      columns: [
+         {
+         data: 'doc_id',
+      }, 
+         {
+         data: 'number',
+      }, 
+      {
+         data: 'tracking_number',
+      }, 
+      {
+         data: null,
+      }, 
+      {
+         data: 'name',
+      }, 
+      {
+         data: 'type_name',
+      }, 
+      {
+         data: 'remarks',
+      }, 
+      {
+         data: 'outgoing_date',
+      }, 
+   ],
+   'select': {
+         'style': 'multi',
+      },
+      columnDefs: [
+         {
+         'targets': 0,
+         'checkboxes': {
+            'selectRow': true
+         },
+      }, 
+            {
+               targets: 3,
+               data: null,
+               render: function (data, type, row) {
+                  return '<a href="' + base_url + '/dts/user/view?tn=' + row.tracking_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.tracking_number + ' ?>">' + row.document_name + '</a>';
+               }
+            },
+   ]
 
    });
 });
+
+
+$('a#received_documents').on('click', function () {
+   selected_items = get_select_items_datatable();
+   if (selected_items.length == 0) {
+      alert('Please Select at least one');
+   } else {
+      var url = '/dts/us/r-f-o';
+      let form = {
+         items: selected_items
+      };
+      delete_item(form, url, button_text = 'Receive Document', text = '')
+   }
+}); 
 </script>
 @endsection

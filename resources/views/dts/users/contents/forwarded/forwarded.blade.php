@@ -65,7 +65,8 @@ document.addEventListener("DOMContentLoaded", function () {
             targets: 5,
             data: null,
             render: function (data, type, row) {
-               return row.remarks+'<br><a href="javascript:;" id="update_remarks" class="text-success" data-history-id="'+row.history_id+'" data-remarks="'+row.remarks+'" >Update Remarks</a>';
+               var remarks = row.remarks == null ? '<span class="text-danger">no remarks</span>' : row.remarks;
+               return remarks+'<br><a href="javascript:;" id="update_remarks" class="text-success" data-history-id="'+row.history_id+'" data-remarks="'+row.remarks+'" >Update Remarks</a>';
             }
          },
          

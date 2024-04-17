@@ -14,14 +14,11 @@
                   <th>From</th>
                   <th>Document Type</th>
                   <th>Remarks</th>
-                  <th>Released Date - Time</th>
+                  <th>Outgoing Date - Time</th>
                   
                </tr>
             </thead>
-            <tbody>
-
-             
-            </tbody>
+            
          </table>
       </div>
 

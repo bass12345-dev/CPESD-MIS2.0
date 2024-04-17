@@ -148,6 +148,10 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
 
     //Outgoing Documents
     Route::get('/g-o-d', [App\Http\Controllers\dts\user\OutgoingController::class, 'get_outgoing_documents']);
+    Route::post('/out-d', [App\Http\Controllers\dts\user\ReceivedController::class, 'outgoing_documents']);
+    //Received From Outgoing
+    Route::post('/r-f-o', [App\Http\Controllers\dts\user\OutgoingController::class, 'received_from_outgoing']);
+    
 
     //Action Logs
     Route::get('/my-action-logs', [App\Http\Controllers\dts\user\ActionLogsController::class, 'action_logs']);
@@ -173,7 +177,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     //Search query
     Route::get('/search', [App\Http\Controllers\dts\user\ViewDocumentController::class, 'search']);
 
-    Route::post('/out-d', [App\Http\Controllers\dts\user\ReceivedController::class, 'outgoing_documents']);
+    
 });
 
 
