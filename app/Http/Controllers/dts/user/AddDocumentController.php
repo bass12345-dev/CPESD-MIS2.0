@@ -11,21 +11,35 @@ use Carbon\Carbon;
 
 class AddDocumentController extends Controller
 {
-    private $document_types_table = "document_types";
-    private $user_table = "users";
-    private $office_table = "offices";
-    private $documents_table = 'documents';
+    private $document_types_table       = "document_types";
+    private $user_table                 = "users";
+    private $office_table               = "offices";
+    private $documents_table            = 'documents';
     public function index(){
 
      
         $data['title']          = 'Add Document';
         $data['document_types'] = CustomModel::q_get_order($this->document_types_table,'type_name','asc')->get(); 
         $data['user_data']      = CustomModel::q_get_where($this->user_table,array('user_id' => session('_id')))->first();
-        $data['documents']      = DocumentsModel::get_all_documents_with_limit(10);
-        $data['reference_number']  = $this->get_last();
         $data['offices']        = CustomModel::q_get_order($this->office_table,'office','asc')->get(); 
         
         return view('dts.users.contents.add_document.add_document')->with($data);
+    }
+
+    public function get_documents_limit(){
+        $items = DocumentsModel::get_all_documents_with_limit(10);
+        $i = 1;
+        foreach ($items as $value => $key) {
+            $data[] = array(
+                'number'            => $i++,
+                'document_name'     => $key->document_name,
+                'name'              => $key->first_name.' '.$key->middle_name.' '.$key->last_name.' '.$key->last_name,
+                'document_number'   => $key->tracking_number
+                
+            );
+        }
+        
+        return response()->json($data);
     }
 
     public function get_last(){

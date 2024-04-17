@@ -147,8 +147,11 @@ $('#outgoing_form').on('submit', function (e) {
       confirmButtonText: "Submit"
    }).then((result) => {
       if (result.isConfirmed) {
-         add_item(form, url);
          $('#outgoing_form').find('button').attr('disabled', true);
+         add_item(form, url);
+         $('#outgoing_form').find('button').attr('disabled', false);
+         $('#outgoing_form')[0].reset();
+         $('#outgoing_modal').modal('hide');
       }
    });
 });

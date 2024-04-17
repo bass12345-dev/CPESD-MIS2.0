@@ -7,7 +7,7 @@
             <div class="form-row mb-2">
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Tracking Number</label>
-                     <input type="text" class="form-control" name="tracking_number" value="{{$reference_number}}" readonly="" >
+                     <input type="text" class="form-control" name="tracking_number" readonly="" >
                   </div>
                   <input type="hidden" name="user_id" value="<?php echo base64_encode($user_data->user_id) ?>" class="form-control"  >
                   <div class="form-group col-md-12 mb-3">

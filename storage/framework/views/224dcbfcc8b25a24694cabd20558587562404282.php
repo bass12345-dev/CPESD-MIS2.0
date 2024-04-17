@@ -12,17 +12,6 @@
                   <th class=" d-md-table-cell">Document Number</th>
                </tr>
             </thead>
-            <tbody>
-                  <?php
-                   $i = 1;
-                   foreach ($documents as $row) :?>
-                     <tr>
-                        <td class=" d-xl-table-cell"><?php echo $i++; ?></td>
-                        <td class=" d-xl-table-cell"><?php echo e($row->document_name); ?></td>
-                        <td class=" d-xl-table-cell"><?php echo  $row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension; ?></td>
-                        <td><?php echo $row->tracking_number; ?></td>
-                     </tr>
-                <?php endforeach; ?>    
-            </tbody>
+          
          </table>
       </div><?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/dts/users/contents/add_document/sections/document_table.blade.php ENDPATH**/ ?>

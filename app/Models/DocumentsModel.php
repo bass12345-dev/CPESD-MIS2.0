@@ -478,6 +478,39 @@ class DocumentsModel extends Model
     }
 
 
+
+    public static function get_outgoing_documents(){
+        $row = DB::table('outgoing_documents as outgoing_documents ')
+             ->leftJoin('documents as documents', 'documents.document_id', '=', 'outgoing_documents.doc_id')
+            //  ->leftJoin('users as users', 'users.user_id', '=', 'outgoing_documents.user_id')
+            //  ->select(  //Document
+            //             'documents.tracking_number as tracking_number',
+            //             'documents.doc_status as doc_status' ,
+            //             'documents.document_name as document_name',
+            //             'documents.document_id as document_id',
+            //             //Documen Type
+     
+            //             //Outgoing
+            //             // 'outgoing_documents.remarks as remarks',
+            //             // 'outgoing_documents.outgoing_date as outgoing_date',
+            //             //User
+            //             'users.user_id as user_id',
+            //             'users.user_type as user_type',
+            //             'users.first_name as first_name', 
+            //             'users.middle_name as middle_name', 
+            //             'users.last_name as last_name', 
+            //             'users.extension as extension',
+            //  )
+            //  ->where('outgoing_documents.user_id', session('_id'))
+            //  ->where('outgoing_documents.status'  ,'!=', 'pending')
+             ->get();
+            //  ->orderBy('tracking_number', 'desc')
+
+        return $row;
+    }
+
+
+
     //FINAL RECEIVER QUERY
     public static function get_receiver_incoming_documents(){
         $row = DB::table('history as history')

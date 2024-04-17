@@ -125,7 +125,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     Route::post('/my-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'get_my_documents']);
     Route::post('/update-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update']);
     Route::post('/delete-my-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'delete']);
-    Route::post('/add-d', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'store']);
+    
 
     //Incoming
     Route::get('/incoming-documents', [App\Http\Controllers\dts\user\IncomingController::class, 'get_incoming_documents']);
@@ -146,10 +146,17 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
         //Update Remarks
         Route::post('/u-f-r', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update_remarks']);
 
-    //
+    //Outgoing Documents
+    Route::get('/g-o-d', [App\Http\Controllers\dts\user\OutgoingController::class, 'get_outgoing_documents']);
+
+    //Action Logs
     Route::get('/my-action-logs', [App\Http\Controllers\dts\user\ActionLogsController::class, 'action_logs']);
 
-
+    //Add Document
+    Route::get('/g-t-n', [App\Http\Controllers\dts\user\AddDocumentController::class, 'get_last']);
+    Route::get('/g-l-d', [App\Http\Controllers\dts\user\AddDocumentController::class, 'get_documents_limit']);
+    Route::post('/add-d', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'store']);
+    
     Route::post('/receive-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive']);
     Route::post('/receive-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'receive_documents']);
     Route::post('/forward-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'forward']);

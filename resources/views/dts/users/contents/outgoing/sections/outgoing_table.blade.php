@@ -4,7 +4,7 @@
                <a class="btn btn-success" href="javascript:;" id="received_documents"><i class="fas fa-hand"></i> Receive </a>
                <hr>
             </div>
-         <table class="table table-hover table-striped " id="datatable_with_select" style="width: 100%; "  >
+         <table class="table table-hover table-striped " id="datatables-buttons" style="width: 100%; "  >
             <thead>
                <tr>
                   <th></th>

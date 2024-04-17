@@ -6,17 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\DocumentsModel;
 use Illuminate\Http\Request;
 use App\Models\CustomModel;
+use Carbon\Carbon;
 use App\Http\Controllers\dts\admin\ActionLogsController;
 
 class ReceivedController extends Controller
 {   
-    private $user_table = "users";
-    private  $history_table        = "history";
-    private  $documents_table      = 'documents';
+    private $user_table             = "users";
+    private  $history_table         = "history";
+    private  $documents_table       = 'documents';
+    private $office_table           = "offices";
+    private $outgoing_table         = 'outgoing_documents';
     public function index(){
         $data['title']              = 'Received Documents';
         $data['user_data']          = CustomModel::q_get_where($this->user_table,array('user_id' => session('_id')))->first();
         $data['users']              = CustomModel::q_get_where($this->user_table,array('user_status' => 'active'))->get();
+        $data['offices']            = CustomModel::q_get_order($this->office_table,'office','asc')->get(); 
         return view('dts.users.contents.received.received')->with($data);
     }
 
@@ -79,9 +83,10 @@ class ReceivedController extends Controller
 
     public function outgoing_documents(Request $request){
 
-        $items = $request->input('history_track2');
-        $note  = $request->input('note');
-        $array      = explode(',',$items);
+        $items          = $request->input('history_track2');
+        $note           = $request->input('note');
+        $office         = $request->input('office');
+        $array          = explode(',',$items);
 
         foreach ($array as $row) {
 
@@ -94,8 +99,17 @@ class ReceivedController extends Controller
                             'doc_status' => 'outgoing',
                             'note'       => $note
                 );
+                $add_items = array(
+                            'doc_id'        => $r->document_id,
+                            'user_Id'       => session('_id'),
+                            'off_id'        => $office,
+                            'remarks'       => $note,
+                            'status'        => 'pending',
+                            'outgoing_date' => Carbon::now()->format('Y-m-d H:i:s'), 
+                );
                 $where = array('tracking_number' => $tracking_number);
                 $update_outgoing = CustomModel::update_item($this->documents_table,$where,$info);
+                $add_outgoing = CustomModel::insert_item($this->outgoing_table,$add_items);
                 ActionLogsController::dts_add_action($action = 'Outgoing Document No. '.$r->tracking_number,$user_type='user',$_id = $r->document_id);
                 $data = array('message' => 'Updated Succesfully', 'response' => true);
 

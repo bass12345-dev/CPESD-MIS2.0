@@ -20,6 +20,20 @@
                 <input type="hidden" name="history_track2">
 
                 <div class="form-group col-md-12 mb-2">
+
+                    <label for="inputEmail4">To : </label>
+                    <select class="form-control" name="office" required>
+                      <option value="">Select..</option>
+                      <?php foreach ($offices as $row) : ?>
+                        <?php $is_disabled = $row->office_id == 21 ? 'disabled' : ''   ?>
+                        <option value="{{$row->office_id}}" {{$is_disabled}}>{{$row->office}}</option>
+                      <?php endforeach; ?>
+
+                    </select>
+
+                    </div>
+
+                <div class="form-group col-md-12 mb-2">
                   <label for="inputEmail4">Note</label>
                   <textarea class="form-control" style="height: 150px;" name="note"></textarea>
                 </div>
