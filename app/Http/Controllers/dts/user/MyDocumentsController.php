@@ -16,12 +16,13 @@ use PDF;
 
 class MyDocumentsController extends Controller
 {
-    private $history_table = "history";
-    private $document_types_table = "document_types";
-    private $documents_table = 'documents';
-    private $users_table = "users";
-    private $final_actions_table = "final_actions";
-    private $office_table = 'offices';
+    private $history_table              = "history";
+    private $document_types_table       = "document_types";
+    private $documents_table            = 'documents';
+    private $users_table                = "users";
+    private $final_actions_table        = "final_actions";
+    private $office_table               = 'offices';
+    private $outgoing_table             = 'outgoing_documents';
     private $now;
 
     public function __construct()
@@ -283,10 +284,11 @@ class MyDocumentsController extends Controller
 
         $id = $request->input('id')['id'];
         $delete = CustomModel::q_get_where($this->documents_table, array('document_id' => $id));
-        $tracking_number = $delete->get()[0]->tracking_number;
+        $tracking_number = $delete->first()->tracking_number;
 
         if ($delete->delete()) {
             CustomModel::delete_item($this->history_table, array('t_number' => $tracking_number));
+            CustomModel::delete_item($this->outgoing_table, array('doc_id' => $id));
             ActionLogsController::dts_add_action($action = 'Deleted Document No. ' . $tracking_number, $user_type = 'user', $_id = $id);
             $data = array('message' => 'Deleted Succesfully', 'response' => true);
         } else {

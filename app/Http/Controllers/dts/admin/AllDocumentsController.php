@@ -15,6 +15,7 @@ class AllDocumentsController extends Controller
     private $history_table           = "history";
     private $documents_table         = "documents";
     private $final_actions_table     = "final_actions";
+    private $outgoing_table          = 'outgoing_documents';
 
     public $now;
     public function __construct()
@@ -129,6 +130,7 @@ class AllDocumentsController extends Controller
                 $delete->delete();
                 ActionLogsController::dts_add_action($action = 'Deleted Document No. '.$tracking_number,$user_type='user',$_id = $document_id);
                 CustomModel::delete_item($this->history_table, array('t_number' => $tracking_number));
+                CustomModel::delete_item($this->outgoing_table, array('doc_id' => $document_id));
             }
 
             $data = array('message' => 'Deleted Succesfully', 'response' => true);
