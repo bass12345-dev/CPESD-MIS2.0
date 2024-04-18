@@ -88,10 +88,12 @@ class ReceivedController extends Controller
         $office         = $request->input('office');
         $array          = explode(',',$items);
 
+
+   
+
         foreach ($array as $row) {
 
             $x                  = explode('-', $row);
-            $history_id         = $x[0];
             $tracking_number    = $x[1];
             $r                  = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tracking_number))->first();
             if ($r->doc_status != 'cancelled') {
@@ -107,8 +109,8 @@ class ReceivedController extends Controller
                             'outgoing_date' => Carbon::now()->format('Y-m-d H:i:s'), 
                 );
                 $where = array('tracking_number' => $tracking_number);
-                $update_outgoing = CustomModel::update_item($this->documents_table,$where,$info);
                 $add_outgoing = CustomModel::insert_item($this->outgoing_table,$add_items);
+                $update_outgoing = CustomModel::update_item($this->documents_table,$where,$info);
                 ActionLogsController::dts_add_action($action = 'Outgoing Document No. '.$r->tracking_number,$user_type='user',$_id = $r->document_id);
                 $data = array('message' => 'Updated Succesfully', 'response' => true);
 

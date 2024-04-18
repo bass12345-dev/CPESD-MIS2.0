@@ -23,7 +23,7 @@ var table;
 <script src=" <?php echo e(asset('assets/js/datatables.js')); ?>"></script>
 <script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
 
-
+<script src="https://pagination.js.org/dist/2.6.0/pagination.js"></script>
 
 <!-- DATATABLE -->
 <!-- <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.0.3/af-2.7.0/b-3.0.1/b-colvis-3.0.1/b-html5-3.0.1/b-print-3.0.1/cr-2.0.0/date-1.5.2/fc-5.0.0/fh-4.0.1/kt-2.12.0/r-3.0.1/rg-1.5.0/rr-1.5.0/sc-2.4.1/sb-1.7.0/sp-2.3.0/sl-2.0.0/sr-1.4.0/datatables.min.js"></script>
@@ -213,7 +213,7 @@ function add_item(data, url) {
         },
         error: function() {
             alert('something Wrong');
-            // location.reload();
+            location.reload();
             JsLoadingOverlay.hide();
         }
 
@@ -321,7 +321,7 @@ function delete_item(id, url, button_text = '', text = '') {
                 },
                 error: function() {
                     alert('something Wrong');
-                    // location.reload();
+                    location.reload();
                     JsLoadingOverlay.hide();
 
                 }

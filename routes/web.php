@@ -81,8 +81,8 @@ Route::middleware(['SessionGuard'])->prefix('dts')->group(function () {
     Route::post('/u-oic', [App\Http\Controllers\dts\admin\SetReceiverController::class, 'update_oic']);
 
     //Documents
+    Route::get('/all-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'get_all_documents']);
     Route::post('/delete-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'delete']);
-
     Route::post('/complete-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'complete']);
     Route::post('/cancel-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'cancel_document']);
     Route::post('/cancel-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'cancel_documents']);

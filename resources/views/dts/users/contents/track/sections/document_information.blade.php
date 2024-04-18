@@ -75,8 +75,8 @@
                         $status = $row->status == 'return' ? '<span class="badge bg-success">Returned</span>' : '<span class="badge bg-danger">Pending</span>';
                         echo $status;
                   ?></td>
-                  <td>{{date('M d Y', strtotime($row->outgoing_date))}}</td>
-                  <td><?php echo $row->outgoing_date_received != null ? date('M d Y', strtotime($row->outgoing_date)) :  '-'; ?></td>
+                  <td>{{date('M d Y h:i A', strtotime($row->outgoing_date))}}</td>
+                  <td><?php echo $row->outgoing_date_received != null ? date('M d Y h:i A', strtotime($row->outgoing_date)) :  '-'; ?></td>
                </tr>
             <?php 
             endforeach; ?>

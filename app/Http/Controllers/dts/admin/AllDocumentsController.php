@@ -32,44 +32,21 @@ class AllDocumentsController extends Controller
         $data['user_data']          = array('user_id' => session('_id'), 'office_id' => $user->off_id);
         $data['final_actions']      = $this->get_final_actions();
         $row_documents              = null;
-        
-        // if(isset($_GET['from']) && isset($_GET['to']) && isset($_GET['type']) && isset($_GET['status'])){
-            
-        //     $start   = date('Y-m-d',strtotime($_GET['from']));
-        //     $end     = date('Y-m-d',strtotime($_GET['to']));
-        //     $type   = $_GET['type'];
-        //     $status = $_GET['status'];
+    
+        $row_documents = $this->get_all_documents($start_date="",$end_date="",$type_id="",$status1="");
 
-        //     $row_documents = $this->get_all_documents($start,$end,$type,$status);
-          
-            
-        // }else {
-
-            $row_documents = $this->get_all_documents($start_date="",$end_date="",$type_id="",$status1="");
-        // }
-        
-      
+    
         $data['documents']      = $row_documents;
         return view('dts.admin.contents.all_documents.all_documents')->with($data);
        
     }
 
 
-    public function get_all_documents($start,$end,$type,$status)
+    public function get_all_documents()
     {
         $rows = '';
 
-        // if(!$start && !$end && !$type && !$status){
-        //     $rows = DocumentsModel::get_all_documents();
-        // }else if($start != '' && $end != '' && $type == 0 && $status == 0){
-        //     $rows = DocumentsModel::filter_date_documents($start,$end);
-        // }else if($start != null && $end != null && $type != 0 && $status == 0){
-        //     $rows = DocumentsModel::filter_date_documents_where_doc_type($start,$end,$type);
-        // }else if($start != null && $end != null && $type == 0 && $status != 0){
-        //     $rows = DocumentsModel::filter_date_documents_where_doc_status($start,$end,$status);
-        // }else if($start != null && $end != null && $type != 0 && $status != 0){
-        //     $rows = DocumentsModel::filter_date_documents_where_doc_status_and_doc_type($start,$end,$status,$type);
-        // }
+      
 
 
         $rows = DocumentsModel::get_all_documents();
@@ -106,7 +83,7 @@ class AllDocumentsController extends Controller
         }
 
 
-        return $data;
+        return response()->json($data);
 
     }
 
