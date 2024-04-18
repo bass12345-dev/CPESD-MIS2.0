@@ -50,7 +50,7 @@ class MyDocumentsController extends Controller
                 $delete_button = CustomModel::q_get_where($this->history_table, array('t_number' => $key->tracking_number))->count() > 1 ? true : false;
                 $status = $this->check_status($key->doc_status);
     
-                $items['data'][] = array(
+                $items[] = array(
                     'number' => $i++,
                     'tracking_number' => $key->tracking_number,
                     'document_name' => $key->document_name,

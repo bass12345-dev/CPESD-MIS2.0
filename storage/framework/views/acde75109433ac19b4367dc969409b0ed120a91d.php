@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }]
    });
 });
-$('button#multiple_forward').on('click', function () {
+$(document).on('click', 'button#multiple_forward', function(){
    let array = get_select_items_datatable();
    let html = '';
    if (array.length > 0) {
@@ -104,7 +104,8 @@ $('#forward_form2').on('submit', function (e) {
       }
    });
 });
-$('button#received_error').on('click', function () {
+
+$(document).on('click', 'button#received_error', function(){
    selected_items = get_select_items_datatable();
    if (selected_items.length == 0) {
       alert('Please Select at least one')
@@ -116,7 +117,8 @@ $('button#received_error').on('click', function () {
       delete_item(form, url, button_text = 'Submit', text = 'The documents that you\'ve selected will be back to incoming section');
    }
 });
-$('button#outgoing').on('click', function () {
+
+$(document).on('click', 'button#outgoing', function(){
    let array = get_select_items_datatable();
    let html = '';
    if (array.length > 0) {
@@ -155,7 +157,7 @@ $('#outgoing_form').on('submit', function (e) {
       }
    });
 });
-$('a#forward_icon').on('click', function () {
+$(document).on('click', 'a#forward_icon', function(){
    $('input[name=history_id]').val($(this).data('history-id'));
    $('input[name=tracking_number]').val($(this).data('tracking-number'));
    $('.offcanvas-title').text('Forward Document #' + $(this).data('tracking-number'));

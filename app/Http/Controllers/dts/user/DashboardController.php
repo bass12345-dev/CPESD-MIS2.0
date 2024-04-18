@@ -12,6 +12,7 @@ class DashboardController extends Controller
 
     private $documents_table = "documents";
     private $history_table = "history";
+    private $outgoing_table             = 'outgoing_documents';
     public function index(){
         $data['title'] = 'User Dashboard';
         $data['count'] = $this->countmydoc_dash();
@@ -30,10 +31,11 @@ class DashboardController extends Controller
                 'incoming'          => CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => NULL,'status' => 'torec','release_status' => NULL,'to_receiver'=> 'no'))->count(),
                 'received'          =>  CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => 1,'status' => 'received','release_status' => NULL,'to_receiver'=> 'no'))->count(),           
                 'forwarded'         => CustomModel::q_get_where($this->history_table,array('user1' => $id,'received_status' => NULL,'status' => 'torec','release_status' => NULL))->count(),
-                'pending'           => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'pending','u_id'=> session('_id')))->count(),
-                'completed'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'completed','u_id'=> session('_id')))->count(),
-                'cancelled'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'cancelled','u_id'=> session('_id')))->count(),
-                'outgoing'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'outgoing','u_id'=> session('_id')))->count(),
+                'pending'           => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'pending','u_id'=> $id))->count(),
+                'completed'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'completed','u_id'=> $id))->count(),
+                'cancelled'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'cancelled','u_id'=> $id))->count(),
+                'encoded_outgoing'   => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'outgoing','u_id'=> $id))->count(),
+                'outgoing'          =>CustomModel::q_get_where($this->outgoing_table,array('status' => 'pending','user_id'=> $id))->count(),
                 'added_today'         => DocumentsModel::user_added_document_date_now($date_now)
         );
 

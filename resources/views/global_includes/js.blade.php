@@ -321,7 +321,7 @@ function delete_item(id, url, button_text = '', text = '') {
                 },
                 error: function() {
                     alert('something Wrong');
-                    location.reload();
+                    // location.reload();
                     JsLoadingOverlay.hide();
 
                 }

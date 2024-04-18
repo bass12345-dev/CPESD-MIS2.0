@@ -29,6 +29,7 @@ class AddDocumentController extends Controller
     public function get_documents_limit(){
         $items = DocumentsModel::get_all_documents_with_limit(10);
         $i = 1;
+        $data = [];
         foreach ($items as $value => $key) {
             $data[] = array(
                 'number'            => $i++,
