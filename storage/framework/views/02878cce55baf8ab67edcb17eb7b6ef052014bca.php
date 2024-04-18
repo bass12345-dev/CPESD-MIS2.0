@@ -213,7 +213,7 @@ function add_item(data, url) {
         },
         error: function() {
             alert('something Wrong');
-            location.reload();
+            // location.reload();
             JsLoadingOverlay.hide();
         }
 
@@ -261,7 +261,7 @@ function update_item(id, data, url) {
         },
         error: function() {
             alert('something Wrong');
-            location.reload();
+            // location.reload();
             JsLoadingOverlay.hide();
 
         }
