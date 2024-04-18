@@ -27,13 +27,13 @@ class IncomingController extends Controller
         $data = [];
 
         $rows = DocumentsModel::get_receiver_incoming_documents();
-   
+        $i = 1;
        foreach ($rows as $value => $key) {
 
           
 
             $data[] = array(
-
+                    'number'            => $i++,
                     'tracking_number'   => $key->tracking_number,
                     'document_name'     => $key->document_name,
                     'type_name'         => $key->type_name,
@@ -47,7 +47,7 @@ class IncomingController extends Controller
             );
         }
 
-        return $data;
+        return response()->json($data);
       }
 
     public function add_note(Request $request){

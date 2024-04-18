@@ -18,6 +18,7 @@ class OutgoingController extends Controller
     private $outgoing_table         = 'outgoing_documents';
     public function index(){
         $data['title'] = 'Outgoing Documents';
+        $data['offices']            = CustomModel::q_get_order($this->office_table,'office','asc')->get(); 
         return view('dts.users.contents.outgoing.outgoing')->with($data);
     }
 
@@ -30,17 +31,40 @@ class OutgoingController extends Controller
 
             $data[] = array(
                 'number'            => $i++,
+                'outgoing_id'       => $key->outgoing_id,
                 'doc_id'            => $key->outgoing_id.'-'.$key->doc_id,
                 'tracking_number'   => $key->tracking_number,
                 'document_name'     => $key->document_name,
                 'name'              => $key->first_name.' '.$key->middle_name.' '.$key->last_name.' '.$key->extension,
                 'type_name'         => $key->type_name,
                 'remarks'           => $key->remarks,
+                'office'            => $key->office,
+                'office_id'         => $key->office_id,
                 'outgoing_date'     => date('M d Y - h:i a', strtotime($key->outgoing_date))
             );
           
         }
 
+        return response()->json($data);
+    }
+
+    public function update_outgoing_documents(Request $request){
+        
+        $outgoing_id    = $request->input('outgoing_id');
+        $office_id      = $request->input('office');
+        $remarks        = $request->input('remarks');
+        $where          = array('outgoing_id'=> $outgoing_id);
+        $info = array(
+            'remarks'   => $remarks,
+            'off_id'    => $office_id
+        );
+
+        $update     = CustomModel::update_item($this->outgoing_table,$where,$info);
+          if ($update) {
+                $data = array('message' => 'Updated Successfully' , 'response' => true );
+            }else {
+                $data = array('message' => 'Something Wrong/No Changes Apply' , 'response' => false );
+            }
         return response()->json($data);
     }
 

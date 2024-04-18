@@ -72,12 +72,12 @@ class ReceivedController extends Controller
         $data = [];
 
         $rows = DocumentsModel::get_receiver_received_documents();
-
+        $i = 1;
        foreach ($rows as $value => $key) {
 
          
             $data[] = array(
-
+                    'number'            => $i++,
                     'tracking_number'   => $key->tracking_number,
                     't_'                => $key->tracking_number,
                     'document_name'     => $key->document_name,
@@ -90,7 +90,7 @@ class ReceivedController extends Controller
             );
         }
 
-        return $data;
+        return response()->json($data);
 
 
     }

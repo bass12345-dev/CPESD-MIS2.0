@@ -1,5 +1,5 @@
 <script>
-    $('a#view_remarks').on('click', function() {
+    $(document).on('click', 'a#view_remarks', function(){
         $('#staticBackdrop').modal('show');
         $('.remarks').text($(this).data('remarks'));
     });

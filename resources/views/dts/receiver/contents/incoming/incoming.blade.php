@@ -10,10 +10,75 @@
 
 
 @section('js')
-@include('dts.includes.datatable')
+<!-- @include('dts.includes.datatable') -->
 <script type="text/javascript">
-  $('a.received_document').on('click', function() {
+   document.addEventListener("DOMContentLoaded", function () {
+   table = $("#datatable_with_select").DataTable({
+      responsive: true,
+      ordering: false,
+      processing: true,
+      pageLength: 25,
+      language: {
+         "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="{{asset("assets/img/peso_logo.png")}}"></div>'
+      },
+      dom: 'Bfrtip',
+      buttons: ['copy', 'print', 'csv'],
+      ajax: {
+         url: base_url + "/dts/r/g-r-i-d",
+         method: 'GET',
+         headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+         },
+         dataSrc: ""
+      },
+      columns: [{
+         data: null,
+      },
+       {
+         data: 'number'
+      }, 
+    {
+         data: 'tracking_number'
+      }, {
+         data: null
+      }, {
+         data: 'from'
+      }, {
+         data: 'type_name'
+      }, {
+         data: 'remarks'
+      }, {
+         data: 'released_date'
+      }, ],
+      // 'select': {
+      //    'style': 'multi',
+      // },
+      columnDefs: [
+      //   {
+      //    'targets': 0,
+      //    'checkboxes': {
+      //       'selectRow': true
+      //    },
+      // }, 
+      {
+         targets: 0,
+         data: null,
+         render: function (data, type, row) {
+            return ' <a class="btn btn-success received_document" data-track="'+row.tracking_number+'"  data-id="'+row.history_id+'"><i class="fas fa-hand"></i></a> ';
+         }
+      },
+      {
+         targets: 3,
+         data: null,
+         render: function (data, type, row) {
+            return '<a href="' + base_url + '/dts/user/view?tn=' + row.tracking_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.tracking_number + ' ?>">' + row.document_name + '</a>';
+         }
+      }
+    ]
+   });
+});
 
+$(document).on('click', 'a.received_document', function(){
     var id = $(this).data('id');
     var track = $(this).data('track');
     Swal.fire({
@@ -83,7 +148,11 @@
    e.preventDefault();
    var url = '/dts/r/complete-document';
    var form = $(this).serialize();
+   $('#forward_form').find('button').attr('disabled', true);
    add_item(form,url);
+   $('#forward_form').find('button').attr('disabled', false);
+   $('#forward_form')[0].reset();
+   $('#final_action_modal').modal('hide');
 
 });
 

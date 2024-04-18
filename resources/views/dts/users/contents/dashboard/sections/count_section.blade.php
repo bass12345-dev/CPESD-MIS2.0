@@ -59,7 +59,7 @@
    <div class="col-xl-12 col-xxl-12 d-flex">
       <div class="w-100">
          <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                <div class="card">
                   <div class="card-body">
                      <div class="row">
@@ -76,7 +76,7 @@
                   </div>
                </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                <div class="card">
                   <div class="card-body">
                      <div class="row">

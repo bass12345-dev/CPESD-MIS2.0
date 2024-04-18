@@ -11,11 +11,12 @@
                   <th>#</th>
                   <th>Tracking Number</th>
                   <th>Document Name</th>
-                  <th>Person</th>
+            
+                  <th>Office</th>
                   <th>Document Type</th>
                   <th>Remarks</th>
                   <th>Outgoing Date - Time</th>
-                  
+                  <th>Actions</th>
                </tr>
             </thead>
 
@@ -25,10 +26,12 @@
                   <th>#</th>
                   <th>Tracking Number</th>
                   <th>Document Name</th>
-                  <th>Person</th>
+                
+                  <th>Office
                   <th>Document Type</th>
                   <th>Remarks</th>
                   <th>Outgoing Date - Time</th>
+                  <th>Actions</th>
                </tr>
             </tfoot>
             

@@ -497,6 +497,9 @@ class DocumentsModel extends Model
                         'outgoing_documents.outgoing_date as outgoing_date',
                         'outgoing_documents.doc_id as doc_id',
                         'outgoing_documents.outgoing_id as outgoing_id',
+                        //Office
+                        'offices.office as office',
+                        'offices.office_id as office_id',
                         //User
                         'users.user_id as user_id',
                         'users.user_type as user_type',

@@ -149,6 +149,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     //Outgoing Documents
     Route::get('/g-o-d', [App\Http\Controllers\dts\user\OutgoingController::class, 'get_outgoing_documents']);
     Route::post('/out-d', [App\Http\Controllers\dts\user\ReceivedController::class, 'outgoing_documents']);
+    Route::post('/u-o-d', [App\Http\Controllers\dts\user\OutgoingController::class, 'update_outgoing_documents']);
     //Received From Outgoing
     Route::post('/r-f-o', [App\Http\Controllers\dts\user\OutgoingController::class, 'received_from_outgoing']);
     
@@ -193,7 +194,12 @@ Route::middleware(['SessionGuard', 'IsReceiver'])->prefix('dts/receiver')->group
 
 //Receiver ACTIONS//
 Route::middleware(['SessionGuard'])->prefix('dts/r')->group(function () {
-
+    
+    //Incoming 
+    Route::get('/g-r-i-d', [App\Http\Controllers\dts\receiver\IncomingController::class, 'get_receiver_incoming_documents']);
+    //Received\
+    Route::get('/g-f-r-r-d', [App\Http\Controllers\dts\receiver\ReceivedController::class, 'get_received_documents']);
+    
     //My Documents
     Route::post('/complete-document', [App\Http\Controllers\dts\receiver\ReceivedController::class, 'complete']);
     
