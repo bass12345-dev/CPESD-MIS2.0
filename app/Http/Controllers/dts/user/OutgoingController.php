@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dts\user;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\dts\admin\ActionLogsController;
 use App\Models\DocumentsModel;
 use Illuminate\Http\Request;
 use App\Models\CustomModel;
@@ -64,11 +65,13 @@ class OutgoingController extends Controller
                     'status'                    => 'return',
                     'outgoing_date_received'    => Carbon::now()->format('Y-m-d H:i:s'),
                  );
-                 
+
+                $r = CustomModel::q_get_where('documents', array('document_id' => $document_id))->first();
                 $where1 = array('document_id' => $document_id);
                 $where2 = array('outgoing_id' => $outgoing_id);
                 $update_outgoing = CustomModel::update_item($this->outgoing_table,$where2,$outgoing_info);
                 $update_document = CustomModel::update_item($this->documents_table,$where1,$doc_info);
+                ActionLogsController::dts_add_action($action = 'Received Document From Outgoing Document No. ' . $r->tracking_number, $user_type = 'user', $_id = $r->document_id);
                 $resp = array('message' => 'Received Successfully', 'response' => true);
                 
             }

@@ -19,9 +19,11 @@ class ViewDocumentController extends Controller
         $check                      = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tn))->count();
         if ($check > 0) {
 
-            $data['title']          = 'Document #' . $tn;
-            $data['doc_data']       = $this->get_document_data($tn);
-            $data['history']        = $this->get_history($tn);
+            $data['title']                  = 'Document #' . $tn;
+            $data['doc_data']               = $this->get_document_data($tn);
+            $data['history']                = $this->get_history($tn);
+            $data['outgoing_history']       = $this->get_outgoing_history($tn);
+
             return view('dts.users.contents.track.track')->with($data);
         } else {
             echo '<script>alert("Tracking Number Not Found")
@@ -29,7 +31,14 @@ class ViewDocumentController extends Controller
          </script>';
 
         }
+        
+        
+    }
 
+
+    private function get_outgoing_history($tn){
+        $items = DocumentsModel::get_outgoing_history($tn);
+        return $items;
     }
 
     function get_document_data($tn)

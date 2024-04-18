@@ -11,13 +11,26 @@
                   <th>#</th>
                   <th>Tracking Number</th>
                   <th>Document Name</th>
-                  <th>From</th>
+                  <th>Person Responsible</th>
                   <th>Document Type</th>
                   <th>Remarks</th>
                   <th>Outgoing Date - Time</th>
                   
                </tr>
             </thead>
+
+            <tfoot>
+               <tr>
+                  <th></th>
+                  <th>#</th>
+                  <th>Tracking Number</th>
+                  <th>Document Name</th>
+                  <th>Person Responsible</th>
+                  <th>Document Type</th>
+                  <th>Remarks</th>
+                  <th>Outgoing Date - Time</th>
+               </tr>
+            </tfoot>
             
          </table>
       </div>
