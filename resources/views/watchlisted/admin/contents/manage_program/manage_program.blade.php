@@ -20,6 +20,7 @@ $('a#remove').on('click', function(){
    var id = $(this).data('id');
    var url = '/wl/delete-program';
    delete_item(id,url);
+   setTimeout(reload_page, 2000)
 });
 
 
@@ -51,7 +52,7 @@ $('#add_form').on('submit', function (e) {
    e.preventDefault();
    var form = $(this).serialize();
    var id = $('input[name=id]').val();
-
+   $('#add_form').find('button').attr('disabled',true);
    if (!id) {
      var url = '/wl/add-program';
      add_item(form,url);
@@ -60,8 +61,10 @@ $('#add_form').on('submit', function (e) {
       update_item(id,form,url);
       
    }
-
-    $('#add_form').find('button').attr('disabled',true);
+   $('#add_form').find('button').attr('disabled',false);
+   $('#add_form')[0].reset();
+   setTimeout(reload_page, 2000)
+   
 
 });
 
