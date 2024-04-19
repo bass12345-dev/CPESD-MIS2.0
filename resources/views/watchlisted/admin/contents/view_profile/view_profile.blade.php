@@ -26,6 +26,7 @@
 @endsection
 
 @section('js')
+@include('dts.includes.datatable')
 <script>
 $('a#update_status').on('click', function(e){
 	alert('asd');
