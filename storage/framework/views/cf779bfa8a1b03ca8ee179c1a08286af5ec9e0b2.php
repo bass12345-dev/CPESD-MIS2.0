@@ -36,7 +36,7 @@
          <td>Gender</td>
          <td class="gender"><?php
                   
-                  $display_gender = $person_data->gender;
+                  $display_gender = $person_data->gender == null ? 'please update gender' :  $person_data->gender;
                   echo strtoupper($display_gender[0]).''.ltrim($display_gender,$display_gender[0]);
                   
          ?></td>

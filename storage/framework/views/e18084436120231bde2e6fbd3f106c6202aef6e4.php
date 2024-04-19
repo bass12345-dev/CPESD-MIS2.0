@@ -1,8 +1,7 @@
 <div class="card flex-fill p-3">
          <div class="card-header">
-            <h5 class="card-title mb-2">To Approve</h5>
-            <button class="btn btn-danger" id="delete">Delete</button>
-            <button class="btn btn-success" id="approve">Approve</button>
+            <h5 class="card-title mb-2">Removed</h5>
+           
          </div>
          
 
@@ -10,22 +9,32 @@
             <thead>
                <tr>
                   <th></th>
-                  <!-- <th class=""><input type="checkbox" name="check_all" value="true"></th>    -->
                   <th>#</th>
                   <th>Name</th>
                   <th>Age</th>
                   <th>Address</th>
                   <th>Email</th>
                   <th>Phone Number</th>
-                  <th>Encoded By</th>
                   
                </tr>
             </thead>
-           
+            <tfoot>
+               <tr>
+                  <th></th>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Address</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  
+               </tr>
+            </tfoot>
+
          </table>
       </div>
 
 
 
 
-<?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/watchlisted/admin/contents/to_approve/sections/to_approve_table.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\CPESD-MIS\resources\views/watchlisted/users/contents/removed/sections/remove_table.blade.php ENDPATH**/ ?>

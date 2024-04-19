@@ -242,15 +242,24 @@ Route::middleware(['IsLoggedInCheck', 'WatchUserCheck'])->prefix('watchlisted/us
 
 Route::middleware(['IsLoggedInCheck', 'WatchUserCheck'])->prefix('wl/user')->group(function () {
 
+    //Approve List
+    Route::get('/g-a-l', [App\Http\Controllers\watchlisted\user\ApprovedListController::class, 'get_approve_list']);
+    //Pending List
+    Route::get('/g-p-l', [App\Http\Controllers\watchlisted\user\PendingListController::class, 'get_pending_list']);
+    //Removed List
+    Route::get('/g-r-l', [App\Http\Controllers\watchlisted\user\RemovedController::class, 'get_removed_list']);
 
     //Records
     Route::post('/a-p', [App\Http\Controllers\watchlisted\user\AddController::class, 'store']);
     Route::post('/d-p', [App\Http\Controllers\watchlisted\user\PendingListController::class, 'delete']);
-
-
     Route::post('/update', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'update_information']);
 
     //Records
+    Route::get('/g-w-r', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'get_records']);
+
+
+
+    
     Route::post('/add-record', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'add_record']);
     Route::post('/update-record', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'update_record']);
     Route::post('/delete-record', [App\Http\Controllers\watchlisted\user\ViewProfileController::class, 'delete_record']);
@@ -294,6 +303,13 @@ Route::middleware(['IsLoggedInCheck', 'WatchAdminCheck'])->prefix('wl')->group(f
     Route::post('/delete-record', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'delete_record']);
     Route::post('/s-p-p', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'save_record_program']);
 
+
+    //Pending List
+    Route::get('/t-a-w', [App\Http\Controllers\watchlisted\admin\ToApproveController::class, 'to_approved_watchlist']);
+    //Approve
+    Route::get('/a-w', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'approved_watchlist']);
+    //Restore
+    Route::get('/r-f-w', [App\Http\Controllers\watchlisted\admin\RestoreListController::class, 'remove_from_watchlisted']);
 
     Route::post('/l-c-g-a', [App\Http\Controllers\watchlisted\admin\ActiveListController::class, 'count_gender_active_chart']);
     //Change Code

@@ -1,6 +1,6 @@
 <div class="card flex-fill p-3">
          <div class="card-header">
-            <h5 class="card-title mb-2">Documents</h5>
+            <h5 class="card-title mb-2">Pending</h5>
             <button class="btn btn-danger" id="delete">Delete</button>
          </div>
          
@@ -9,7 +9,6 @@
             <thead>
                <tr>
                   <th></th>
-                  <!-- <th class=""><input type="checkbox" name="check_all" value="true"></th>    -->
                   <th>#</th>
                   <th>Name</th>
                   <th>Age</th>
@@ -19,26 +18,19 @@
                   
                </tr>
             </thead>
-            <tbody>
-
-                <?php
-                   $i = 1;
-                   foreach ($pending as $row) :?>
-                     <tr>
-                        <td><?php echo e($row->person_id); ?></td>
-                        <!-- <td><input type="checkbox" name="person_id" value="<?php echo e($row->person_id); ?>"></td> -->
-                        <td><?php echo $i++; ?></td>
-                        <td><a href="<?php echo e(url('/watchlisted/user/view_profile?id='.$row->person_id)); ?>" ><?php echo $row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension; ?></a></td>
-                        <td><?php echo $row->age; ?></td>
-                        <td><?php echo $row->address; ?></td>
-                        <td><?php echo $row->email_address; ?></td>
-                        <td><?php echo $row->phone_number; ?></td>
-                       
-                       
-                     </tr>
-                <?php endforeach; ?>    
+            <tfoot>
+               <tr>
+                  <th></th>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Address</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
                   
-            </tbody>
+               </tr>
+            </tfoot>
+
          </table>
       </div>
 

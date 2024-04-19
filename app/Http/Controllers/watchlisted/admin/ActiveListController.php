@@ -24,8 +24,27 @@ class ActiveListController extends Controller
     public function index()
     {
         $data['title'] = 'Active List';
-        $data['list'] = CustomModel::q_get_where_order($this->person_table, array('status' => 'active'), 'first_name', 'asc')->get();
         return view('watchlisted.admin.contents.list.list')->with($data);
+    }
+
+    public function approved_watchlist(){
+
+        $items       = CustomModel::q_get_where_order($this->person_table, array('status' => 'active'), 'first_name', 'asc')->get();
+        $i = 1;
+        $data = [];
+        foreach ($items as $row) {
+            $data[] = array(
+                        'name'              => $row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension,
+                        'age'               => $row->age,
+                        'address'           => $row->address,
+                        'email'             => $row->email_address,
+                        'phone_number'      => $row->phone_number,
+                        'person_id'         => $row->person_id,
+                        'number'            => $i++
+            );
+           
+        }
+        return response()->json($data);
     }
 
     public function store(Request $request)

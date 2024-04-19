@@ -14,8 +14,29 @@ class ToApproveController extends Controller
     public function index(){
 
         $data['title'] = 'To Approve';
-        $data['list'] = PersonModel::get_to_approve();
         return view('watchlisted.admin.contents.to_approve.to_approve')->with($data);
+    }
+
+
+    public function to_approved_watchlist(){
+
+        $items       = PersonModel::get_to_approve();
+        $i = 1;
+        $data = [];
+        foreach ($items as $row) {
+            $data[] = array(
+                        'name'              => $row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension,
+                        'age'               => $row->age,
+                        'address'           => $row->address,
+                        'email'             => $row->email_address,
+                        'phone_number'      => $row->phone_number,
+                        'person_id'         => $row->person_id,
+                        'encoded_by'        => $row->user_first_name.' '.$row->user_middle_name.' '.$row->user_last_name.' '.$row->user_extension,
+                        'number'            => $i++
+            );
+           
+        }
+        return response()->json($data);
     }
 
     public function approve(Request $request){

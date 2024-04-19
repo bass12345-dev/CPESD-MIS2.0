@@ -11,8 +11,28 @@ class RestoreListController extends Controller
     private $records_table = "records";
     public function index(){
         $data['title'] = 'Restore';
-        $data['list'] = CustomModel::q_get_where_order($this->person_table,array('status' => 'inactive'),'first_name','asc')->get();
         return view('watchlisted.admin.contents.restore.restore')->with($data);
+    }
+
+    public function remove_from_watchlisted(){
+
+        $items = CustomModel::q_get_where_order($this->person_table,array('status' => 'inactive'),'first_name','asc')->get();
+        $i = 1;
+        $data = [];
+        foreach ($items as $row) {
+            $data[] = array(
+                        'name'              => $row->first_name.' '.$row->middle_name.' '.$row->last_name.' '.$row->extension,
+                        'age'               => $row->age,
+                        'address'           => $row->address,
+                        'email'             => $row->email_address,
+                        'phone_number'      => $row->phone_number,
+                        'person_id'         => $row->person_id,
+                        'number'            => $i++
+            );
+           
+        }
+        return response()->json($data);
+
     }
 
     public function delete(Request $request){

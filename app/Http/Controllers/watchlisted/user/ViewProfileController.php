@@ -24,10 +24,11 @@ class ViewProfileController extends Controller
         $data['person_data']        = PersonModel::get_person_profile($id);
         $data['programs']           = $this->get_programs();
         $data['person_programs']    = $this->get_person_programs($data['programs']);   
-        $data['records']            = $this->get_records();
         $data['barangay']           = config('app.barangay');
         return view('watchlisted.users.contents.view_profile.view_profile')->with($data);
     }
+
+
 
 
     public function update_information(Request $request){
@@ -199,22 +200,26 @@ class ViewProfileController extends Controller
  }
 
 
- private function get_records(){
+ public function get_records(){
 
         $data = [];
-        $items = CustomModel::q_get_where($this->records_table,array('p_id' => $_GET['id']))->get();
+        $id = $_GET['id'];
+        $items = CustomModel::q_get_where($this->records_table,array('p_id' =>$id ))->get();
+        $person = PersonModel::get_person_profile($id);
         foreach ($items as $row) {
-            
+                
             $data[] = array(
 
                     'created_at'            => date('M d Y - h:i a', strtotime($row->created_at)),
                     'record_description'    => $row->record_description,
                     'p_id'                  => $row->p_id,
-                    'record_id'             => $row->record_id
+                    'record_id'             => $row->record_id,
+                    'actions'               => session('watch_id') == $person->user_id ?  true : false
+                    
 
             );
         }
-      return $data;
+      return response()->json($data);
     }
 
 }

@@ -37,6 +37,7 @@ $('a#remove').on('click', function(e){
 	var id = $(this).data('id');
 	var url = '/wl/delete-record';
 	delete_item(id,url);
+	setTimeout(reload_page, 2000)
 });
 
 
@@ -53,7 +54,7 @@ $('a#update').on('click', function(){
 $('#add_form').find('button.cancel_update').on('click', function(){
    $(this).attr('hidden',true);
    $('input[name=record_id]').val('');
-   $('input[name=record_description]').val('');
+   $('textarea[name=record_description]').val('');
    $('#add_form').find('button.submit').text('Submit');
     $('.card-title').text('Add Program');
 });
@@ -64,6 +65,7 @@ $('#add_form').on('submit', function (e) {
    var form = $(this).serialize();
    var id = $('input[name=record_id]').val();
    var person_id = $('input[name=person_id]').val();
+   $('#add_form').find('button').attr('disabled',true);
 
    if (!id) {
    		var url = '/wl/add-record';
@@ -74,9 +76,8 @@ $('#add_form').on('submit', function (e) {
       update_item(id,form,url);
       
    }
-
-    $('#add_form').find('button').attr('disabled',true);
-
+   $('#add_form').find('button').attr('disabled',false);
+   setTimeout(reload_page, 2000)
 });
 
 
@@ -95,9 +96,10 @@ $('#program_form').on('submit', function(e){
 				id : items,
 				person_id : person_id
 	};
+	$('#program_form').find('button').attr('disabled',true);
 	add_item(data,url);
-
-    $('#program_form').find('button').attr('disabled',true);
+	$('#program_form').find('button').attr('disabled',false);
+	setTimeout(reload_page, 2000)
 
 });
 
@@ -112,9 +114,10 @@ $('#update_information').on('submit', function(e){
 
 		var url = '/wl/update';
 		var form = $('#update_information').serialize();
-		update_item(id='',form,url);
 		$('#update_information').find('button').attr('disabled',true);
-		
+		update_item(id='',form,url);
+		$('#update_information').find('button').attr('disabled',false);
+		setTimeout(reload_page, 2000)
 });
 
 

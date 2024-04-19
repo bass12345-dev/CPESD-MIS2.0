@@ -6,9 +6,7 @@
 	<div class="col-md-7">
 		<?php echo $__env->make('watchlisted.users.contents.view_profile.sections.info', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 	</div>
-	<div class="col-md-5">
-		<?php echo $__env->make('watchlisted.users.contents.view_profile.sections.program_block', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-	</div>
+	
 </div>
 
 
@@ -30,15 +28,69 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
+<?php echo $__env->make('dts.includes.datatable_with_select', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
-	$('a#remove').on('click', function(e) {
+
+	
+document.addEventListener("DOMContentLoaded", function () {
+   table = $("#datatable_with_select").DataTable({
+      responsive: true,
+      ordering: false,
+      processing: true,
+      pageLength: 25,
+      language: {
+         "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="<?php echo e(asset("assets/img/peso_logo.png")); ?>"></div>'
+      },
+      dom: 'Bfrtip',
+      buttons: ['copy', 'print', 'csv'],
+      ajax: {
+         url: base_url + "/wl/user/g-w-r?id="+'<?php echo $_GET['id'] ?>',
+         method: 'GET',
+         headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+         },
+         dataSrc: ""
+      },
+      columns: [
+         {
+         data: 'record_description'
+      },
+      {
+         data: 'created_at'
+      }, 
+	  {
+         data: null
+      }, 
+	],
+      columnDefs: [ 
+            {
+               targets: -1,
+               data: null,
+               render: function (data, type, row) {
+				 let actions = row.actions == true ? '<div class="btn-group dropstart">\
+                                <i class="fa fa-ellipsis-v " class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>\
+                                <ul class="dropdown-menu">\
+                                    <li><a class="dropdown-item" id="update" href="javascript:;" data-user-id="'+row.p_id+'" data-record="'+row.record_description+'" data-record-id="'+row.record_id+'">Update</a></li>\
+                                    <li><a class="dropdown-item" id="remove" href="javascript:;" data-id="'+row.record_id+'">Remove</a></li>\
+                                </ul>\
+                            </div>' : '';
+                  return actions;
+               }
+            },
+
+           
+
+   ]
+   });
+});
+	$(document).on('click', 'a#remove', function(){
+
 		var id = $(this).data('id');
 		var url = '/wl/user/delete-record';
 		delete_item(id, url);
 	});
 
-
-	$('a#update').on('click', function() {
+	$(document).on('click', 'a#update', function(){
 		var id = $(this).data('record-id');
 		var record = $(this).data('record');
 		$('input[name=record_id]').val(id);
@@ -51,7 +103,7 @@
 	$('#add_form').find('button.cancel_update').on('click', function() {
 		$(this).attr('hidden', true);
 		$('input[name=record_id]').val('');
-		$('input[name=record_description]').val('');
+		$('textarea[name=record_description]').val('');
 		$('#add_form').find('button.submit').text('Submit');
 		$('.card-title').text('Add Program');
 	});
@@ -62,7 +114,7 @@
 		var form = $(this).serialize();
 		var id = $('input[name=record_id]').val();
 		var person_id = $('input[name=person_id]').val();
-
+		$('#add_form').find('button').attr('disabled', true);
 		if (!id) {
 			var url = '/wl/user/add-record';
 			add_item(form, url);
@@ -72,8 +124,9 @@
 			update_item(id, form, url);
 
 		}
-
-		$('#add_form').find('button').attr('disabled', true);
+		$('#add_form').find('button').attr('disabled', false);
+		$('#add_form')[0].reset();
+		
 
 	});
 
@@ -110,8 +163,10 @@
 
 		var url = '/wl/user/update';
 		var form = $('#update_information').serialize();
-		update_item(id = '', form, url);
 		$('#update_information').find('button').attr('disabled', true);
+		update_item(id = '', form, url);
+		$('#update_information').find('button').attr('disabled', false);
+		 setTimeout(reload_page, 2000)
 
 	});
 </script>
