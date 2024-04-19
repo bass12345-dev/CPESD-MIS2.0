@@ -19,7 +19,7 @@
                            <tr>
                               <th scope="row"><?php echo e($i++); ?></th>
                               <td><?php echo e($row->tracking_number); ?></td>
-                              <td><?php echo e($row->document_name); ?></td>
+                              <td><a href="<?php echo e(url('/dts/user/view?tn='.$row->tracking_number)); ?>" data-toggle="tooltip" data-placement="top" title="View <?php echo $row->tracking_number ?>"><?php echo $row->document_name; ?></a></td>
                               <td><?php echo e($row->type_name); ?></td>
                               <td><?php echo e($row->destination_type); ?></td>
                            </tr>
