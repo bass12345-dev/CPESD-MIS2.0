@@ -22,6 +22,28 @@
       language: {
          "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="{{asset("assets/img/peso_logo.png")}}"></div>'
       },
+      "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+      buttons: [
+            {
+               extend: 'copy',
+               text: 'Copy',
+               className: 'btn btn-warning rounded-pill ',
+               footer: true,
+               
+            }, 
+            {
+               extend: 'print',
+               text: 'Print',
+               className: 'btn btn-info rounded-pill  ms-2',
+               footer: true,
+              
+            }, {
+               extend: 'csv',
+               text: 'CSV',
+               className: 'btn btn-success rounded-pill ms-2',
+               footer: true,
+              
+            }, ],
       
       
       ajax: {
@@ -82,7 +104,7 @@
                targets: 3,
                data: null,
                render: function (data, type, row) {
-                  return '<a href="' + base_url + '/dts/user/view?tn=' + row.tracking_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.tracking_number + ' ?>">' + row.document_name + '</a>';
+                  return '<a href="' + base_url + '/dts/user/view?tn=' + row.tracking_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.tracking_number + '">' + row.document_name + '</a>';
                }
             },
             {

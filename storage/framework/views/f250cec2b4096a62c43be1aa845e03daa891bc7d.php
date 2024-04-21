@@ -11,15 +11,35 @@
     pageLength: 25,
         
 
-        buttons: [{
-                extend: 'print',
-                title: 'All Documents'
-            },
+    "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+      buttons: [
             {
-                extend: 'csv',
-            }
-
-        ],
+               extend: 'copy',
+               text: 'Copy',
+               className: 'btn btn-warning ',
+               footer: true,
+               exportOptions: {
+                  columns: 'th:not(:last-child)',
+                 
+               }
+            }, 
+            {
+               extend: 'print',
+               text: 'Print',
+               className: 'btn btn-info ',
+               footer: true,
+               exportOptions: {
+                  columns: 'th:not(:last-child)'
+               }
+            }, {
+               extend: 'csv',
+               text: 'CSV',
+               className: 'btn btn-success ',
+               footer: true,
+               exportOptions: {
+                  columns: 'th:not(:last-child)',
+               }
+            }, ],
         // scrollX: true
     });
     datatablesButtons.buttons().container().appendTo("#datatables-buttons_wrapper .col-md-6:eq(0)");

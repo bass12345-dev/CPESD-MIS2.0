@@ -12,6 +12,7 @@
 </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
+<?php echo $__env->make('dts.includes.datatable', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
 $('a#remove').on('click', function(){
    var id = $(this).data('id');
@@ -46,7 +47,7 @@ $('#add_form').on('submit', function (e) {
      var url = '/dts/add-action';
      add_item(form,url);
    }else {
-      var url = '/dts/update-action/';
+      var url = '/dts/update-action';
       update_item(id,form,url);
    }
 

@@ -86,6 +86,7 @@
       <details open>\
           <summary ><a href="'+ base_url + '/dts/admin/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
           <p>'+item.document_description+'</p>\
+          <b><span>#'+item.tracking_number+'</span></b>\
           <span class="text-primary"><b>Remarks</b></span><p>'+item.remarks+'</p>\
         </details>\
       </li>';

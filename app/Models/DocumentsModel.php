@@ -631,6 +631,7 @@ class DocumentsModel extends Model
         $rows = DB::table('documents as documents')
         ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
         ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
+        ->leftJoin('history as history', 'history.t_number', '=', 'documents.tracking_number')
         ->select(    //Documents
                     'documents.created as created', 
                     'documents.doc_status as doc_status',  
@@ -647,6 +648,8 @@ class DocumentsModel extends Model
                     'users.middle_name as middle_name', 
                     'users.last_name as last_name', 
                     'users.extension as extension', 
+                    //Histoty 
+                    'history.remarks as remarks',
                     DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name"))
         ->where(DB::raw("concat(documents.document_name, ' ', documents.document_description)"), 'LIKE', "%" . $search . "%")
         ->orderBy('documents.document_id', 'desc')->get();

@@ -3,15 +3,15 @@
 <?php $__env->startSection('content'); ?>
 
 <?php echo $__env->make('global_includes.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php echo $__env->make('dts.users.contents.search.sections.search_form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('dts.admin.contents.search.sections.search_form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <div class="row d-none result-card">
   <div class="col-md-12 col-12">
     <div class="card flex-fill p-3">
     <div class="loading"></div>
       <div class="card-header">
+      
         <h5 class="card-title text-danger mb-0"></h5>
       </div>
-     
       <div class="data-container"></div>
       <div class="pagination-container mt-3"></div>
     </div>
@@ -30,9 +30,9 @@
     var q = $('input[name=search]').val();
     $('.result-card').addClass('d-none')
     $('.result').html('');
-    
+
     $.ajax({
-      url: base_url + '/dts/us/search?q=' + q,
+      url: base_url + '/dts/search?q=' + q,
       method: 'GET',
       dataType: 'json',
       headers: {
@@ -45,24 +45,23 @@
         $('.result-card').removeClass('d-none');
         JsLoadingOverlay.hide();
         if (data.length > 0) {
-          
+         
           let arr = [];
           $('.card-title').text(data.length + ' Result/s');
           simpleTemplating(data);
           $('.pagination-container').pagination({
             dataSource: data,
-            pageSize:50,
+            pageSize: 100,
             showPageNumbers: true,
             showNavigator: true,
             showSizeChanger: true,
             callback: function(data, pagination) {
-              var html = simpleTemplating(data);
+              var html = simpleTemplating(data,q);
               $('.data-container').html(html);
-              highlightText(q);
             }
           });
           $('.pagination-container').removeClass('d-none');
-         
+          highlightText(q);
         } else {
           $('.card-title').text('0 Result/s');
           $('.data-container').html('<div class="row d-flex justify-content-center text-danger" style="font-size: 20px;">Sorry! We can\'t find the document you\'re looking for</div>');
@@ -84,8 +83,8 @@
     $.each(data, function(index, item) {
       
       html += '<li class="list-group-item">\
-      <details class="details" open>\
-          <summary ><a href="'+ base_url + '/dts/user/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
+      <details open>\
+          <summary ><a href="'+ base_url + '/dts/admin/view?tn=' + item.tracking_number+'">' + item.document_name + '</a></summary>\
           <p>'+item.document_description+'</p>\
           <b><span>#'+item.tracking_number+'</span></b>\
           <span class="text-primary"><b>Remarks</b></span><p>'+item.remarks+'</p>\
@@ -98,7 +97,8 @@
 
 
 
+
 </script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('dts.users.layout.user_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/dts/users/contents/search/search.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('dts.admin.layout.admin_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/dts/admin/contents/search/search.blade.php ENDPATH**/ ?>
