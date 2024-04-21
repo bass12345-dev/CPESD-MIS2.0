@@ -13,10 +13,13 @@ class DashboardController extends Controller
     private $documents_table = "documents";
     private $history_table = "history";
     private $outgoing_table             = 'outgoing_documents';
+    private $users_table             = "users";
+
     public function index(){
         $data['title'] = 'User Dashboard';
         $data['count'] = $this->countmydoc_dash();
         $data['today'] = Carbon::now()->format('M d Y');
+        $data['forwarded_to_users'] = $this->get_forwarded_documents();
         return view('dts.users.contents.dashboard.dashboard')->with($data);
        
     }
@@ -36,9 +39,28 @@ class DashboardController extends Controller
                 'cancelled'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'cancelled','u_id'=> $id))->count(),
                 'encoded_outgoing'   => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'outgoing','u_id'=> $id))->count(),
                 'outgoing'          =>CustomModel::q_get_where($this->outgoing_table,array('status' => 'pending','user_id'=> $id))->count(),
-                'added_today'         => DocumentsModel::user_added_document_date_now($date_now)
+                'added_today'         => DocumentsModel::added_document_date_now($date_now),
+                // DocumentsModel::user_added_document_date_now($date_now)
         );
 
         return $data;
+    }
+
+
+
+    function get_forwarded_documents(){
+        //get users
+        $users = CustomModel::q_get_where($this->users_table,array('user_status'=>'active'))->get();
+        //store results
+        $result = array();
+        foreach($users as $row){
+            $query_history =  DocumentsModel::count_forwarded_documents($row->user_id);
+            if($query_history->count() > 0){
+                array_push($result,$row->first_name.' - '.$query_history->count().' Documents');
+            }
+
+        }
+
+        return $result;
     }
 }

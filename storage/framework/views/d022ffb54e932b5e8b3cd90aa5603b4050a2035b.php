@@ -54,7 +54,7 @@
 
   
 </div>
-</div>
+
 <div class="row">
    <div class="col-xl-12 col-xxl-12 d-flex">
       <div class="w-100">
@@ -151,46 +151,4 @@
    </div>
 </div>
 
-<div class="row">
-   <div class="col-xl-12 col-xxl-12 d-flex">
-      <div class="w-100">
-         <div class="row">
-            <div class="col-sm-8">
-               <div>
-                  <div class="card">
-                     <div class="card-header bg-primary text-white">
-                           Document Added Today - <?php echo e($today); ?>
-
-                     </div>
-                     <table class="table">
-                        <thead>
-                           <tr>
-                              <th class="text-center">#</th>
-                              <th class="text-center">Tracking Number</th>
-                              <th class="text-center">Document Name</th>
-                              <th class="text-center">Type</th>
-                              <th class="text-center">Transaction Type</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <?php $i =1; foreach($count['added_today'] as $row) {
-                               ?>
-                           <tr>
-                              <th class="text-center"><?php echo e($i++); ?></th>
-                              <td class="text-center"><?php echo e($row->tracking_number); ?></td>
-                              <td class="text-center"><?php echo e($row->document_name); ?></td>
-                              <td class="text-center"><?php echo e($row->type_name); ?></td>
-                              <td class="text-center"><?php echo e($row->destination_type); ?></td>
-                           </tr>
-                          <?php } ?>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-
-            </div>
-
-         </div>
-      </div>
-   </div>
-</div><?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/dts/users/contents/dashboard/sections/count_section.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/dts/users/contents/dashboard/sections/count_section.blade.php ENDPATH**/ ?>

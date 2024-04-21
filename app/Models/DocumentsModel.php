@@ -477,6 +477,22 @@ class DocumentsModel extends Model
         return $row;
     }
 
+    //User Dashboard
+    public static function count_forwarded_documents($user_id){
+        $row = DB::table('history as history')
+        ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
+        ->where('user1', session('_id'))
+        ->where('user2', $user_id)
+        ->where('doc_status'  ,'!=', 'cancelled')
+        ->where('received_status', NULL)
+        ->where('status', 'torec')
+        ->where('release_status',NULL )
+        ->orderBy('tracking_number', 'desc');
+
+        return $row;
+
+    }
+
 
 
     public static function get_outgoing_documents(){
