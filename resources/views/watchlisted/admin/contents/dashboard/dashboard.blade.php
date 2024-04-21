@@ -93,7 +93,7 @@ function load_chart_active(year){
 					labels: data.label,
 					datasets: [
 						{
-						label: 'Active',
+						label: 'Approved',
 						backgroundColor: window.theme.danger,
 						borderColor: window.theme.danger,
 						hoverBackgroundColor: window.theme.danger,

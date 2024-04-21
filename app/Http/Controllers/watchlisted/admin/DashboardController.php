@@ -12,7 +12,7 @@ class DashboardController extends Controller
     private $programs_table = "programs";
     public function index(){
         $data['title']                  = 'Watchlisted Dashboard';
-        $data['gender_title']           = 'Count Active By Gender';
+        $data['gender_title']           = 'Count Approved By Gender';
         $data['count']   = $this->count_all();
 
        

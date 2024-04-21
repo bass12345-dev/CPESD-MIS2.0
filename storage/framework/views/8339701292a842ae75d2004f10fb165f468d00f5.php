@@ -1,13 +1,12 @@
 <div class="col-12 col-lg-12 col-xxl-12 d-flex">
-							<div class="card flex-fill w-100">
-								<div class="card-header">
+	<div class="card  w-100 " style="border: 1px solid;">
+		
+		<div class="card-body d-flex w-100" >
+			<div class="align-self-center chart chart-lg">
+				<canvas id="chartjs-dashboard-bar" style="height: 150px;"></canvas>
+			</div>
+		</div>
+	</div>
+</div>
 
-									<h5 class="card-title mb-0">Data Per Barangay</h5>
-								</div>
-								<div class="card-body d-flex w-100">
-									<div class="align-self-center chart chart-lg">
-										<canvas id="chartjs-dashboard-bar" style="height: 300vh;"></canvas>
-									</div>
-								</div>
-							</div>
-						</div><?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/watchlisted/admin/contents/dashboard/sections/barangay.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/watchlisted/admin/contents/dashboard/sections/barangay.blade.php ENDPATH**/ ?>

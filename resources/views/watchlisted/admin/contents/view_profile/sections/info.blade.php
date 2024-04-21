@@ -61,7 +61,7 @@
                      $bg = 'bg-success';
                      break;
                   case 'active': 
-                     $status = 'Active';
+                     $status = 'Approved';
                      $bg = 'bg-danger';
                   
                   default:

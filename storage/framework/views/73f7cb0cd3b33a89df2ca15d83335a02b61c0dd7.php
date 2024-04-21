@@ -3,15 +3,10 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel"></h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Update Document</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-           <div class="card">
-         <div class="card-header">
-            <h5 class="card-title mb-0">Update Document</h5>
-         </div>
-         <div class="card-body">
             <form id="update_document">
                <div class="form-row mb-2">
                   <div class="form-group col-md-12 mb-3">
@@ -22,6 +17,20 @@
                    <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Document name</label>
                      <input type="text" name="document_name" class="form-control" required >
+                  </div>
+
+                  <div class="form-group col-md-12 mb-3">
+                     <label for="inputEmail4">Origin</label>
+                     <select class="form-control" name="origin" required>
+                        <option value="">Select Office Origin</option>
+                        <?php
+                           foreach ($offices as $row) :
+                          
+                              echo "<option value='".$row->office_id."' >".$row->office."</option>";
+                              # code...
+                           endforeach;
+                         ?>
+                     </select>      
                   </div>
 
                   <div class="form-group col-md-12 mb-3">
@@ -59,9 +68,9 @@
                </div>
                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-         </div>
+         
       </div>
-      </div>
+      
       
     </div>
   </div>

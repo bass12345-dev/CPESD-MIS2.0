@@ -25,7 +25,7 @@
 
 			<li class="sidebar-item <?= $segments[2] == 'list' ? 'active' : '' ?>">
 				<a class="sidebar-link" href="{{url('/watchlisted/admin/list')}}">
-					<i class=" fas fa-file align-middle"></i> <span class="align-middle">Active List</span>
+					<i class=" fas fa-file align-middle"></i> <span class="align-middle">Approved</span>
 				</a>
 			</li>
 

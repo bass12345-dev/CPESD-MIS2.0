@@ -23,7 +23,7 @@ class ActiveListController extends Controller
     }
     public function index()
     {
-        $data['title'] = 'Active List';
+        $data['title'] = 'Approved';
         return view('watchlisted.admin.contents.list.list')->with($data);
     }
 

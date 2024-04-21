@@ -7,7 +7,7 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="col mt-0">
-                           <h5 class="card-title text-white">Watchlist</h5>
+                           <h5 class="card-title text-white">Approved</h5>
                         </div>
                         <div class="col-auto">
                            <div class="stat text-primary">

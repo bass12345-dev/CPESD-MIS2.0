@@ -4,15 +4,18 @@
 
 <?php echo $__env->make('global_includes.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <div class="row">
-   <div class="col-12 col-md-5">
+   <div class="col-12 col-md-12">
        <?php echo $__env->make('dts.users.contents.track.sections.document_information', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-   
    </div>
-   <div class="col-12  col-md-7 ">
-       <?php echo $__env->make('dts.users.contents.track.sections.history', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-   </div>
-   
 </div>
+
+<div class="row">
+    <div class="col-12  col-md-12 ">
+        <?php echo $__env->make('dts.users.contents.track.sections.history', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    </div>
+</div>
+
+
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
 

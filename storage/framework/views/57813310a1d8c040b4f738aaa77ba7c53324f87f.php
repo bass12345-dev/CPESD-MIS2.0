@@ -1,0 +1,25 @@
+
+
+<div class="card">
+   <div class="card-header">
+      <h5 class="card-title mb-0"></h5>
+   </div>
+   <div class="card-body">
+      <form id="add_form">
+         <div class="form-row mb-2">
+
+
+            <div class="form-group col-md-12 mb-3">
+               <input type="hidden" name="person_id" value="<?php echo e($_GET['id']); ?>">
+               <input type="hidden" name="record_id">
+               <label for="inputEmail4">Add Record</label>
+               <textarea name="record_description" class="form-control" style="height: 10rem;"></textarea>
+            </div>
+
+         </div>
+         <button type="submit" class="btn btn-primary submit">Submit</button>
+         <button type="button" class="btn btn-danger cancel_update" hidden>Cancel Update</button>
+      </form>
+   </div>
+</div>
+<?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/watchlisted/users/contents/view_profile/sections/add_form.blade.php ENDPATH**/ ?>

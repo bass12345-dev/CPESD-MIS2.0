@@ -7,12 +7,26 @@
             <div class="form-row mb-2">
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Tracking Number</label>
-                     <input type="text" class="form-control" name="tracking_number" value="<?php echo e($reference_number); ?>" readonly="" >
+                     <input type="text" class="form-control" name="tracking_number" readonly="" >
                   </div>
                   <input type="hidden" name="user_id" value="<?php echo base64_encode($user_data->user_id) ?>" class="form-control"  >
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Document name</label>
                      <input type="text" name="document_name" class="form-control" required >
+                  </div>
+
+                  <div class="form-group col-md-12 mb-3">
+                     <label for="inputEmail4">Origin</label>
+                     <select class="form-control" name="origin" required>
+                        <option value="">Select Office Origin</option>
+                        <?php
+                           foreach ($offices as $row) :
+                          
+                              echo "<option value='".$row->office_id."' >".$row->office."</option>";
+                              # code...
+                           endforeach;
+                         ?>
+                     </select>      
                   </div>
 
                   <div class="form-group col-md-12 mb-3">
@@ -32,10 +46,10 @@
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Office</label>
                      <select class="form-control" name="office_id" required>
-                        <option value="">Select Document Type</option>
+                        <option value="">Select Office</option>
                         <?php
                            foreach ($offices as $row) :
-                              $selected = $row->office_id == 21 ? 'selected' : '';
+                              $selected = $row->office_id == 21 ? 'selected' : 'disabled';
                               echo "<option value='".$row->office_id."' ".$selected.">".$row->office."</option>";
                               # code...
                            endforeach;

@@ -51,6 +51,7 @@
          <td>{{ $person_data->user_first_name.' '.$person_data->user_middle_name.' '.$person_data->user_last_name.' '.$person_data->user_extension }}</td>
       </tr>
        <tr>
+       <td>Status</td>
        <?php 
                $status  = '';
                $bg      = '';
@@ -65,7 +66,7 @@
                      $bg = 'bg-success';
                      break;
                   case 'active': 
-                     $status = 'Active';
+                     $status = 'Approved';
                      $bg = 'bg-danger';
                   
                   default:

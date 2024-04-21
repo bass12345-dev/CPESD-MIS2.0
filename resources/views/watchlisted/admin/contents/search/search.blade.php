@@ -101,7 +101,7 @@ function search_name_result(url,form){
                         break;
                      
                      case 'active' : 
-                        status = 'Active';
+                        status = 'Approved';
                         bg = 'bg-danger';
                         break;
                   
