@@ -112,7 +112,7 @@
                </div>
             </div>
             <div class="col-sm-2">
-               <div class="card">
+               <div class="card outgoing-card">
                   <div class="card-body">
                      <div class="row">
                         <div class="col mt-0">

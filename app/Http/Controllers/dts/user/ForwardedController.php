@@ -33,7 +33,7 @@ class ForwardedController extends Controller
                      'type_name'         => $key->type_name,
                      'released_date'     => date('M d Y - h:i a', strtotime($key->release_date)) ,
                      'forward_to_id'     => $key->user_id,
-                     'forwarded_to'      => $key->first_name.' '.$key->middle_name.' '.$key->last_name.' '.$key->extension,
+                     'forwarded_to'      => $key->final_receiver == 'yes' ? '<span class="text-danger">To Final Receiver</span>' : $key->first_name.' '.$key->middle_name.' '.$key->last_name.' '.$key->extension,
                      'document_id'       => $key->document_id,
                      'remarks'           => $key->remarks,
              );

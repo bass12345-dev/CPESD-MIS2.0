@@ -455,6 +455,7 @@ class DocumentsModel extends Model
                         'history.release_date as release_date',
                         'history.history_id as history_id',
                         'history.remarks as remarks',
+                        'history.to_receiver as final_receiver',
                         //User
                         'users.user_id as user_id',
                         'users.user_type as user_type',
@@ -486,6 +487,23 @@ class DocumentsModel extends Model
         ->where('doc_status'  ,'!=', 'cancelled')
         ->where('received_status', NULL)
         ->where('status', 'torec')
+        ->where('to_receiver', 'no')
+        ->where('release_status',NULL )
+        ->orderBy('tracking_number', 'desc');
+
+        return $row;
+
+    }
+
+    public static function count_forwarded_documents_final($user_id){
+        $row = DB::table('history as history')
+        ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
+        ->where('user1', session('_id'))
+        ->where('user2', $user_id)
+        ->where('doc_status'  ,'!=', 'cancelled')
+        ->where('received_status', NULL)
+        ->where('status', 'torec')
+        ->where('to_receiver', 'yes')
         ->where('release_status',NULL )
         ->orderBy('tracking_number', 'desc');
 

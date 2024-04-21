@@ -36,8 +36,8 @@
 
             </div>
             <div class="col-sm-5">
-               <div>
-                  <div class="card">
+              
+                  <div class="card documents_forwarded">
                      <div class="card-header bg-danger text-white">
                         Documents Forwarded
                         
@@ -51,7 +51,7 @@
                      </ul>
                      
                   </div>
-               </div>
+              
 
             </div>
 

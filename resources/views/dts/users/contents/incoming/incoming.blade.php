@@ -97,6 +97,24 @@ $('a#received_documents').on('click', function () {
       delete_item(form, url, button_text = 'Receive Document', text = '')
    }
 }); 
+
+introJs().setOptions(
+      
+      {
+          "dontShowAgain": true,
+          showProgress: true,          
+steps: [{
+  title: 'Welcome',
+  intro: 'Hello Ka people of CPESD There\'s a new update! 👋'
+},
+{
+  title: 'Receive Button',
+  element: document.querySelector('.received_documents'),
+  intro: 'You can receive multiple documents by selecting row/\'s in incoming table'
+}]
+},
+
+).start();
 </script>
 
 @endsection

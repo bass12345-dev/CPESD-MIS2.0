@@ -225,6 +225,37 @@ $('a#received_error').on('click', function () {
       }
    });
 });
+
+
+introJs().setOptions(
+      
+      {
+          "dontShowAgain": true,
+          showProgress: true,          
+steps: [{
+  title: 'Welcome',
+  intro: 'Hello Ka people of CPESD There\'s a new update! 👋'
+},
+{
+  title: 'Forward Button',
+  element: document.querySelector('#multiple_forward'),
+  intro: 'You can forward multiple documents by selecting row/\'s in received table'
+},
+{
+  title: 'Received Error Button',
+  element: document.querySelector('#received_error'),
+  intro: 'You can do received error by selecting row/\'s in received table'
+},
+{
+  title: 'Outgoing Button',
+  element: document.querySelector('#outgoing'),
+  intro: 'You can outgoing multiple documents by selecting row/\'s in received table'
+}
+
+]
+},
+
+).start();
 </script>
 
 <?php $__env->stopSection(); ?>

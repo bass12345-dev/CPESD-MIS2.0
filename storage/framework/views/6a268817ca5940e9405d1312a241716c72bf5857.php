@@ -36,12 +36,7 @@ $(document).ready(function () {
                footer: true,
                exportOptions: {
                   columns: 'th:not(:last-child)',
-                  orthogonal: 'excel',
-                    modifier: {
-                        order: 'current',
-                        page: 'all',
-                        selected: false,
-                    },
+                 
                }
             }, 
             {
