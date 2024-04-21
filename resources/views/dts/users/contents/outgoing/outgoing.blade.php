@@ -175,5 +175,26 @@ $(document).on('click', 'a#received_documents', function(){
       delete_item(form, url, button_text = 'Receive Document', text = '')
    }
 }); 
+
+introJs().setOptions(
+      
+      {
+          "dontShowAgain": true,
+          showProgress: true,          
+steps: [{
+  title: 'Welcome',
+  intro: 'Hello Ka people of CPESD There\'s a new update! 👋'
+},
+{
+  title: 'Forward Button',
+  element: document.querySelector('#received_documents'),
+  intro: 'You can received multiple documents from outgoing by selecting row/\'s in received table'
+},
+
+
+]
+},
+
+).start();
 </script>
 @endsection

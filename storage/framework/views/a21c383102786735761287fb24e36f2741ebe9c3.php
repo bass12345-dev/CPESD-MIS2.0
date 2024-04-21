@@ -175,6 +175,27 @@ $(document).on('click', 'a#received_documents', function(){
       delete_item(form, url, button_text = 'Receive Document', text = '')
    }
 }); 
+
+introJs().setOptions(
+      
+      {
+          "dontShowAgain": true,
+          showProgress: true,          
+steps: [{
+  title: 'Welcome',
+  intro: 'Hello Ka people of CPESD There\'s a new update! 👋'
+},
+{
+  title: 'Forward Button',
+  element: document.querySelector('#received_documents'),
+  intro: 'You can received multiple documents from outgoing by selecting row/\'s in received table'
+},
+
+
+]
+},
+
+).start();
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('dts.users.layout.user_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/dts/users/contents/outgoing/outgoing.blade.php ENDPATH**/ ?>
