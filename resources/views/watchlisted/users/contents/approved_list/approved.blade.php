@@ -20,8 +20,28 @@
       language: {
          "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="{{asset("assets/img/peso_logo.png")}}"></div>'
       },
-      dom: 'Bfrtip',
-      buttons: ['copy', 'print', 'csv'],
+      "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+      buttons: [
+            {
+               extend: 'copy',
+               text: 'Copy',
+               className: 'btn btn-warning rounded-pill ',
+               footer: true,
+               
+            }, 
+            {
+               extend: 'print',
+               text: 'Print',
+               className: 'btn btn-info rounded-pill  ms-2',
+               footer: true,
+              
+            }, {
+               extend: 'csv',
+               text: 'CSV',
+               className: 'btn btn-success rounded-pill ms-2',
+               footer: true,
+              
+            }, ],
       ajax: {
          url: base_url + "/wl/user/g-a-l",
          method: 'GET',
