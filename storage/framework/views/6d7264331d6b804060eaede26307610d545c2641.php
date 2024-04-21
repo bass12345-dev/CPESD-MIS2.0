@@ -41,11 +41,13 @@
                   <div class="card">
                      <div class="card-header bg-danger text-white">
                         Documents Forwarded
+                        
                      </div>
                      <ul class="list-group list-group-flush">
                         <?php foreach($forwarded_to_users as $row): ?>
                         <li class="list-group-item text-danger"><?php echo e($row); ?></li>
                         <?php endforeach; ?>
+                        <li class="list-group-item text-danger"><a href="<?php echo e(url('/dts/user/forwarded')); ?>">See all</a></li>
                
                      </ul>
                      

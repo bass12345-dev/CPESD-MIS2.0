@@ -56,7 +56,7 @@ class DashboardController extends Controller
         foreach($users as $row){
             $query_history =  DocumentsModel::count_forwarded_documents($row->user_id);
             if($query_history->count() > 0){
-                array_push($result,$row->first_name.' - '.$query_history->count().' Documents');
+                array_push($result,$row->first_name.' - '.$query_history->count().' Document/s');
             }
 
         }
