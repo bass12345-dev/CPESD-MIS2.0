@@ -3,6 +3,7 @@
             <h5 class="card-title mb-2">To Approve</h5>
             <button class="btn btn-danger" id="delete">Delete</button>
             <button class="btn btn-success" id="approve">Approve</button>
+            <hr>
          </div>
          
 

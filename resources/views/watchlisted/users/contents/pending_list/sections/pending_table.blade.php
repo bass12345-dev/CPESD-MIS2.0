@@ -2,6 +2,7 @@
          <div class="card-header">
             <h5 class="card-title mb-2">Pending</h5>
             <button class="btn btn-danger" id="delete">Delete</button>
+            <hr>
          </div>
          
 

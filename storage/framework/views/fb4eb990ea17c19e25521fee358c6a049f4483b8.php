@@ -2,7 +2,7 @@
          <div class="card-header">
             <h5 class="card-title mb-2">Active List</h5>
             <button class="btn btn-danger" id="remove"> Remove</button>
-
+            <hr>
          </div>
          
 

@@ -3,6 +3,7 @@
             <h5 class="card-title mb-2">Restore</h5>
             <button class="btn btn-danger" id="delete"> Delete</button>
             <button class="btn btn-success" id="restore"> Set to active</button>
+            <hr>
          </div>
          
 
