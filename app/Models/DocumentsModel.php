@@ -511,6 +511,42 @@ class DocumentsModel extends Model
 
     }
 
+    //Admin Dashboard
+
+    public static function count_unreceived_documents_admin($user_id){
+        $row = DB::table('history as history')
+        ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
+        ->where('user2', $user_id)
+        ->where('doc_status'  ,'!=', 'cancelled')
+        ->where('received_status', NULL)
+        ->where('status', 'torec')
+        ->where('to_receiver', 'no')
+        ->where('release_status',NULL )
+        ->orderBy('tracking_number', 'desc');
+
+        return $row;
+
+    }
+
+    public static function count_received_documents_admin($user_id){
+        $row = DB::table('history as history')
+        ->leftJoin('documents as documents', 'documents.tracking_number', '=', 'history.t_number')
+        ->where('user2', $user_id)
+        ->where('received_status', 1)
+        ->where('release_status',NULL )
+        ->where('status' , 'received')
+        ->where('doc_status'  ,'!=', 'cancelled')
+        ->where('doc_status'  ,'!=', 'outgoing')
+        // ->where('documents.destination_type', 'complex')
+        ->where('to_receiver' , 'no')
+        ->orderBy('tracking_number', 'desc');
+
+        
+
+        return $row;
+
+    }
+
 
 
     public static function get_outgoing_documents(){

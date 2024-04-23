@@ -16,6 +16,8 @@ class DashboardController extends Controller
     private $users_table             = "users";
     private $final_actions_table     = "final_actions";
     private $logged_in_history      = 'logged_in_history';
+    private $outgoing_table             = 'outgoing_documents';
+    private $history_table              = "history";
     
     private $date_now;
 
@@ -46,7 +48,9 @@ class DashboardController extends Controller
             'cancelled'             => CustomModel::q_get_where($this->document_table,array('doc_status' => 'cancelled'))->count(),
             'added_today'           => DocumentsModel::added_document_date_now($date_now),
             'completed_today'       => DocumentsModel::completed_document_date_now($date_now),
-            'latest'                => DocumentsModel::get_all_documents_with_limit_completed('10')
+            'latest'                => DocumentsModel::get_all_documents_with_limit_completed('10'),
+            'outgoing'              =>CustomModel::q_get_where($this->outgoing_table,array('status' => 'pending'))->count(),
+            'final_receiver'        =>  $count = CustomModel::q_get_where($this->history_table, array('received_status' => NULL, 'status' => 'torec', 'release_status' => NULL, 'to_receiver' => 'yes'))->count()
 
         );
 
@@ -70,10 +74,16 @@ class DashboardController extends Controller
                 $interval               = $date_now_->diff($logged_in_date);
                 //Count Days
                 $count_days = $interval->d;
-                $name = $count_days  > 1 ?  array_push($result,$row->first_name.' is '.$count_days.' days Inactive'):  false;
-            }else {
+                
+                //count unreceived documents
+                $count_unreceived =  DocumentsModel::count_unreceived_documents_admin($row->user_id)->count();
+                $count_received =  DocumentsModel::count_received_documents_admin($row->user_id)->count();
 
-                array_push($result,$row->first_name.' - walay open2x sa iyang account');
+                $name = $count_days  > 1 ?  
+                array_push($result, '<span class="text-danger">'.$row->first_name.' is '.$count_days.' days Inactive'.'</span><br><span class="text-danger fw-bold">Incoming : '.$count_unreceived.' | Received : '.$count_received.'<span>' ):  
+                array_push($result, '<span class="text-success">'.$row->first_name.' is an Active User'.'</span><br><span class="text-danger fw-bold">Incoming : '.$count_unreceived.' | Received : '.$count_received.'<span>' );
+            }else {
+                array_push($result, '<span class="text-danger">'.$row->first_name.' - walay open2x sa iyang account'.'</span>' );
             }
 
             

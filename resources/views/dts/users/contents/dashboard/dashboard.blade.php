@@ -17,7 +17,7 @@
     intro: 'Hello Ka people of CPESD There\'s a new update! 👋'
   },
   {
-    intro: 'Outgoing Documents',
+    title :  'Outgoing Documents',
     element: document.querySelector('.outgoing-card'),
     intro: 'Count Outgoing Documents Outside Office'
   },

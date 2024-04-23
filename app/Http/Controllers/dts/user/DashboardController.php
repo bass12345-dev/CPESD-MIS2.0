@@ -28,17 +28,20 @@ class DashboardController extends Controller
 
         $id = session('_id');
         $date_now = Carbon::now()->format('Y-m-d');
+        $received = CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => 1,'status' => 'received','release_status' => NULL,'to_receiver'=> 'no'))->count();
+        $outgoing = CustomModel::q_get_where($this->outgoing_table,array('status' => 'pending','user_id'=> $id))->count();
+
         $data = array(
 
                 'count_documents'   => CustomModel::q_get_where($this->documents_table,array('u_id' => $id))->count(),
                 'incoming'          => CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => NULL,'status' => 'torec','release_status' => NULL,'to_receiver'=> 'no'))->count(),
-                'received'          =>  CustomModel::q_get_where($this->history_table,array('user2' => $id,'received_status' => 1,'status' => 'received','release_status' => NULL,'to_receiver'=> 'no'))->count(),           
+                'received'          =>  $received - $outgoing,
                 'forwarded'         => CustomModel::q_get_where($this->history_table,array('user1' => $id,'received_status' => NULL,'status' => 'torec','release_status' => NULL))->count(),
                 'pending'           => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'pending','u_id'=> $id))->count(),
                 'completed'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'completed','u_id'=> $id))->count(),
                 'cancelled'         => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'cancelled','u_id'=> $id))->count(),
                 'encoded_outgoing'   => CustomModel::q_get_where($this->documents_table,array('doc_status' => 'outgoing','u_id'=> $id))->count(),
-                'outgoing'          =>CustomModel::q_get_where($this->outgoing_table,array('status' => 'pending','user_id'=> $id))->count(),
+                'outgoing'          => $outgoing,
                 'added_today'         => DocumentsModel::added_document_date_now($date_now),
                 // DocumentsModel::user_added_document_date_now($date_now)
         );
