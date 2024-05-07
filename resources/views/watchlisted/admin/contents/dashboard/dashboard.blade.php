@@ -4,6 +4,7 @@
 @include('global_includes.title')
 @include('watchlisted.admin.contents.dashboard.sections.count')
 @include('watchlisted.admin.contents.dashboard.sections.barangay')
+@include('watchlisted.admin.contents.dashboard.sections.latest_tabs')
 @include('watchlisted.admin.contents.dashboard.sections.count1')
 @endsection
 @section('js')

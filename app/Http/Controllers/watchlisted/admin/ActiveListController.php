@@ -8,7 +8,7 @@ use App\Models\PersonModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
+use App\Http\Controllers\dts\admin\ActionLogsController;
 class ActiveListController extends Controller
 {
     private $person_table            = 'persons';
@@ -66,8 +66,10 @@ class ActiveListController extends Controller
             'added_by'                  => session('watch_id')
         );
         $add = CustomModel::insert_item($this->person_table, $items);
+        $id = DB::getPdo()->lastInsertId();
         if ($add) {
-            $data = array('id' => DB::getPdo()->lastInsertId(), 'message' => 'Added Successfully', 'response' => true);
+            $data = array('id' => $id, 'message' => 'Added Successfully', 'response' => true);
+            ActionLogsController::wl_add_action($action = 'Added New Watchlisted | ' . $items['first_name'].' '.$items['middle_name'].' '.$items['last_name'], $user_type = 'user', $_id = $id);
         } else {
             $data = array('message' => 'Something Wrong', 'response' => false);
         }
@@ -92,6 +94,9 @@ class ActiveListController extends Controller
         $id = $request->input('person_id');
         $update = CustomModel::update_item($this->person_table, array('person_id' => $id), $items);
         if ($update) {
+
+            $user_row = CustomModel::q_get_where($this->person_table,array('person_id' => $id))->first();
+            ActionLogsController::wl_add_action($action = 'Updated "' . $user_row->first_name.' '.$user_row->first_name.' '.$user_row->last_name.'" information', $user_type = 'user', $_id = $user_row->person_id);
             $data = array('message' => 'Updated Successfully', 'response' => true);
         } else {
             $data = array('message' => 'Something Wrong/Data is not updated', 'response' => false);
@@ -105,10 +110,14 @@ class ActiveListController extends Controller
         $request = $request->input('id');
         $id = $request['id'];
         $status = $request['status'];
-        $message = $request['status'] == 'active' ? 'Set Successfully' : 'Removed Successfully';
+        $message = $status == 'active' ? 'Set Successfully' : 'Removed Successfully';
+        $action =  $status == 'active' ? 'Set As Active | ' : 'Removed from Watchlisted | ';
         if (is_array($id)) {
             foreach ($id as $row) {
+
                 $update = CustomModel::update_item($this->person_table, array('person_id' => $row), array('status' => $status));
+                $user_row = CustomModel::q_get_where($this->person_table,array('person_id' => $row))->first();
+                ActionLogsController::wl_add_action($action = $action . $user_row->first_name.' '.$user_row->first_name.' '.$user_row->last_name, $user_type = 'user', $_id = $user_row->person_id);
             }
             $data = array('message' => $message, 'response' => true);
         } else {
@@ -135,6 +144,8 @@ class ActiveListController extends Controller
         $add = CustomModel::insert_item($this->records_table, $items);
         if ($add) {
             $data = array('message' => 'Added Successfully', 'response' => true);
+            $user_row = CustomModel::q_get_where($this->person_table,array('person_id' => $items['p_id']))->first();
+            ActionLogsController::wl_add_action($action =  'Added record of '. $user_row->first_name.' '.$user_row->first_name.' '.$user_row->last_name, $user_type = 'user', $_id = $user_row->person_id);
         } else {
             $data = array('message' => 'Something Wrong', 'response' => false);
         }

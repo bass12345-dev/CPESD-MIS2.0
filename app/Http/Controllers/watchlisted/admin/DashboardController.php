@@ -4,7 +4,9 @@ namespace App\Http\Controllers\watchlisted\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
+use App\Models\PersonModel;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -13,6 +15,7 @@ class DashboardController extends Controller
     public function index(){
         $data['title']                  = 'Watchlisted Dashboard';
         $data['gender_title']           = 'Count Approved By Gender';
+        $data['today'] = Carbon::now()->format('M d Y');
         $data['count']   = $this->count_all();
 
        
@@ -20,20 +23,28 @@ class DashboardController extends Controller
     }
 
     function count_all(){
+
+        $date_now       = Carbon::now()->format('Y-m-d');
         $data           = [];
         $active         = CustomModel::q_get_where($this->person_table,array('status' => 'active'))->count();
         $inactive       = CustomModel::q_get_where($this->person_table,array('status' => 'inactive'))->count();
         $to_approve     = CustomModel::q_get_where($this->person_table,array('status' => 'not-approved'))->count();
         $programs       = CustomModel::q_get($this->programs_table)->count();
         $active_male    = CustomModel::q_get_where($this->person_table,array('status' => 'active','gender'=> 'male'))->count();
-        $active_female    = CustomModel::q_get_where($this->person_table,array('status' => 'active','gender'=> 'female'))->count();
+        $active_female  = CustomModel::q_get_where($this->person_table,array('status' => 'active','gender'=> 'female'))->count();
+        $added_today    = PersonModel::added_today($date_now);
+        $approved_today = PersonModel::approved_today($date_now);
+        $latest_approved = PersonModel::latest_approved($limit=10);
         $data         = array(
                                 'active'            => $active , 
                                 'inactive'          => $inactive,
                                 'to_approve'        => $to_approve,
                                 'programs'          => $programs,
                                 'total_male'        => $active_male ,
-                                'total_female'        => $active_female 
+                                'total_female'      => $active_female,
+                                'added_today'       => $added_today,
+                                'approved_today'    => $approved_today,
+                                'latest_approved'  => $latest_approved
                             );
         return  $data;
     }

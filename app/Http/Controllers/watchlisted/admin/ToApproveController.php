@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CustomModel;
 use App\Models\PersonModel;
+use App\Http\Controllers\dts\admin\ActionLogsController;
 
 class ToApproveController extends Controller
 {
@@ -44,7 +45,10 @@ class ToApproveController extends Controller
         $id = $request->input('id')['id'];
         if (is_array($id)) {
             foreach ($id as $row) {
+                
                 $update = CustomModel::update_item($this->person_table, array('person_id' => $row), array('status'=> 'active'));
+                $user_row = CustomModel::q_get_where($this->person_table,array('person_id' => $row))->first();
+                ActionLogsController::wl_add_action($action = 'Approved New Watchlisted | ' . $user_row->first_name.' '.$user_row->first_name.' '.$user_row->last_name, $user_type = 'user', $_id = $user_row->person_id);
             }
             $data = array('message' => 'Approved Succesfully' , 'response' => true);
         }else{

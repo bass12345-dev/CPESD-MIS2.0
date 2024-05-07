@@ -31,4 +31,23 @@ class ActionLogsController extends Controller
 
         
     }
+
+    public static function wl_add_action($action,$user_type,$_id){
+
+        $items  = array(
+            'action'            => $action,
+            'web_type'          => 'wl',
+            'user_type'         => $user_type,
+            'user_id'           =>  session('watch_id'),
+            '_id'               =>  $_id,
+            'action_datetime'   => Carbon::now()->format('Y-m-d H:i:s'),
+           
+        );
+
+        CustomModel::insert_item('action_logs', $items);
+
+        
+    }
+
+    
 }

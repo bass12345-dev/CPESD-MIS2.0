@@ -87,4 +87,30 @@ class PersonModel extends Model
         ->count();
 
     }
+
+
+    public static function added_today($date_now) {
+
+        return DB::table('persons')
+        ->whereDate('persons.created_at', '=', $date_now)
+        ->orderBy('persons.first_name', 'asc')->get();
+    }
+
+    public static function approved_today($date_now) {
+
+        return DB::table('persons')
+        ->where('persons.status','active')
+        ->whereDate('persons.created_at', '=', $date_now)
+        ->orderBy('persons.first_name', 'asc')->get();
+    }
+
+    public static function latest_approved($limit) {
+
+        return DB::table('persons')
+        ->where('persons.status','active')
+        ->orderBy('persons.person_id', 'desc')->limit($limit)->get();
+    }
+
+
+    
 }

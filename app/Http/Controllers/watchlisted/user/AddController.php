@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CustomModel;
 use Carbon\Carbon;
+use App\Http\Controllers\dts\admin\ActionLogsController;
 use Illuminate\Support\Facades\DB;
 
 
@@ -40,8 +41,12 @@ class AddController extends Controller
 
         
         $add = CustomModel::insert_item($this->person_table, $items);
+        $id = DB::getPdo()->lastInsertId();
         if ($add) {
-            $data = array('id' => DB::getPdo()->lastInsertId(), 'message' => 'Added Successfully', 'response' => true);
+            
+            ActionLogsController::wl_add_action($action = 'Added New Watchlisted | ' . $items['first_name'].' '.$items['middle_name'].' '.$items['last_name'], $user_type = 'user', $_id = $id);
+                
+            $data = array('id' => $id, 'message' => 'Added Successfully', 'response' => true);
         } else {
             $data = array('message' => 'Something Wrong', 'response' => false);
         }
