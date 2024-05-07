@@ -221,6 +221,7 @@ Route::middleware(['IsLoggedInCheck', 'WatchAdminCheck'])->prefix('watchlisted/a
     Route::get('/manage-program', [App\Http\Controllers\watchlisted\admin\ManageProgramController::class, 'index']);
     Route::get('/change-code', [App\Http\Controllers\watchlisted\admin\ChangeSecurityController::class, 'index']);
     Route::get('/view_profile', [App\Http\Controllers\watchlisted\admin\ViewProfileController::class, 'index']);
+    Route::get('/activity-logs', [App\Http\Controllers\watchlisted\admin\ActivityLogsController::class, 'index']);
 });
 
 

@@ -25,7 +25,7 @@
                   <td><?php echo e($row['date_received']); ?></td>
                   <td><?php echo e($row['user2']); ?></td>
                   <td><?php echo e($row['duration']); ?></td>
-                  <td><a  href="javascript:;" id="view_remarks" data-remarks="<?php echo e($row['remarks']); ?>" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View Remarks</a></td>
+                  <td><a href="javascript:;" id="view_remarks" data-remarks="<?php echo e($row['remarks']); ?>">View Remarks</a></td>
                   <td><?php echo $row['final_action_taken'] == NULL ? ' - ' : '<span class="badge p-2 bg-primary">'.$row['final_action_taken'].'</span>'  ?></td>
                </tr>
             <?php endforeach; ?>

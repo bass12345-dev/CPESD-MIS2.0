@@ -5,6 +5,7 @@ namespace App\Http\Controllers\watchlisted\user;
 use App\Http\Controllers\Controller;
 use App\Models\CustomModel;
 use Illuminate\Http\Request;
+use App\Http\Controllers\dts\admin\ActionLogsController;
 
 class PendingListController extends Controller
 {
@@ -40,6 +41,8 @@ class PendingListController extends Controller
         $id = $request->input('id')['id'];
         if (is_array($id)) {
             foreach ($id as $row) {
+            $user_row = CustomModel::q_get_where($this->person_table,array('person_id' => $row))->first();
+            ActionLogsController::wl_add_action($action =  'Deleted "'. $user_row->first_name.' '.$user_row->first_name.' '.$user_row->last_name.'"', $user_type = 'user', $_id = $user_row->person_id);
             $delete = CustomModel::delete_item($this->person_table,array('person_id' => $row));  
             if($delete) {
                 CustomModel::delete_item($this->records_table,array('p_id' => $row));  

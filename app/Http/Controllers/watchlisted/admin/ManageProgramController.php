@@ -85,7 +85,7 @@ class ManageProgramController extends Controller
         $check = CustomModel::q_get_where($this->program_block_table, array('program_id' => $id))->count();
 
         if ($check > 0) {
-            $data = array('message' => 'This type of document is used in other operation', 'response' => false);
+            $data = array('message' => 'You cannot remove this data', 'response' => false);
         } else {
             $delete = CustomModel::delete_item($this->programs_table, array('program_id' => $id));
             if ($delete) {

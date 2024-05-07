@@ -53,6 +53,12 @@
 				</a>
 			</li>
 
+			<li class="sidebar-item <?= $segments[2] == 'activity-logs' ? 'active' : '' ?>">
+				<a class="sidebar-link" href="{{url('/watchlisted/admin/activity-logs')}}">
+					<i class="align-middle" data-feather="list"></i> <span class="align-middle">Activity Logs</span>
+				</a>
+			</li>
+
 			<!-- <li class="sidebar-item <?= $segments[2] == 'change-code' ? 'active' : '' ?>">
 				<a class="sidebar-link" href="{{url('/watchlisted/admin/change-code')}}">
 					<i class="align-middle" data-feather="key"></i> <span class="align-middle">Change Security Code</span>

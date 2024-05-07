@@ -65,7 +65,7 @@ class CustomModel extends Model
     }
 
 
-        //Actions
+        #DTS
     
         public static function get_actions_dts(){
             $row = DB::table('action_logs')
@@ -112,6 +112,38 @@ class CustomModel extends Model
               )
             ->where('action_logs.web_type','dts')
             ->where('action_logs.user_id',session('_id'))
+            ->orderBy('action_logs.action_datetime', 'desc')
+            ->get();
+            return $row;
+        }
+
+
+        #Watchlisted
+
+        public static function get_actions_wl(){
+            $row = DB::table('action_logs')
+            ->leftJoin('users', 'users.user_id', '=', 'action_logs.user_id')
+            ->leftJoin('persons', 'persons.person_id', '=', 'action_logs._id')
+
+            ->select(   //history
+                
+                'action_logs.action_datetime as action_datetime', 
+                'action_logs.action as action',
+                'action_logs.user_type as user_type',
+                'action_logs._id as _id',
+                //Persons
+                'persons.first_name as first_name', 
+                'persons.middle_name as middle_name', 
+                'persons.last_name as last_name', 
+                'persons.extension as extension', 
+                'persons.person_id as person_id', 
+                //User
+                'users.first_name as first_name', 
+                'users.middle_name as middle_name', 
+                'users.last_name as last_name', 
+                'users.extension as extension', 
+              )
+            ->where('action_logs.web_type','wl')
             ->orderBy('action_logs.action_datetime', 'desc')
             ->get();
             return $row;

@@ -8,6 +8,7 @@ use App\Models\CustomModel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\PersonModel;
+use App\Http\Controllers\dts\admin\ActionLogsController;
 
 
 class ViewProfileController extends Controller
@@ -50,6 +51,8 @@ class ViewProfileController extends Controller
         $id = $request->input('person_id');
         $update = CustomModel::update_item($this->person_table, array('person_id' => $id), $items);
         if ($update) {
+            $user_row = CustomModel::q_get_where($this->person_table,array('person_id' => $id))->first();
+            ActionLogsController::wl_add_action($action = 'Updated "' . $user_row->first_name.' '.$user_row->first_name.' '.$user_row->last_name.'" information', $user_type = 'user', $_id = $user_row->person_id);
             $data = array('message' => 'Updated Successfully', 'response' => true);
         } else {
             $data = array('message' => 'Something Wrong/Data is not updated', 'response' => false);
@@ -92,6 +95,8 @@ class ViewProfileController extends Controller
         );
         $add = CustomModel::insert_item($this->records_table, $items);
         if ($add) {
+            $user_row = CustomModel::q_get_where($this->person_table,array('person_id' => $items['p_id']))->first();
+            ActionLogsController::wl_add_action($action =  'Added record of "'. $user_row->first_name.' '.$user_row->first_name.' '.$user_row->last_name.'"', $user_type = 'user', $_id = $user_row->person_id);
             $data = array('message' => 'Added Successfully', 'response' => true);
         } else {
             $data = array('message' => 'Something Wrong', 'response' => false);

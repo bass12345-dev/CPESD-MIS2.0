@@ -145,7 +145,7 @@ class ActiveListController extends Controller
         if ($add) {
             $data = array('message' => 'Added Successfully', 'response' => true);
             $user_row = CustomModel::q_get_where($this->person_table,array('person_id' => $items['p_id']))->first();
-            ActionLogsController::wl_add_action($action =  'Added record of '. $user_row->first_name.' '.$user_row->first_name.' '.$user_row->last_name, $user_type = 'user', $_id = $user_row->person_id);
+            ActionLogsController::wl_add_action($action =  'Added record of "'. $user_row->first_name.' '.$user_row->first_name.' '.$user_row->last_name.'"', $user_type = 'user', $_id = $user_row->person_id);
         } else {
             $data = array('message' => 'Something Wrong', 'response' => false);
         }

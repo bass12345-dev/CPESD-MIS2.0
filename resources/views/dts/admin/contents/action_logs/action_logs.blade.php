@@ -9,6 +9,7 @@
          <table class="table table-hover  " id="datatables-buttons" style="width: 100%; "  >
             <thead>
                <tr>
+                  <th>#</th>
                   <th>Name</th>
                   <th>Action</th>
                   <th>Type</th>
@@ -22,6 +23,7 @@
                    $i = 1;
                    foreach ($actions as $row) :?>
                      <tr>
+                        <td>{{$i++}}</td>
                         <td>{{$row->first_name}} {{$row->middle_name}} {{$row->last_name}} {{$row->extension}}</td>
                         <td><a href="{{url('/dts/admin/view?tn='.$row->tracking_number)}}">{{$row->action}}</a></td>
                         <td><span class="badge bg-primary " style="font-size: 12px;">{{$row->user_type}}</span></td>

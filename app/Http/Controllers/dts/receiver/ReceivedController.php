@@ -9,6 +9,7 @@ use App\Models\DocumentsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Http\Controllers\dts\admin\ActionLogsController;
 
 
 
@@ -104,6 +105,8 @@ class ReceivedController extends Controller
         $update_receive     = DB::table('history')
                     ->where('history.history_id', $id)
                     ->update(array('status' => 'completed','final_action_taken' => $request->input('final_action_taken'), 'remarks' => $request->input('remarks1') ));
+        
+        $r = CustomModel::q_get_where('documents', array('tracking_number' => $tracking_number))->first();
 
          if($update_receive) {
 
@@ -111,7 +114,7 @@ class ReceivedController extends Controller
                     ->where('tracking_number', $tracking_number)
                     ->update(array('doc_status' => 'completed','completed_on'=> Carbon::now()->format('Y-m-d H:i:s')));
 
-
+            ActionLogsController::dts_add_action($action = 'Completed Document No. ' . $tracking_number, $user_type = 'receiver', $_id = $r->document_id);
             $data = array('message' => 'Completed Succesfully' , 'response' => true );
                 
 
