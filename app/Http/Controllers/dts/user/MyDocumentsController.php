@@ -375,7 +375,7 @@ class MyDocumentsController extends Controller
     {
 
         $items      = $request->input('history_track1');
-        $remarks    = $request->input('remarks');
+        $remarks    = $request->input('remarks1');
         $forward    = $request->input('forward1');
         $user_id    = session('_id');
         $array      = explode(',',$items);

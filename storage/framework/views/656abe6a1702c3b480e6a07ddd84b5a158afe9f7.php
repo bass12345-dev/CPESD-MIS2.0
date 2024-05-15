@@ -121,6 +121,7 @@ $('#forward_form2').on('submit', function (e) {
          add_item(form, url);
          $('#forward_form2').find('button').attr('disabled', false);
          $('#forward_modal').modal('hide');
+         $('#forward_form2')[0].reset();
       }
    });
 });
