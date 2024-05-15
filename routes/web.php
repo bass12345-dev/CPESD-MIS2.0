@@ -168,6 +168,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     Route::post('/forward-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'forward_documents']);
     Route::post('/update-profile', [App\Http\Controllers\dts\user\ProfileController::class, 'update']);
     Route::post('/ck', [App\Http\Controllers\dts\user\ProfileController::class, 'check']);
+    Route::post('/c-docs', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'complete_documents']);
     //Update User Password
     Route::post('/u-p', [App\Http\Controllers\dts\user\ProfileController::class, 'update_password']);
    
