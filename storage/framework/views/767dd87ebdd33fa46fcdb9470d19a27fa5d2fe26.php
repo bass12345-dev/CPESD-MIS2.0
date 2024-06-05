@@ -28,7 +28,7 @@
                                     <?php endforeach; ?>`
 
                             </select>
-                            </select>
+                      
                         </div>
 
                         <div class="form-group col-md-12 mb-2">
