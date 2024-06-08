@@ -3,10 +3,10 @@
 
 <head>
 
-    @include('dts.auth.includes.meta')
+    <?php echo $__env->make('dts.auth.includes.meta', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <title>DTS Register</title>
-    @include('dts.auth.includes.css')
-    <link href=" {{ asset('assets/css/hamster.css') }} " rel="stylesheet">
+    <?php echo $__env->make('dts.auth.includes.css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <link href=" <?php echo e(asset('assets/css/hamster.css')); ?> " rel="stylesheet">
     <style>
         canvas {
   overflow-y: hidden;
@@ -30,7 +30,7 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <a href="{{url('/dts')}}"><i class="fas fa-arrow-left"></i></a>
+                                <a href="<?php echo e(url('/dts')); ?>"><i class="fas fa-arrow-left"></i></a>
                                 <div class="text-center mt-4">
 
                                     <h1 class="h2 text-black">Register</h1>
@@ -92,7 +92,7 @@
                                                         foreach($barangay as $row):
 
                                                     ?>
-                                                    <option value="{{$row}}">{{$row}}</option>
+                                                    <option value="<?php echo e($row); ?>"><?php echo e($row); ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
@@ -127,7 +127,7 @@
                                         <div class="d-grid gap-2 mt-3">
                                             <button type="submit" class="btn btn-lg btn-primary">Submit</button>
                                         </div>
-                                        @include('components.submit_loader')
+                                        <?php echo $__env->make('components.submit_loader', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                     </form>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
 
 </body>
 
-@include('dts.auth.includes.js')
+<?php echo $__env->make('dts.auth.includes.js', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <script>
     //   setTimeout(Draw, 2000)
@@ -206,6 +206,6 @@ function canvas_remove() {
 
 
 </script>
-@include('global_includes.js_.confetti')
+<?php echo $__env->make('global_includes.js_.confetti', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-</html>
+</html><?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/dts/auth/register.blade.php ENDPATH**/ ?>

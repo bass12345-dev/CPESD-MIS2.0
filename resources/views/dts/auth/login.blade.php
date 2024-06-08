@@ -30,7 +30,7 @@
 									<form id="login_form">
 										<div class="mb-3">
 											<label class="form-label">Username</label>
-											<input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your Username" required />
+											<input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your Username"  />
 										</div>
 										<!-- <div class="mb-3">
 											<label class="form-label">Password</label>

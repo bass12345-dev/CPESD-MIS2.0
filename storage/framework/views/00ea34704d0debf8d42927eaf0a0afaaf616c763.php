@@ -104,14 +104,14 @@
                      });
                      table.ajax.reload();
                      $('#add_document')[0].reset();
+                     tracking_number();
                   } else {
 
                      alert(data.message + '! Please Click Submit Button Again');
-                     
-
+                     tracking_number();
                   }
                   $('#add_document').find('button').attr('disabled', false);
-                  tracking_number();
+                 
             
 
                },
