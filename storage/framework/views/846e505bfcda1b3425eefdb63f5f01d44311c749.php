@@ -65,8 +65,9 @@
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Type</label>
                      <select class="form-control" name="type" >
-                     	<option value="complex">Complex</option>
+                     	
                         <option value="simple">Simple</option>
+                        <option value="complex">Complex</option>
                      </select>
                   </div>
 

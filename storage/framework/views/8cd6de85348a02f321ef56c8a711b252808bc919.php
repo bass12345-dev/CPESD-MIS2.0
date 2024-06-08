@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                   if(row.history_status != 'completed' && row.history_status == 'pending' && row.history_status != 'cancelled'){
                      html += '<li><a class="dropdown-item" id="forward_icon" href="#" data-history-id="'+row.history_id+'"\
-                  data-tracking-number="'+row.tracking_number+'"data-bs-toggle="offcanvas"\
+                  data-tracking-number="'+row.tracking_number+'" data-bs-toggle="offcanvas"\
                   data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Complete Document</a></li>';
                   }
               
