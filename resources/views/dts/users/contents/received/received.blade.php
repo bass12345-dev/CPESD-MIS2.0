@@ -11,6 +11,7 @@
 @include('dts.users.contents.received.sections.forward_offcanvas')
 @include('dts.users.contents.received.sections.forward_modal')
 @include('dts.users.contents.received.sections.outgoing_modal')
+@include('dts.users.contents.received.sections.complete_modal')
 @endsection
 @section('js')
 @include('dts.includes.datatable_with_select')
@@ -226,6 +227,55 @@ $('a#received_error').on('click', function () {
       }
    });
 });
+
+
+var myOffcanvas = document.getElementById('offcanvasExample1')
+var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas)
+
+$(document).on('click', 'button#complete', function(){
+   let array = get_select_items_datatable();
+   let html = '';
+   
+   if (array.length > 0) {
+      bsOffcanvas.show();
+      $('input[name=c_t_number]').val(array);
+      array.forEach(element => {
+         const myArray = element.split("-");
+         const first = myArray[0];
+         const second = myArray[1];
+         html += '<li class="text-danger h3">' + second + '</li>';
+      });
+      $('.display_tracking_number2').html(html);
+   } else {
+      alert('Please Select at least one');
+   }
+});
+
+
+$('#complete_form').on('submit', function (e) {
+   e.preventDefault();
+   var url = '/dts/us/c-docs';
+   var form = $(this).serialize();
+   Swal.fire({
+      title: "Are you sure?",
+      text: "",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Complete Document"
+   }).then((result) => {
+      if (result.isConfirmed) {
+         $('#complete_form').find('button').attr('disabled', true);
+         add_item(form, url);
+         $('#complete_form').find('button').attr('disabled', false);
+         $('#complete_form')[0].reset();
+         bsOffcanvas.hide();
+        
+      }
+   });
+});
+
 
 
 introJs().setOptions(

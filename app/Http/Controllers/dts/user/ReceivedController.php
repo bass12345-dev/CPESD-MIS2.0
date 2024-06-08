@@ -16,11 +16,14 @@ class ReceivedController extends Controller
     private  $documents_table       = 'documents';
     private $office_table           = "offices";
     private $outgoing_table         = 'outgoing_documents';
+    private $final_actions_table     = "final_actions";
+
     public function index(){
         $data['title']              = 'Received Documents';
         $data['user_data']          = CustomModel::q_get_where($this->user_table,array('user_id' => session('_id')))->first();
         $data['users']              = CustomModel::q_get_where($this->user_table,array('user_status' => 'active'))->get();
         $data['offices']            = CustomModel::q_get_order($this->office_table,'office','asc')->get(); 
+        $data['final_actions']      = $this->get_final_actions();
         return view('dts.users.contents.received.received')->with($data);
     }
 
@@ -153,4 +156,34 @@ class ReceivedController extends Controller
 
         return $data;
     }
+
+
+        //GET
+        public function get_final_actions()
+        {
+    
+            $items = CustomModel::q_get($this->final_actions_table)->get();
+    
+            $data = [];
+            foreach ($items as $row) {
+    
+                $data[] = array(
+    
+    
+                    'type_name' => $row->action_name,
+                    'type_id' => $row->action_id,
+                    'created' => date('M d Y - h:i a', strtotime($row->created))
+                );
+                // code...
+            }
+    
+            return $data;
+    
+    
+    
+    
+    
+    
+        }
+    
 }

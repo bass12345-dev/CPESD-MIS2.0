@@ -375,7 +375,7 @@ class MyDocumentsController extends Controller
     {
 
         $items      = $request->input('history_track1');
-        $remarks    = $request->input('remarks');
+        $remarks    = $request->input('remarks1');
         $forward    = $request->input('forward1');
         $user_id    = session('_id');
         $array      = explode(',',$items);
@@ -452,6 +452,105 @@ class MyDocumentsController extends Controller
 
         return $data;
 
+    }
+
+
+    public function complete_documents(Request $request){
+
+
+        $items           = $request->input('c_t_number');
+        $remarks         = $request->input('remarks2');
+        $final_action    = $request->input('final_action_taken');
+        $array      = explode(',',$items);
+        
+        foreach ($array as $row) {
+
+            $x                  = explode('-', $row);
+            $history_id         = $x[0];
+            $tracking_number    = $x[1];
+            $resp               = $this->complete_process($remarks,$final_action,$history_id,$tracking_number);
+           
+        }
+
+        return response()->json($resp);
+        
+    }
+
+
+
+    private function complete_process($remarks,$final_action,$history_id,$tracking_number){
+
+        $hs                 = CustomModel::q_get_where_order($this->history_table,array('history_id' => $history_id),'history_id','desc')->first();
+        $user_row           = CustomModel::q_get_where('users', array('user_id' => session('_id')))->first();
+
+
+        if($user_row->user_id == 8 || $user_row->user_id == 13){
+
+    
+
+
+        $where              = array('history_id' => $history_id);
+        $data               = array(
+                            // 'user2'             => $hs->user2 == NULL ? $user_row->user_id : $hs->user2,
+                            // 'office2'           => $hs->office2 == NULL ? $user_row->off_id : $hs->office2,
+                            'status'            => 'received',
+                            'received_status'   => 1,
+                            'received_date'     =>  $hs->received_date == NULL ?   Carbon::now()->format('Y-m-d H:i:s') : $hs->received_date,
+                            'release_status'    => 1,
+                            'release_date'      =>  $hs->release_date == NULL ?   Carbon::now()->format('Y-m-d H:i:s')  : $hs->release_date,
+        );
+        $update             = CustomModel::update_item($this->history_table,$where,$data);
+
+        if($update){
+
+           
+
+        $info = array(
+            't_number'              => $tracking_number,
+            'user1'                 => $user_row->user_id,
+            'office1'               => $user_row->off_id,
+            'user2'                 => $user_row->user_id,
+            'office2'               => $user_row->off_id,
+            'received_status'       => 1,
+            'received_date'         => Carbon::now()->format('Y-m-d H:i:s') ,
+            'release_status'        => NULL,
+            'to_receiver'           => 'no',
+            'release_date'          => Carbon::now()->format('Y-m-d H:i:s') ,
+            'status'                => 'completed',
+            'final_action_taken'    => $final_action,
+            'remarks'               => $remarks
+
+        );
+
+        $add1 = CustomModel::insert_item($this->history_table, $info);
+
+        if ($add1) {
+            $query_row = CustomModel::q_get_where($this->documents_table,array('tracking_number'=> $tracking_number))->first();
+            $update_receive = DB::table('documents')
+                ->where('tracking_number', $tracking_number)
+                ->update(array('doc_status' => 'completed','completed_on'=> Carbon::now()->format('Y-m-d H:i:s')));
+            
+            ActionLogsController::dts_add_action($action = 'Completed Document No. '.$query_row->tracking_number,$user_type='user',$_id = $query_row->document_id);
+            $data = array('message' => 'Completed Succesfully', 'response' => true);
+        } else {
+
+            $data = array('message' => 'Something Wrong', 'response' => false);
+
+        }
+
+        }else {
+            $data = array('message' => 'Something Wrong', 'response' => false);
+        }
+
+    }else {
+        $data = array('message' => 'Sorry !!!! You are not Authorized to use this action', 'response' => false);
+    }
+
+
+        
+        
+
+        return $data;
     }
 
     public function update_forwarded(Request $request)
