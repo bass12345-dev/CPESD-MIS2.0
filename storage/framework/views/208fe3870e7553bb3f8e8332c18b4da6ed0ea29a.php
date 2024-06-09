@@ -6,7 +6,7 @@
     <?php echo $__env->make('dts.auth.includes.meta', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <title>DTS Register</title>
     <?php echo $__env->make('dts.auth.includes.css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <link href=" <?php echo e(asset('assets/css/hamster.css')); ?> " rel="stylesheet">
+    
     <style>
         canvas {
   overflow-y: hidden;

@@ -6,7 +6,7 @@
     @include('dts.auth.includes.meta')
     <title>DTS Register</title>
     @include('dts.auth.includes.css')
-    <link href=" {{ asset('assets/css/hamster.css') }} " rel="stylesheet">
+    
     <style>
         canvas {
   overflow-y: hidden;
@@ -152,16 +152,14 @@
     //   setTimeout(Draw, 2000)
 $('#register_form').on('submit', function(e) {
     e.preventDefault();
+    var form =  $('#register_form');
     $.ajax({
         url: base_url + '/r-u',
         method: 'POST',
         data: $(this).serialize(),
         dataType: 'json',
         beforeSend: function() {
-            
-            $('span.error').remove();
-            $('.submit-loader').removeClass('d-none');
-            $('#register_form').find('button[type="submit"]').prop('disabled',true);
+           before(form);
         },
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),

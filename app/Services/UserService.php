@@ -7,60 +7,97 @@ use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\IpUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Models\CustomModel;
 class UserService
 {
     protected $userRepository;
     protected $user_table = 'users';
+    private $log_in_history_table = 'logged_in_history';
+    
+    protected $request;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, Request $request)
     {
         $this->userRepository = $userRepository;
+        $this->request = $request;
     }
 
-    public function LoginUser(array $auth,$request)
+    //USER LOGIN PROCESS
+    public function LoginUser(array $auth)
     {
+        $response = array();
         if ($auth['g-recaptcha-response'] != null) {
 
             $url = "https://www.google.com/recaptcha/api/siteverify";
             $body = [
                             'secret' => config('services.recaptcha.secret'),
                             'response' => $auth['g-recaptcha-response'],
-                            'remoteip' => IpUtils::anonymize($request->ip()) //anonymize the ip to be GDPR compliant. Otherwise just pass the default ip address
+                            'remoteip' => IpUtils::anonymize($this->request->ip()) //anonymize the ip to be GDPR compliant. Otherwise just pass the default ip address
                     ];
             $response = Http::asForm()->post($url, $body);
             $result = json_decode($response);
             if ($response->successful() && $result->success == true) {  
-
                 $user = $this->userRepository->q_get_where('users', array('username' => $auth['username']));
                 if ($user->count() > 0) {
-
                     $user_row = $user->first();
-
                     if ($user_row->user_status == 'active') {
-
                         $check = password_verify($auth['password'], $user_row->password);
                         if ($check) {
-                            // $this->set_session($request,$user_row);
-                            // $this->store_login_history($user_row);
+
+                            $response = [
+                                'response' => true,
+                                'message' => 'Success'
+                            ];
+                            $this->set_session($user_row);
+                            $this->store_login_history($user_row);
+                        }else {
+                            $response = [
+                                'response' => false,
+                                'message' => 'Invalid Password.'
+                            ];
                         }
                         
-                    }
+                    }else {
 
+                        $response = [
+                            'response' => false,
+                            'message' => 'Please Contact Administrator to activate your Account!!!'
+                        ];
+
+                    }  
+
+                }else{
+
+                    $response = [
+                        'response' => false,
+                        'message' => 'Invalid Username.'
+                    ];
                 }
                 
 
+            }else{
+                $response = [
+                    'response' => false,
+                    'message' => 'Please Complete the Recaptcha Again to proceed.'
+                ];
             }
+        }else{
+            $response = [
+                'response' => false,
+                'message' => 'Please Complete the Recaptcha Again to proceed.'
+            ];
         }
 
 
 
-        return null;
+        return $response;
     }
 
 
-    private function set_session($request,$user_row){
+    //SET SESSION
+    private function set_session($user_row){
         
-        $request->session()->put(
+        $this->request->session()->put(
             array(
                 'name'              => $user_row->first_name,
                 '_id'               => $user_row->user_id,
@@ -71,6 +108,16 @@ class UserService
             )
         );
     }
+
+    //STORE USER LOGIN
+    private function store_login_history($user_row){
+
+        $items = ['web_type'=> 'dts','user_id'=>$user_row->user_id,'logged_in_date'=> Carbon::now()->format('Y-m-d H:i:s') ];
+         CustomModel::insert_item($this->log_in_history_table,$items);
+    }
+    
+
+    //REGISTER USER
     public function registerUser(array $userData)
     {
 

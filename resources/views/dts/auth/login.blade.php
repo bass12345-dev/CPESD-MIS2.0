@@ -37,25 +37,24 @@
 											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" autocomplete required />
 										</div> -->
 										<label class="form-label">Password</label>
-										<div class="input-group flex-nowrap" style="height: 40px;">
+										<div class="input-group flex-nowrap pass" style="height: 40px;">
 											
 											<input type="password" class="form-control password" name="password" placeholder="Enter your Password" aria-label="Password" aria-describedby="addon-wrapping">
 											<span class="input-group-text show_con">
 												<i class="fas fa-eye show_icon"></i>
 												<i class="fas fa-eye-slash hidden_icon" hidden></i>
 											</span>
+										
+											
 										</div>
+								
 										<div class="g-recaptcha mt-4" data-sitekey={{config('services.recaptcha.key')}}></div>
 
-										<div class="d-grid gap-2 mt-3">
+										<div class="d-grid gap-2 mt-5">
 											<button type="submit" class="btn btn-lg btn-primary">Submit</button>
-
-
 										</div>
-
-										<!-- <div class="d-grid gap-2 mt-1">
-											<a href="{{url('/dts/track')}}" class="btn btn-lg btn-success">Track Documents</a>
-										</div> -->
+										@include('components.submit_loader')
+									
 									</form>
 								</div>
 							</div>
@@ -68,27 +67,24 @@
 				</div>
 			</div>
 		</div>
-
-
 	</main>
-
-
-
 </body>
 
 @include('dts.auth.includes.js')
 @include('global_includes.js_.global_js')
 
 <script type="text/javascript">
+	
 	$('#login_form').on('submit', function(e) {
 		e.preventDefault();
+		var form = $('#login_form');
 		$.ajax({
 			url: base_url + '/v-u',
 			method: 'POST',
 			data: $(this).serialize(),
 			dataType: 'json',
 			beforeSend: function() {
-				Swal.showLoading()
+				before(form);
 			},
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -112,9 +108,29 @@
 					location.reload();
 				}
 			},
-			error: function(data) {
+			error: function(err) {
 				Swal.close();
-				alert('Something Wrong!')
+				if (err.status == 422) { // when status code is 422, it's a validation issue
+				form.find('button[type="submit"]').prop('disabled',false);
+                $('.submit-loader').addClass('d-none');
+                // // display errors on each form field
+                $.each(err.responseJSON.errors, function(i, error) {
+
+
+					if(i == 'password'){
+						console.log('hey')
+						var e = $(document).find('.pass');
+                    	e.after($('<br><span style="color: red;" class="error">' + error[0] +
+                        '</span>'));
+					}else {
+						var el = $(document).find('[name="' + i + '"]');
+                    el.after($('<span style="color: red;" class="error">' + error[0] +
+                        '</span>'));
+
+					}
+                   
+                });
+            }
 			}
 
 		});
