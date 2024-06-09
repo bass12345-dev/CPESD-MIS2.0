@@ -6,13 +6,31 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\CustomModel;
+use App\Services\ActionLogsService;
 class ActionLogsController extends Controller
 {
-    
+    protected $actionLogsService;
+    public function __construct(ActionLogsService $actionLogsService){
+        $this->actionLogsService = $actionLogsService;
+    }
+
     public function index(){
         $data['title']      = 'Action Logs';
-        $data['actions']    = CustomModel::get_actions_dts();
         return view('dts.admin.contents.action_logs.action_logs')->with($data);
+    }
+
+    public function action_logs(){
+        $month = '';
+        $year = '';
+        if(isset($_GET['m'])){
+            $month =   date('m', strtotime($_GET['m']));
+            $year =   date('Y', strtotime($_GET['m']));
+        }else {
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+        }
+        $user = $this->actionLogsService->AllActionLogs($month,$year);
+        return response()->json($user);
     }
 
     public static function dts_add_action($action,$user_type,$_id){
@@ -51,3 +69,6 @@ class ActionLogsController extends Controller
 
     
 }
+
+
+
