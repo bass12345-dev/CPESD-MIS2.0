@@ -16,18 +16,17 @@ class ActionLogsController extends Controller
 
     public function index(){
         $data['title']      = 'Action Logs';
+        $data['current']    = Carbon::now()->year.'-'.Carbon::now()->month;
         return view('dts.admin.contents.action_logs.action_logs')->with($data);
     }
 
     public function action_logs(){
+    
         $month = '';
         $year = '';
         if(isset($_GET['m'])){
             $month =   date('m', strtotime($_GET['m']));
             $year =   date('Y', strtotime($_GET['m']));
-        }else {
-            $month = Carbon::now()->month;
-            $year = Carbon::now()->year;
         }
         $user = $this->actionLogsService->AllActionLogs($month,$year);
         return response()->json($user);

@@ -3,7 +3,7 @@ namespace App\Services;
 
 use App\Repositories\dts\AdminRepository;
 use Carbon\Carbon;
-class ActionLogsService
+class LoginHistoryServices
 {   
     protected $adminRepository;
     protected $now;
@@ -12,30 +12,27 @@ class ActionLogsService
         $this->adminRepository = $adminRepository;
         $this->now =  Carbon::now();
     }
-
-    public function AllActionLogs($month,$year){
+    
+    public function AllLoginHistory($month,$year){
 
        if($month == '' && $year == ''){
-            $items =  $this->adminRepository->get_actions_dts();
+            $items =  $this->adminRepository->get_logged_in_history();
        }else {
-            $items           =  $this->adminRepository->get_actions_dts_by_month($month,$year);
+            $items =  $this->adminRepository->get_logged_in_history_by_month($month,$year);
        }
-       $i                    = 1;
+       $i = 1;
        $data = [];
        foreach ($items as $value => $key) {
         $data[] = array(
             'number'            => $i++,
             'name'              => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
-            'user_type'         => $key->user_type,
-            'tracking_number'   => $key->tracking_number,
-            'action'            => $key->action,
-            'action_datetime'   => date('M d Y h:i A', strtotime($key->action_datetime))
+            'datetime'   => date('M d Y h:i a',strtotime($key->logged_in_date))
             
         );
     }
 
     return $data;
-
+        
     }
 
 }

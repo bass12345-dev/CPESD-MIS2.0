@@ -89,6 +89,8 @@ Route::middleware(['SessionGuard'])->prefix('dts')->group(function () {
     Route::post('/revert-document', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'revert_document']);
     //Action Logs
     Route::get('/action-logs', [App\Http\Controllers\dts\admin\ActionLogsController::class, 'action_logs']);
+    //Login History
+    Route::get('/login-history', [App\Http\Controllers\dts\admin\LoggedInHistoryController::class, 'login_history']);
     //Search query
     Route::get('/search', [App\Http\Controllers\dts\admin\ViewDocumentController::class, 'search']);
 });

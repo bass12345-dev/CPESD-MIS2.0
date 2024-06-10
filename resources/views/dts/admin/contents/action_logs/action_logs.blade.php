@@ -3,12 +3,7 @@
 @section('content')
 @include('global_includes.title')
 <div class="card flex-fill p-3">
-   <div class="card-header d-flex">
-      <button class="btn btn-primary " style="margin-right: 10px;">Show All Data</button>
-
-      <input id='calendar' name="month" class="form-control w-25" />
-      <button class="btn btn-success" id="by-month" style="margin-left:2px;">Submit</button>
-   </div>
+   @include('components.filter1')
    <hr>
    <p class="text-danger ">*This month Actions</p>
    <table class="table table-hover  " id="datatables-buttons" style="width: 100%; ">
@@ -28,27 +23,28 @@
 
 @endsection
 @section('js')
-<script src="https://jsuites.net/v4/jsuites.js"></script>
-<link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
 <script>
-
-   var month = null;
-
+   var month = $('input[name=month]').val();
    jSuites.calendar(document.getElementById('calendar'), {
       type: 'year-month-picker',
-      format: 'MMM-YYYY',
+      format: 'MMMM-YYYY',
    });
    
    $(document).on('click','#by-month', function(){
       month = $('input[name=month]').val();
       search(month);
-   })
+   });
+
+   $(document).on('click','#all_data', function(){
+      search(month=null);
+   });
    
    var search = function (month) {
-      var add_to_url = '';
-      if(month!=undefined){
+      var add_to_url='';
+      if(month!=null){
          add_to_url = '?m='+month
       }
+      loader();
       $.ajax({
          type: "GET",
          url: base_url + "/dts/action-logs"+add_to_url,
@@ -57,9 +53,8 @@
                   },
          datatype: "json",
          traditional: true
-      })
-         .done(function (data) {
-
+      }).done(function (data) {
+         JsLoadingOverlay.hide();
             table = $("#datatables-buttons").DataTable({
                responsive: true,
                ordering: false,
@@ -137,87 +132,12 @@
          });
    };
 
-   search();
-
-   // document.addEventListener("DOMContentLoaded", function () {
-   //    table = $("#datatables-buttons").DataTable({
-   //       responsive: true,
-   //       ordering: false,
-   //       processing: true,
-   //       pageLength: 25,
-   //       language: {
-   //          "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="{{asset("assets/img/peso_logo.png")}}"></div>'
-   //       },
-   //       "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-   //       buttons: [
-   //             {
-   //                extend: 'copy',
-   //                text: 'Copy',
-   //                className: 'btn btn-warning rounded-pill ',
-   //                footer: true,
-
-   //             }, 
-   //             {
-   //                extend: 'print',
-   //                text: 'Print',
-   //                className: 'btn btn-info rounded-pill  ms-2',
-   //                footer: true,
-
-   //             }, {
-   //                extend: 'csv',
-   //                text: 'CSV',
-   //                className: 'btn btn-success rounded-pill ms-2',
-   //                footer: true,
-
-   //             }, ],
-   //       ajax: {
-   //          url: base_url + "/dts/action-logs",
-   //          method: 'GET',
-   //          headers: {
-   //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-   //          },
-   //          dataSrc: ""
-   //       },
-   //       columns: [
-   //          {
-   //          data: 'number',
-   //       }, 
-   //       {
-   //          data: 'name',
-   //       }, 
-   //          {
-   //          data: null,
-   //       }, 
-   //       {
-   //          data: null
-   //       }, 
-   //       {
-   //          data: 'action_datetime'
-   //       }, 
-
-   //           ],
-   //           columnDefs: [ 
-   //             {
-   //                targets: 2,
-   //                data: null,
-   //                render: function (data, type, row) {
-   //                   return '<a href="' + base_url + '/dts/user/view?tn=' + row.tracking_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.tracking_number + ' ?>">' + row.action + '</a>';
-   //                }
-   //             },
-   //             {
-   //                targets: -2,
-   //                data: null,
-   //                render: function (data, type, row) {
-   //                   return '<span class="badge bg-primary" style="font-size: 12px;">'+row.user_type+'</span>';
-   //                }
-   //             },
+$(document).ready(function(){
+   search(month);
+});
 
 
 
-   //    ]
-
-   //    });
-   // });
 </script>
 
 @endsection
