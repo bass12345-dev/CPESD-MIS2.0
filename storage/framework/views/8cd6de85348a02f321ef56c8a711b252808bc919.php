@@ -244,14 +244,18 @@ $('button#filter').on('click', function(){
 
 
 //PRINT
-$('button#print_slips').on('click', function(){
-var selected_items = get_select_items_datatable();
-if(selected_items.length  == 0){
-   alert('Please Select at least one')
-}else{
-   var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
-}
-});
+$(document).on('click','button#print_slips', function(){
+   alert('asd')
+})
+// $('button#print_slips').on('click', function(){
+//    alert('asd')
+// // var selected_items = get_select_items_datatable();
+// // if(selected_items.length  == 0){
+// //    alert('Please Select at least one')
+// // }else{
+// //    var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
+// // }
+// });
 
 </script>
 <?php $__env->stopSection(); ?>
