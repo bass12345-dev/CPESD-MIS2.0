@@ -6,7 +6,7 @@
 @include('dts.receiver.contents.received.sections.final_action_off_canvas')
 @endsection
 @section('js')
-@include('dts.includes.datatable_with_select')
+
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }, {
          data: 'created'
       }, {
-         data: 'is'
+         data: 'history_status'
       },{
          data: null
       }, ],
@@ -85,6 +85,31 @@ document.addEventListener("DOMContentLoaded", function () {
          data: null,
          render: function (data, type, row) {
             return '<a href="' + base_url + '/dts/user/view?tn=' + row.tracking_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.tracking_number + ' ?>">' + row.document_name + '</a>';
+         }
+      },
+       {
+         targets: -2,
+         data: null,
+         render: function (data, type, row) {
+            var status;
+            switch (row.history_status) {
+               case 'completed':
+                  status = '<span class="badge p-2 bg-success">Completed</span>';
+                  break;
+               case 'pending':
+                  status = '<span class="badge p-2 bg-danger">Pending</span>';
+                  break;
+               case 'cancelled':
+                  status = '<span class="badge p-2 bg-warning">Canceled</span>';
+                  break;
+               case 'outgoing':
+                  status = '<span class="badge p-2 bg-secondary">Outgoing</span>';
+                  break;
+            
+               default:
+                  break;
+            }
+            return status;
          }
       },
       {
@@ -115,9 +140,48 @@ document.addEventListener("DOMContentLoaded", function () {
          }
       }
    
-   ]
+   ],
+   initComplete: function () {
+        this.api()
+            .columns()
+            .every(function () {
+                let column = this;
+                arr = [];
+
+                column.each(function( index, element ) {
+
+                  arr.push(index);
+
+                });
+
+                console.log(arr)
+               //  // Create select element
+               //  let select = document.createElement('select');
+               //  select.add(new Option(''));
+               //  column.footer().replaceChildren(select);
+ 
+               //  // Apply listener for user change in value
+               //  select.addEventListener('change', function () {
+               //      column
+               //          .search(select.value, {exact: true})
+               //          .draw();
+               //  });
+ 
+               //  // Add list of options
+               //  column
+               //      .data()
+               //      .unique()
+               //      .sort()
+               //      .each(function (d, j) {
+               //          select.add(new Option(d));
+               //      });
+            });
+    }
    });
 });
+
+ 
+
 
 
 //MULTIPLE ACTIONS

@@ -32,6 +32,7 @@ class AllDocumentsController extends Controller
         $user                       = DB::table('users')->where('user_id', session('_id'))->get()[0];
         $data['user_data']          = array('user_id' => session('_id'), 'office_id' => $user->off_id);
         $data['final_actions']      = $this->get_final_actions();
+        $data['current']    = Carbon::now()->year.'-'.Carbon::now()->month;
         $row_documents              = null;
     
         $row_documents = $this->get_all_documents($start_date="",$end_date="",$type_id="",$status1="");
