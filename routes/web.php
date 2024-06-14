@@ -37,6 +37,7 @@ Route::get('/dts', [App\Http\Controllers\dts\auth\AuthController::class, 'index'
 //ADMIN ROUTES//
 Route::middleware(['SessionGuard', 'IsAdmin'])->prefix('dts/admin')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\dts\admin\DashboardController::class, 'index']);
+    Route::get('/analytics', [App\Http\Controllers\dts\admin\AnalyticsController::class, 'index']);
     Route::get('/all-documents', [App\Http\Controllers\dts\admin\AllDocumentsController::class, 'index']);
     Route::get('/offices', [App\Http\Controllers\dts\admin\OfficesController::class, 'index']);
     Route::get('/doc-types', [App\Http\Controllers\dts\admin\DocTypesController::class, 'index']);
@@ -93,6 +94,9 @@ Route::middleware(['SessionGuard'])->prefix('dts')->group(function () {
     Route::get('/login-history', [App\Http\Controllers\dts\admin\LoggedInHistoryController::class, 'login_history']);
     //Search query
     Route::get('/search', [App\Http\Controllers\dts\admin\ViewDocumentController::class, 'search']);
+
+    //Analytics
+    Route::post('/d-t-analytics', [App\Http\Controllers\dts\admin\AnalyticsController::class, 'document_types_analytics']);
 });
 
 

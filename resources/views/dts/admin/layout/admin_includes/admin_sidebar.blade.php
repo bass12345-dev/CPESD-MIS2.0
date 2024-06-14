@@ -9,12 +9,25 @@
                 Pages
             </li>
             <?php $segments = Request::segments();?>
-            <li class="sidebar-item <?= $segments[2] == 'dashboard' ? 'active' : '' ?>">
-                <a class="sidebar-link" href="{{url('/dts/admin/dashboard')}}">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
-                </a>
+
+
+            <li class="sidebar-item">
+                <a data-bs-target="#multi-2" data-bs-toggle="collapse" class="sidebar-link collapsed "> <i class="align-middle" data-feather="sliders"></i> Dashboard & Analytics</a>
+                <ul id="multi-2" class="sidebar-dropdown list-unstyled collapse <?= $segments[2] == 'dashboard' || 'analytics' ? 'show' : '' ?>">
+                    <li class="sidebar-item <?= $segments[2] == 'dashboard' ? 'active' : '' ?>">
+                        <a class="sidebar-link" href="{{url('/dts/admin/dashboard')}}">
+                             <span class="align-middle">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item <?= $segments[2] == 'analytics' ? 'active' : '' ?>">
+                        <a class="sidebar-link" href="{{url('/dts/admin/analytics')}}">
+                             <span class="align-middle">Analytics</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            
+
+
 
             <li class="sidebar-item <?= $segments[2] == 'all-documents' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/admin/all-documents')}}">
@@ -43,13 +56,14 @@
 
             <?php 
                 use App\Models\CustomModel;
-                $row = CustomModel::q_get_where('users',array('user_id' => session('_id')))->first();
-                if($row->user_id == 8){
+
+$row = CustomModel::q_get_where('users', array('user_id' => session('_id')))->first();
+if ($row->user_id == 8) {
                 ?>
 
             <li class="sidebar-item <?= $segments[2] == 'manage-staff' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/admin/manage-staff')}}">
-                    <i class="align-middle fas fa-hand" ></i> <span class="align-middle">Manage Staff</span>
+                    <i class="align-middle fas fa-hand"></i> <span class="align-middle">Manage Staff</span>
                 </a>
             </li>
 
@@ -61,11 +75,12 @@
                 </a>
             </li>
 
-            
+
 
             <li class="sidebar-item <?= $segments[2] == 'logged-in-history' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/admin/logged-in-history')}}">
-                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Logged in History</span>
+                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Logged in
+                        History</span>
                 </a>
             </li>
 
@@ -77,10 +92,14 @@
 
             <li class="sidebar-item <?= $segments[2] == 'track' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/admin/track')}}">
-                    <i class="align-middle" data-feather="search"></i> <span class="align-middle">Search Documents</span>
+                    <i class="align-middle" data-feather="search"></i> <span class="align-middle">Search
+                        Documents</span>
                 </a>
             </li>
-            
+
+
+
+
 
             <!-- <li class="sidebar-item <?= $segments[2] == 'back-up' ? 'active' : '' ?>">
                 <a class="sidebar-link" href="{{url('/dts/admin/back-up')}}">

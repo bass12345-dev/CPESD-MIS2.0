@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 class AdminRepository
 {
 
+  // Analytics Dashboard
+
+  public static function get_documents_where_and_year($table,$where,$col,$year){
+
+    return DB::table($table)->where($where)->whereYear($col, '=', $year);
+
+  }
+
   //Action Logs
   public function get_actions_dts_by_month($month, $year)
   {

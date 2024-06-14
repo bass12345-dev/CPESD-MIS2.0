@@ -45,7 +45,7 @@
       e.preventDefault();
       var form = $(this).serialize();
       var id = $('input[name=id]').val();
-
+      $('#add_form').find('button').attr('disabled', true);
       if (!id) {
          var url = '/dts/add-document-type';
          add_item(form, url);
@@ -54,7 +54,7 @@
          update_item(id, form, url);
 
       }
-      $('#add_form').find('button').attr('disabled', true);
+      $('#add_form').find('button').attr('disabled', false);
    });
 </script>
 
