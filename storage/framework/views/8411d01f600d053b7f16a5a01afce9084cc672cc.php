@@ -79,4 +79,4 @@
                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
          </div>
-      </div>
+      </div><?php /**PATH C:\Apache24\htdocs\CPESD-MIS2.0\resources\views/dts/users/contents/add_document/sections/form.blade.php ENDPATH**/ ?>

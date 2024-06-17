@@ -142,40 +142,38 @@ document.addEventListener("DOMContentLoaded", function () {
    
    ],
    initComplete: function () {
-        this.api()
-            .columns()
-            .every(function () {
-                let column = this;
-                arr = [];
 
-                column.each(function( index, element ) {
+      var column = table.column(6);
+      let select = document.createElement('select');
+      select.className = "form-select";
+      select.add(new Option(''));
+      column.header().replaceChildren(select);
+      //   this.api()
+      //       .columns()
+      //       .every(function () {
+      //           let column = this;
 
-                  arr.push(index);
-
+      //           // Create select element
+      //           let select = document.createElement('select');
+      //           select.add(new Option(''));
+      //           column.footer().replaceChildren(select);
+ 
+      //           // Apply listener for user change in value
+                select.addEventListener('change', function () {
+                    column
+                        .search(select.value, {exact: true})
+                        .draw();
                 });
-
-                console.log(arr)
-               //  // Create select element
-               //  let select = document.createElement('select');
-               //  select.add(new Option(''));
-               //  column.footer().replaceChildren(select);
  
-               //  // Apply listener for user change in value
-               //  select.addEventListener('change', function () {
-               //      column
-               //          .search(select.value, {exact: true})
-               //          .draw();
-               //  });
- 
-               //  // Add list of options
-               //  column
-               //      .data()
-               //      .unique()
-               //      .sort()
-               //      .each(function (d, j) {
-               //          select.add(new Option(d));
-               //      });
-            });
+                // Add list of options
+                column
+                    .data()
+                    .unique()
+                    .sort()
+                    .each(function (d, j) {
+                        select.add(new Option(d));
+                    });
+            // });
     }
    });
 });
