@@ -34,3 +34,4 @@
    </table>
 </div>
 
+<?php /**PATH C:\Apache24\htdocs\CPESD-MIS2.0\resources\views/dts/admin/contents/all_documents/sections/all_documents_table.blade.php ENDPATH**/ ?>

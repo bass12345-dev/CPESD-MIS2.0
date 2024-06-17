@@ -1,12 +1,12 @@
-@extends('dts.admin.layout.admin_master')
-@section('title', $title)
-@section('content')
-@include('global_includes.title')
-@include('dts.admin.contents.all_documents.sections.all_documents_table')
-@include('dts.receiver.contents.received.sections.final_action_off_canvas')
-@endsection
-@section('js')
-@include('dts.includes.datatable_with_select')
+
+<?php $__env->startSection('title', $title); ?>
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('global_includes.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('dts.admin.contents.all_documents.sections.all_documents_table', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('dts.receiver.contents.received.sections.final_action_off_canvas', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('js'); ?>
+<?php echo $__env->make('dts.includes.datatable_with_select', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
       processing: true,
       pageLength: 25,
       language: {
-         "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="{{asset("assets/img/peso_logo.png")}}"></div>'
+         "processing": '<div class="d-flex justify-content-center "> <img class="top-logo mt-4" src="<?php echo e(asset("assets/img/peso_logo.png")); ?>"></div>'
       },
       "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
       buttons: [
@@ -320,4 +320,5 @@ if(selected_items.length  == 0){
 });
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('dts.admin.layout.admin_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Apache24\htdocs\CPESD-MIS2.0\resources\views/dts/admin/contents/all_documents/all_documents.blade.php ENDPATH**/ ?>

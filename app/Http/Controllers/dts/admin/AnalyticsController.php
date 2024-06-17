@@ -25,4 +25,12 @@ class AnalyticsController extends Controller
         return response()->json($data);
         
     }
+
+    public function per_month_analytics(Request $request){
+        
+        $year = $request->input('year');
+        $data = $this->DashboardService->count_documents_per_month($year);
+        return response()->json($data);
+        
+    }
 }

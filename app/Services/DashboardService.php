@@ -38,5 +38,34 @@ class DashboardService
     }
 
 
+    public function count_documents_per_month($year){
+
+        $months           = array();
+        $completed        = array();
+        $pending          = array();
+        $cancelled        = array();
+
+        for ($m = 1; $m <= 12; $m++) {
+
+            $completed_doc          =  $this->adminRepository->get_documents_where_and_year_and_month($this->documents_table,array('doc_status' => 'completed'),'created',$year,$m)->count();
+            $pending_doc            =  $this->adminRepository->get_documents_where_and_year_and_month($this->documents_table,array('doc_status' => 'pending'),'created',$year,$m)->count();
+            $cancelled_doc          =  $this->adminRepository->get_documents_where_and_year_and_month($this->documents_table,array('doc_status' => 'cancelled'),'created',$year,$m)->count();
+            $month                          =  date('M', mktime(0, 0, 0, $m, 1));
+            array_push($months, $month);
+            array_push($completed, $completed_doc);
+            array_push($cancelled, $cancelled_doc);
+            array_push($pending, $pending_doc);
+        }
+        $data['label']                      = $months;
+        $data['data_pending']               = $pending;
+        $data['data_completed']             = $completed;
+        $data['data_cancelled']             = $cancelled;
+       
+        return $data;
+
+        
+    }
+
+
 
 }

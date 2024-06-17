@@ -17,6 +17,12 @@ class AdminRepository
 
   }
 
+  public static function get_documents_where_and_year_and_month($table,$where,$col,$year,$m){
+
+    return DB::table($table)->where($where)->whereMonth($col, '=', $m)->whereYear($col, '=', $year);
+
+  }
+
   //Action Logs
   public function get_actions_dts_by_month($month, $year)
   {

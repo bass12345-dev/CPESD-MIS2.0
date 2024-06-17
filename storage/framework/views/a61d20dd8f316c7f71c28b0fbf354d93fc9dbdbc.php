@@ -1,12 +1,12 @@
-@extends('dts.admin.layout.admin_master')
-@section('title', $title)
-@section('content')
-@include('global_includes.title')
+
+<?php $__env->startSection('title', $title); ?>
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('global_includes.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <div class="container-fluid p-0">
-@include('dts.admin.contents.analytics.sections.document_types_analytics')
+<?php echo $__env->make('dts.admin.contents.analytics.sections.document_types_analytics', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </div>
-@endsection
-@section('js')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('js'); ?>
 <script>
 
 function load_document_types_analytics(year) {
@@ -213,4 +213,5 @@ function load_graph($this) {
 // 	});
 // });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('dts.admin.layout.admin_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Apache24\htdocs\CPESD-MIS2.0\resources\views/dts/admin/contents/analytics/analytics.blade.php ENDPATH**/ ?>

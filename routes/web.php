@@ -97,6 +97,7 @@ Route::middleware(['SessionGuard'])->prefix('dts')->group(function () {
 
     //Analytics
     Route::post('/d-t-analytics', [App\Http\Controllers\dts\admin\AnalyticsController::class, 'document_types_analytics']);
+    Route::post('/p-m-analytics', [App\Http\Controllers\dts\admin\AnalyticsController::class, 'per_month_analytics']);
 });
 
 
