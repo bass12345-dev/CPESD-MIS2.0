@@ -24,9 +24,9 @@ class ViewDocumentController extends Controller
         $tn = $_GET['tn'];
         $check = CustomModel::q_get_where($this->documents_table, array('tracking_number' => $tn))->count();
         if ($check > 0) {
-            $data['title'] = 'Document #' . $tn;
-            $data['doc_data'] = $this->DocumentService->get_document_data($tn);
-            $data['history'] =$this->DocumentService->get_document_history($tn);
+            $data['title']          = 'Document #' . $tn;
+            $data['doc_data']       = $this->DocumentService->get_document_data($tn);
+            $data['history']        = $this->DocumentService->get_document_history($tn);
             return view('dts.admin.contents.view.view')->with($data);
         } else {
 

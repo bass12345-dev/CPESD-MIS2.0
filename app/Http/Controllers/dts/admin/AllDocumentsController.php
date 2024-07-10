@@ -8,6 +8,7 @@ use App\Models\DocumentsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Services\DocumentServices;
 
 class AllDocumentsController extends Controller
 {
@@ -16,11 +17,12 @@ class AllDocumentsController extends Controller
     private $documents_table         = "documents";
     private $final_actions_table     = "final_actions";
     private $outgoing_table          = 'outgoing_documents';
-
+    protected $DocumentService;
     public $now;
-    public function __construct()
+    public function __construct(DocumentServices $DocumentService)
     {
-        $this->now = new \DateTime();
+        $this->DocumentService = $DocumentService;
+        $this->now = new \DateTime();   
         $this->now->setTimezone(new \DateTimezone('Asia/Manila'));
     }
     public function index()
@@ -32,12 +34,9 @@ class AllDocumentsController extends Controller
         $user                       = DB::table('users')->where('user_id', session('_id'))->get()[0];
         $data['user_data']          = array('user_id' => session('_id'), 'office_id' => $user->off_id);
         $data['final_actions']      = $this->get_final_actions();
-        $data['current']    = Carbon::now()->year.'-'.Carbon::now()->month;
+        $data['current']            = Carbon::now()->year.'-'.Carbon::now()->month;
         $row_documents              = null;
-    
         $row_documents = $this->get_all_documents($start_date="",$end_date="",$type_id="",$status1="");
-
-    
         $data['documents']      = $row_documents;
         return view('dts.admin.contents.all_documents.all_documents')->with($data);
        
@@ -46,74 +45,8 @@ class AllDocumentsController extends Controller
 
     public function get_all_documents()
     {
-        $rows = '';
-
-      
-
-
-        $rows = DocumentsModel::get_all_documents();
-
-      
-        $data = [];
-        $i = 1;
-
-        foreach ($rows as $value => $key) {
-            $where                          = array('t_number' => $key->tracking_number);
-            $delete_button                  = CustomModel::q_get_where($this->history_table, $where)->count() > 1 ? true : false;
-            $status                         = $this->check_status($key->doc_status);
-            $history                        = CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc');
-            $is_existing                     = $history->count();
-            // $history                        = CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0];
-
-
-            $data[] = array(
-                'number'                    => $i++,
-                'tracking_number'           => $key->tracking_number,
-                'document_name'             => $key->document_name,
-                'type_name'                 => $key->type_name,
-                'created'                   => date('M d Y - h:i a', strtotime($key->created)),
-                'a'                         => $delete_button,
-                'document_id'               => $key->document_id,
-                'history_id'                => $is_existing == 0 ? '' : CustomModel::q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0]->history_id,
-                // 'history_id'                => $history->history_id,
-                'error'                     => $is_existing == 0 ? 'text-danger' : '',
-                'user_id'                   => $key->u_id,
-                'created_by'                => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
-                'is'                        => $status,
-                'history_status'            => $key->doc_status
-            );
-        }
-
-
+        $data = $this->DocumentService->get_all_documents();
         return response()->json($data);
-
-    }
-
-
-    public static function check_status($doc_status){
-        $status         = '';
-
-        switch ($doc_status) {
-            case 'completed':
-                                $status = '<span class="badge p-2 bg-success">Completed</span>';
-                break;
-            case 'pending': 
-                                $status = '<span class="badge p-2 bg-danger">Pending</span>';
-                break;
-
-            case 'cancelled': 
-                    $status = '<span class="badge p-2 bg-warning">Canceled</span>';
-                break;
-            
-            case 'outgoing': 
-                    $status = '<span class="badge p-2 bg-secondary">Outgoing</span>';
-                break;
-            default:
-                # code...
-                break;
-        }
-
-        return $status;
     }
 
 
@@ -121,8 +54,6 @@ class AllDocumentsController extends Controller
     {
 
         $id = $request->input('id')['id'];
-
-
         if (is_array($id)) {
             foreach ($id as $row) {
                 $delete                   = CustomModel::q_get_where($this->documents_table, array('document_id' => $row));
@@ -164,19 +95,11 @@ class AllDocumentsController extends Controller
         }
 
         return $data;
-
-
-
-
-
-
     }
 
 
     public function cancel_documents(Request $request)
     {
-
-       
         $id = $request->input('id')['id'];
         $message = '';
         $arr = array();
@@ -209,28 +132,6 @@ class AllDocumentsController extends Controller
 
         return response()->json($data);
     }
-
-
-
-
-    // public function cancel_document(Request $request){
-
-    //     $tracking_number = $request->input('t');
-    //     $items = array(
-    //         'doc_status'         => 'cancelled',
-    //     );
-    //     $update = CustomModel::update_item($this->documents_table, array('tracking_number' => $tracking_number), $items);
-    //     if ($update) {
-
-
-    //         $data = array('message' => 'Canceled Succesfully', 'response' => true);
-    //     } else {
-
-    //         $data = array('message' => 'Something Wrong/No Changes Apply ', 'response' => false);
-    //     }
-    //     return response()->json($data);
-
-    // }
 
     public function revert_document(Request $request){
 

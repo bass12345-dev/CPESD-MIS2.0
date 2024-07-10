@@ -145,73 +145,7 @@ function load_graph($this) {
     load_document_per_month($this.value);
 }
 
-// 	document.addEventListener("DOMContentLoaded", function() {
-// 	var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
 
-// 	// Line chart
-// 	new Chart(document.getElementById("chartjs-dashboard-line"), {
-// 		type: "bar",
-// 		data: {
-// 			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-// 			datasets: [{
-// 				label: "Sales ($)",
-// 				fill: true,
-// 				backgroundColor: 'red',
-// 				borderColor: window.theme.primary,
-// 				data: [
-// 					2115,
-// 					1562,
-// 					1584,
-// 					1892,
-// 					1587,
-// 					1923,
-// 					2566,
-// 					2448,
-// 					2805,
-// 					3438,
-// 					2917,
-// 					3327
-// 				]
-// 			}]
-// 		},
-// 		options: {
-// 			maintainAspectRatio: false,
-// 			legend: {
-// 				display: false
-// 			},
-// 			tooltips: {
-// 				intersect: false
-// 			},
-// 			hover: {
-// 				intersect: true
-// 			},
-// 			plugins: {
-// 				filler: {
-// 					propagate: false
-// 				}
-// 			},
-// 			scales: {
-// 				xAxes: [{
-// 					reverse: true,
-// 					gridLines: {
-// 						color: "rgba(0,0,0,0.0)"
-// 					}
-// 				}],
-// 				yAxes: [{
-// 					ticks: {
-// 						stepSize: 1000
-// 					},
-// 					display: true,
-// 					borderDash: [3, 3],
-// 					gridLines: {
-// 						color: "rgba(0,0,0,0.0)",
-// 						fontColor: "#fff"
-// 					}
-// 				}]
-// 			}
-// 		}
-// 	});
-// });
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('dts.admin.layout.admin_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CPESD-MIS2.0\resources\views/dts/admin/contents/analytics/analytics.blade.php ENDPATH**/ ?>

@@ -45,10 +45,10 @@
       e.preventDefault();
       var form = $(this).serialize();
       var id = $('input[name=office_id]').val();
-
+      $('#add_office').find('button').attr('disabled', true);
       if (!id) {
          var url = '/dts/add-office';
-         $('#add_office').find('button').attr('disabled', true);
+         
          add_item(form, url);
          
       } else {

@@ -15,6 +15,9 @@ class CustomRepository
     public static function q_get($table){
         return DB::table($table);
     }
+    public  function q_get_where_order($table,$where,$order_key,$order_by){
+        return DB::table($table)->where($where)->orderBy($order_key, $order_by);
+    }
     
     public function insert_item($table,$data){
         return DB::table($table)->insert($data);

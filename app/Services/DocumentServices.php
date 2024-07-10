@@ -1,18 +1,25 @@
 <?php 
 namespace App\Services;
 
+use App\Repositories\dts\CustomRepository;
 use App\Repositories\dts\DocumentRepository;
 use Carbon\Carbon;
 use DateTime;
 class DocumentServices
 {   
     protected $documentRepository;
+    protected $customRepository;
     protected $now;
-    public function __construct(DocumentRepository $documentRepository)
+    private $history_table           = "history";
+    public function __construct(DocumentRepository $documentRepository,CustomRepository $customRepository)
     {
         $this->documentRepository = $documentRepository;
+        $this->customRepository = $customRepository;
         $this->now =  Carbon::now();
     }
+
+
+    //ADMIN SERVICE
     
     public function get_document_data($tn){
 
@@ -89,6 +96,38 @@ class DocumentServices
     }
 
 
+    public function get_all_documents(){
+
+        $rows               = $this->documentRepository->get_all_documents();
+        $data = [];
+        $i = 1;
+
+        foreach ($rows as $value => $key) {
+            $where                          = array('t_number' => $key->tracking_number);
+            $delete_button                  = $this->customRepository->q_get_where($this->history_table, $where)->count() > 1 ? true : false;
+            $status                         = $this->check_status($key->doc_status);
+            $history                        = $this->customRepository->q_get_where_order($this->history_table, $where, 'history_id', 'desc');
+            $is_existing                     = $history->count();
+            $data[] = array(
+                'number'                    => $i++,
+                'tracking_number'           => $key->tracking_number,
+                'document_name'             => $key->document_name,
+                'type_name'                 => $key->type_name,
+                'created'                   => date('M d Y - h:i a', strtotime($key->created)),
+                'a'                         => $delete_button,
+                'document_id'               => $key->document_id,
+                'history_id'                => $is_existing == 0 ? '' : $this->customRepository->q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0]->history_id,
+                'error'                     => $is_existing == 0 ? 'text-danger' : '',
+                'user_id'                   => $key->u_id,
+                'created_by'                => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
+                'is'                        => $status,
+                'history_status'            => $key->doc_status
+            );
+        }
+
+
+        return $data;
+    }
 
     public function check_status($doc_status)
     {
