@@ -18,6 +18,9 @@ $('a#remove').on('click', function(){
    var id = $(this).data('id');
    var url = '/dts/delete-action';
    delete_item(id,url);
+   setTimeout(function() { 
+            reload_page();
+      }, 2000);
 });
 
 $('a#update').on('click', function(){
@@ -50,7 +53,9 @@ $('#add_form').on('submit', function (e) {
       var url = '/dts/update-action';
       update_item(id,form,url);
    }
-   $('#add_form').find('button').attr('disabled',false);
+   setTimeout(function() { 
+            reload_page();
+      }, 2000);
    
 });
 

@@ -21,6 +21,9 @@
       var id = $(this).data('id');
       var url = '/dts/delete-type';
       delete_item(id, url);
+      setTimeout(function() { 
+            reload_page();
+      }, 2000);
    });
 
    $('a#update').on('click', function () {
@@ -54,7 +57,9 @@
          update_item(id, form, url);
 
       }
-      $('#add_form').find('button').attr('disabled', false);
+      setTimeout(function() { 
+            reload_page();
+      }, 2000);
    });
 </script>
 

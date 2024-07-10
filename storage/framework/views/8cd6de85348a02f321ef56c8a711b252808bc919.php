@@ -6,7 +6,7 @@
 <?php echo $__env->make('dts.receiver.contents.received.sections.final_action_off_canvas', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
-
+<?php echo $__env->make('dts.includes.datatable_with_select', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -142,40 +142,38 @@ document.addEventListener("DOMContentLoaded", function () {
    
    ],
    initComplete: function () {
-        this.api()
-            .columns()
-            .every(function () {
-                let column = this;
-                arr = [];
 
-                column.each(function( index, element ) {
+      var column = table.column(6);
+      let select = document.createElement('select');
+      select.className = "form-select";
+      select.add(new Option(''));
+      column.header().replaceChildren(select);
+      //   this.api()
+      //       .columns()
+      //       .every(function () {
+      //           let column = this;
 
-                  arr.push(index);
-
+      //           // Create select element
+      //           let select = document.createElement('select');
+      //           select.add(new Option(''));
+      //           column.footer().replaceChildren(select);
+ 
+      //           // Apply listener for user change in value
+                select.addEventListener('change', function () {
+                    column
+                        .search(select.value, {exact: true})
+                        .draw();
                 });
-
-                console.log(arr)
-               //  // Create select element
-               //  let select = document.createElement('select');
-               //  select.add(new Option(''));
-               //  column.footer().replaceChildren(select);
  
-               //  // Apply listener for user change in value
-               //  select.addEventListener('change', function () {
-               //      column
-               //          .search(select.value, {exact: true})
-               //          .draw();
-               //  });
- 
-               //  // Add list of options
-               //  column
-               //      .data()
-               //      .unique()
-               //      .sort()
-               //      .each(function (d, j) {
-               //          select.add(new Option(d));
-               //      });
-            });
+                // Add list of options
+                column
+                    .data()
+                    .unique()
+                    .sort()
+                    .each(function (d, j) {
+                        select.add(new Option(d));
+                    });
+            // });
     }
    });
 });
@@ -185,6 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 //MULTIPLE ACTIONS
+
 $('button#delete').on('click', function(){
     var button_text = 'Delete selected items';
     var text = 'Document History will be deleted also';
@@ -308,18 +307,15 @@ $('button#filter').on('click', function(){
 
 
 //PRINT
-$(document).on('click','button#print_slips', function(){
-   alert('asd')
-})
-// $('button#print_slips').on('click', function(){
-//    alert('asd')
-// // var selected_items = get_select_items_datatable();
-// // if(selected_items.length  == 0){
-// //    alert('Please Select at least one')
-// // }else{
-// //    var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
-// // }
-// });
+
+$('button#print_slips').on('click', function(){
+var selected_items = get_select_items_datatable();
+if(selected_items.length  == 0){
+   alert('Please Select at least one')
+}else{
+   var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
+}
+});
 
 </script>
 <?php $__env->stopSection(); ?>

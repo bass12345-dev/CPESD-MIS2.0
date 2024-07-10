@@ -3,7 +3,7 @@
       <h5 class="card-title mb-2">Documents</h5>
       <button class="btn btn-danger" id="delete"> Delete</button>
       <button class="btn btn-warning" id="cancel"> Cancel</button>
-      <button class="btn btn-primary" id="print_slips"> Print Tracking Slip</button>
+      <button class="btn btn-primary" id="print_slips1"> Print Tracking Slip</button>
    </div>
 
    <table class="table table-hover table-striped m-2 " id="datatable_with_select" style="width: 100%; ">

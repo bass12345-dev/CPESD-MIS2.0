@@ -18,6 +18,9 @@
       var id = $(this).data('id');
       var url = '/dts/delete-office';
       delete_item(id, url);
+      setTimeout(function() { 
+         reload_page();
+    }, 2000);
    });
 
    $('a#update_office').on('click', function () {
@@ -45,15 +48,18 @@
 
       if (!id) {
          var url = '/dts/add-office';
+         $('#add_office').find('button').attr('disabled', true);
          add_item(form, url);
+         
       } else {
          var url = '/dts/update-office';
          update_item(id, form, url);
 
       }
-
-      $('#add_office').find('button').attr('disabled', true);
-
+         setTimeout(function() { 
+            reload_page();
+      }, 2000);
+     
    });
 </script>
 <?php $__env->stopSection(); ?>
