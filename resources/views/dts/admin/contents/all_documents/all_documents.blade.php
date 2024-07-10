@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
          targets: 3,
          data: null,
          render: function (data, type, row) {
-            return '<a href="' + base_url + '/dts/user/view?tn=' + row.tracking_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.tracking_number + ' ?>">' + row.document_name + '</a>';
+            return '<a href="' + base_url + '/dts/admin/view?tn=' + row.tracking_number + '" data-toggle="tooltip" data-placement="top" title="View ' + row.tracking_number + ' ?>">' + row.document_name + '</a>';
          }
       },
        {
@@ -307,15 +307,13 @@ $('button#filter').on('click', function(){
 
 
 //PRINT
-
-$('button#print_slips').on('click', function(){
-var selected_items = get_select_items_datatable();
-if(selected_items.length  == 0){
-   alert('Please Select at least one')
-}else{
-   var a = window.open(base_url + '/dts/admin/print-slips/?ids='+selected_items, '__blank');
-}
+$('a#print_slips').on('click', function () {
+   var selected_items = get_select_items_datatable();
+   if (selected_items.length == 0) {
+      alert('Please Select at least one');
+   } else {
+      var a = window.open(base_url + '/dts/user/print-slips/?ids=' + selected_items, '__blank');
+   }
 });
-
 </script>
 @endsection

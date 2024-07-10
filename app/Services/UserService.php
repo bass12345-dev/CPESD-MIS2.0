@@ -148,4 +148,10 @@ class UserService
         // Handle duplicate email scenario
         return null;
     }
+
+
+    public static function user_full_name($row){
+        $full_name =  $row->first_name . ' ' . $row->middle_name . ' ' . $row->last_name . ' ' . $row->extension;
+        return $full_name;
+    }
 }
