@@ -19,8 +19,13 @@ class CustomRepository
         return DB::table($table)->where($where)->orderBy($order_key, $order_by);
     }
     
-    public function insert_item($table,$data){
+    public static function insert_item($table,$data){
         return DB::table($table)->insert($data);
+    }
+
+     //UPDATE ITEMS 
+     public static function update_item($table,$where,$data){
+        return DB::table($table)->where($where)->update($data);
     }
 
 

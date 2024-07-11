@@ -107,6 +107,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/user')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\dts\user\DashboardController::class, 'index']);
     Route::get('/my-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'index']);
     Route::get('/add-document', [App\Http\Controllers\dts\user\AddDocumentController::class, 'index']);
+    
     Route::get('/incoming', [App\Http\Controllers\dts\user\IncomingController::class, 'index']);
     Route::get('/received', [App\Http\Controllers\dts\user\ReceivedController::class, 'index']);
     Route::get('/forwarded', [App\Http\Controllers\dts\user\ForwardedController::class, 'index']);
@@ -133,7 +134,7 @@ Route::middleware(['SessionGuard'])->prefix('dts/us')->group(function () {
     Route::post('/my-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'get_my_documents']);
     Route::post('/update-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'update']);
     Route::post('/delete-my-document', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'delete']);
-    
+    Route::post('/cancel-documents', [App\Http\Controllers\dts\user\MyDocumentsController::class, 'cancel_documents']);
 
     //Incoming
     Route::get('/incoming-documents', [App\Http\Controllers\dts\user\IncomingController::class, 'get_incoming_documents']);

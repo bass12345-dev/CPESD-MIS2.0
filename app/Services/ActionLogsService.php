@@ -2,15 +2,34 @@
 namespace App\Services;
 
 use App\Repositories\dts\AdminRepository;
+use App\Repositories\dts\CustomRepository;
 use Carbon\Carbon;
 class ActionLogsService
 {   
     protected $adminRepository;
+    protected $customRepository;
     protected $now;
-    public function __construct(AdminRepository $adminRepository)
+    public function __construct(AdminRepository $adminRepository,CustomRepository $customRepository)
     {
-        $this->adminRepository = $adminRepository;
         $this->now =  Carbon::now();
+        $this->adminRepository = $adminRepository;
+        $this->customRepository = $customRepository;
+        
+    }
+
+    public function dts_add_action($action,$user_type,$_id){
+
+        $items  = array(
+            'action'            => $action,
+            'web_type'          => 'dts',
+            'user_type'         => $user_type,
+            'user_id'           =>  session('_id'),
+            '_id'               =>  $_id,
+            'action_datetime'   => Carbon::now()->format('Y-m-d H:i:s'),
+           
+        );
+        
+        $this->customRepository->insert_item('action_logs', $items);
     }
 
     public function AllActionLogs($month,$year){

@@ -11,6 +11,7 @@
 </div>
 <?php echo $__env->make('dts.users.contents.my_documents.modals.print_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('dts.users.contents.my_documents.modals.update_document_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('dts.users.contents.my_documents.modals.cancel_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
 <?php echo $__env->make('dts.includes.datatable_with_select', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -169,6 +170,27 @@ $('a#print_slips').on('click', function () {
       var a = window.open(base_url + '/dts/user/print-slips/?ids=' + selected_items, '__blank');
    }
 });
+
+$('#cancel_document_form').on('submit', function(e){
+   e.preventDefault();
+   var button_text = 'Cancel selected items';
+   var url = '/dts/us/cancel-documents';
+   var items = get_select_items_datatable();
+   var data = {
+               id : items,
+               reason : $(this).find('textarea[name=reason]').val()
+            }; 
+
+   if(items.length  == 0){
+    alert('Please Select at least one')
+   }else{
+    delete_item(data,url,button_text);
+   }
+   $('#cancel_document_modal').modal('hide');
+   $(this)[0].reset();
+   
+})
+
 </script>
 
 <?php $__env->stopSection(); ?>

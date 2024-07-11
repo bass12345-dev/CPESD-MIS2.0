@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\dts\admin\ActionLogsController;
 use App\Models\DocumentsModel;
 use App\Models\CustomModel;
+use App\Repositories\dts\CustomRepository;
+use App\Services\DocumentServices;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -20,13 +22,16 @@ class MyDocumentsController extends Controller
     private $document_types_table       = "document_types";
     private $documents_table            = 'documents';
     private $users_table                = "users";
-    private $final_actions_table        = "final_actions";
+
     private $office_table               = 'offices';
     private $outgoing_table             = 'outgoing_documents';
     private $now;
-
-    public function __construct()
+    private $documentService;
+    private $customRepository;
+    public function __construct(DocumentServices $documentService, CustomRepository $customRepository)
     {
+        $this->documentService = $documentService;
+        $this->customRepository = $customRepository;
         $this->now = new \DateTime();
         $this->now->setTimezone(new \DateTimezone('Asia/Manila'));
     }
@@ -104,39 +109,7 @@ class MyDocumentsController extends Controller
 
 
 
-    // function get_all_documents()
-    // {
 
-    //     $rows = DocumentsModel::get_my_documents();
-    //     $data = [];
-    //     $i = 1;
-    //     foreach ($rows as $value => $key) {
-
-    //         $delete_button = CustomModel::q_get_where($this->history_table, array('t_number' => $key->tracking_number))->count() > 1 ? true : false;
-    //         $status = $this->check_status($key->doc_status);
-
-    //         $data[] = array(
-    //             'number' => $i++,
-    //             'tracking_number' => $key->tracking_number,
-    //             'document_name' => $key->document_name,
-    //             'type_name' => $key->type_name,
-    //             'created' => date('M d Y - h:i a', strtotime($key->d_created)),
-    //             'a' => $delete_button,
-    //             'document_id' => $key->document_id,
-    //             'is' => $status,
-    //             'doc_type' => $key->doc_type,
-    //             'description' => $key->document_description,
-    //             'destination_type' => $key->destination_type,
-    //             'doc_status' => $key->doc_status,
-    //             'name' => $key->name,
-    //             'document_type_name' => $key->type_name,
-    //             'encoded_by' => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
-    //             'origin' => $key->origin == NULL ? '-' : $key->origin,
-    //             'origin_id' => $key->origin_id
-    //         );
-    //     }
-    //     return $data;
-    // }
 
     public static function check_status($doc_status)
     {
@@ -461,14 +434,15 @@ class MyDocumentsController extends Controller
         $items           = $request->input('c_t_number');
         $remarks         = $request->input('remarks2');
         $final_action    = $request->input('final_action_taken');
-        $array      = explode(',',$items);
+        $array           = explode(',',$items);
+        $user_type       = 'user';
         
         foreach ($array as $row) {
 
             $x                  = explode('-', $row);
             $history_id         = $x[0];
             $tracking_number    = $x[1];
-            $resp               = $this->complete_process($remarks,$final_action,$history_id,$tracking_number);
+            $resp               = $this->documentService->complete_process($remarks,$final_action,$history_id,$tracking_number,$user_type);
            
         }
 
@@ -478,159 +452,38 @@ class MyDocumentsController extends Controller
 
 
 
-    private function complete_process($remarks,$final_action,$history_id,$tracking_number){
-
-        $hs                 = CustomModel::q_get_where_order($this->history_table,array('history_id' => $history_id),'history_id','desc')->first();
-        $user_row           = CustomModel::q_get_where('users', array('user_id' => session('_id')))->first();
-
-
-        if($user_row->user_id == 8 || $user_row->user_id == 13){
-
     
-
-
-        $where              = array('history_id' => $history_id);
-        $data               = array(
-                            // 'user2'             => $hs->user2 == NULL ? $user_row->user_id : $hs->user2,
-                            // 'office2'           => $hs->office2 == NULL ? $user_row->off_id : $hs->office2,
-                            'status'            => 'received',
-                            'received_status'   => 1,
-                            'received_date'     =>  $hs->received_date == NULL ?   Carbon::now()->format('Y-m-d H:i:s') : $hs->received_date,
-                            'release_status'    => 1,
-                            'release_date'      =>  $hs->release_date == NULL ?   Carbon::now()->format('Y-m-d H:i:s')  : $hs->release_date,
-        );
-        $update             = CustomModel::update_item($this->history_table,$where,$data);
-
-        if($update){
-
-           
-
-        $info = array(
-            't_number'              => $tracking_number,
-            'user1'                 => $user_row->user_id,
-            'office1'               => $user_row->off_id,
-            'user2'                 => $user_row->user_id,
-            'office2'               => $user_row->off_id,
-            'received_status'       => 1,
-            'received_date'         => Carbon::now()->format('Y-m-d H:i:s') ,
-            'release_status'        => NULL,
-            'to_receiver'           => 'no',
-            'release_date'          => Carbon::now()->format('Y-m-d H:i:s') ,
-            'status'                => 'completed',
-            'final_action_taken'    => $final_action,
-            'remarks'               => $remarks
-
-        );
-
-        $add1 = CustomModel::insert_item($this->history_table, $info);
-
-        if ($add1) {
-            $query_row = CustomModel::q_get_where($this->documents_table,array('tracking_number'=> $tracking_number))->first();
-            $update_receive = DB::table('documents')
-                ->where('tracking_number', $tracking_number)
-                ->update(array('doc_status' => 'completed','completed_on'=> Carbon::now()->format('Y-m-d H:i:s')));
-            
-            ActionLogsController::dts_add_action($action = 'Completed Document No. '.$query_row->tracking_number,$user_type='user',$_id = $query_row->document_id);
-            $data = array('message' => 'Completed Succesfully', 'response' => true);
-        } else {
-
-            $data = array('message' => 'Something Wrong', 'response' => false);
-
-        }
-
-        }else {
-            $data = array('message' => 'Something Wrong', 'response' => false);
-        }
-
-    }else {
-        $data = array('message' => 'Sorry !!!! You are not Authorized to use this action', 'response' => false);
-    }
-
-
-        
-        
-
-        return $data;
-    }
 
     public function update_forwarded(Request $request)
     {
-
-        $id = $request->input('history_id');
-        $tracking_number = $request->input('tracking_number');
-        $forward_to = $request->input('forward') == 'fr' ? $this->get_receiver() : $request->input('forward');
-        $is_yes = $request->input('forward') == 'fr' ? 'yes' : 'no';
-
-
-
-
-        $r = CustomModel::q_get_where('documents', array('tracking_number' => $tracking_number))->first();
-        $user_row = CustomModel::q_get_where($this->users_table, array('user_id' => $forward_to))->first();
-        $update_release = CustomModel::update_item($this->history_table, array('history_id' => $id), array('user2' => $forward_to, 'to_receiver' => $is_yes));
-        if ($update_release) {
-            ActionLogsController::dts_add_action(
-                $action = 'Update Forwarded Document No. ' . $tracking_number . ' to ' . $user_row->first_name . ' ' . $user_row->middle_name . ' ' . $user_row->last_name . ' ' . $user_row->extension,
-                $user_type = 'user'
-                ,
-                $_id = $r->document_id
-            );
-            $data = array('message' => 'Updated Successfully', 'response' => true);
-        } else {
-            $data = array('message' => 'Something Wrong', 'response' => false);
-        }
-        return response()->json($data);
+        $resp = $this->documentService->update_forwarded($request,'user');
+        return response()->json($resp);
     }
 
 
     public function update_remarks(Request $request)
     {
-
-        $id = $request->input('history_id');
-        $remarks = $request->input('remarks_update');
-
-
-
-        $update_release = CustomModel::update_item($this->history_table, array('history_id' => $id), array('remarks' => $remarks));
-
-        if ($update_release) {
-            $data = array('message' => 'Remarks Updated Successfully', 'response' => true);
-        } else {
-            $data = array('message' => 'Something Wrong | Remarks is not updated', 'response' => false);
-        }
-        return response()->json($data);
+        $id         = $request->input('history_id');
+        $remarks    = $request->input('remarks_update');
+        $resp = $this->documentService->update_remarks($id,$remarks);
+        return response()->json($resp);
     }
 
-    function get_receiver()
+   
+
+    public function cancel_documents(Request $request)
     {
-
-        $items = CustomModel::q_get_where($this->users_table, array('user_status' => 'active', 'is_receiver' => 'yes'))->first();
-        return $items->user_id;
-    }
-
-    public function cancel_document(Request $request)
-    {
-
-
-        $id = $request->input('id');
-        $items = array(
-            'doc_status' => 'cancelled',
-        );
-        $update = CustomModel::update_item($this->documents_table, array('document_id' => $id), $items);
-        if ($update) {
-
-            $data = array('message' => 'Cancelled Succesfully', 'response' => true);
-        } else {
-
-            $data = array('message' => 'Something Wrong/No Changes Apply ', 'response' => false);
-        }
-        return response()->json($data);
+        $items = $request->input('id');
+        $user_type = 'user';
+        $resp  =  $this->documentService->cancel_documents($items,$user_type);
+        return response()->json($resp);
     }
 
 
     public function get_receiver_incoming()
     {
         $id = session('_id');
-        $count = CustomModel::q_get_where($this->history_table, array('user2' => $id, 'received_status' => NULL, 'status' => 'torec', 'release_status' => NULL, 'to_receiver' => 'yes'))->count();
+        $count = $this->customRepository->q_get_where($this->history_table, array('user2' => $id, 'received_status' => NULL, 'status' => 'torec', 'release_status' => NULL, 'to_receiver' => 'yes'))->count();
         return $count;
 
     }
