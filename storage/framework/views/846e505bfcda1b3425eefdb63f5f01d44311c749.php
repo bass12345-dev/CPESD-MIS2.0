@@ -17,7 +17,7 @@
 
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Origin</label>
-                     <select class="form-control" name="origin" required>
+                     <select class="form-select" name="origin" required>
                         <option value="">Select Office Origin</option>
                         <?php
                            foreach ($offices as $row) :
@@ -31,7 +31,7 @@
 
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Document Type</label>
-                     <select class="form-control" name="document_type" required>
+                     <select class="form-select" name="document_type" required>
                         <option value="">Select Document Type</option>
                         <?php
                            foreach ($document_types as $row) :
@@ -45,7 +45,7 @@
 
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Office</label>
-                     <select class="form-control" name="office_id" required>
+                     <select class="form-select" name="office_id" required>
                         <option value="">Select Office</option>
                         <?php
                            foreach ($offices as $row) :
@@ -64,7 +64,7 @@
 
                   <div class="form-group col-md-12 mb-3">
                      <label for="inputEmail4">Type</label>
-                     <select class="form-control" name="type" >
+                     <select class="form-select" name="type" >
                      	
                         <option value="simple">Simple</option>
                         <option value="complex">Complex</option>

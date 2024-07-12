@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
             data: null,
             render: function (data, type, row) {
                var remarks = row.remarks == null ? '<span class="text-danger">no remarks</span>' : row.remarks;
-               return remarks+'<br><a href="javascript:;" id="update_remarks" class="text-success" data-history-id="'+row.history_id+'" data-remarks="'+row.remarks+'" >Update Remarks</a>';
+               return remarks+'<br><a href="javascript:;" id="update_remarks" class="text-success"  data-document-id="'+row.document_id+'" data-history-id="'+row.history_id+'" data-remarks="'+row.remarks+'" >Update Remarks</a>';
             }
          },
          
@@ -118,9 +118,10 @@ $(document).on('click', 'a#forward_icon', function(){
 });
 
 $(document).on('click', 'a#update_remarks', function(){
-   $('.offcanvas-title').text('Update Remarks Document #' +$(this).data('tracking-number') );
+   $('#update_remarks_modal').find('.modal-title').text('Update Remarks Document #' +$(this).data('tracking-number') );
    $('#update_remarks_modal').modal('show');
    $('input[name=history_id]').val($(this).data('history-id'));
+   $('input[name=remarks_document_id]').val($(this).data('document-id'));
    $('textarea[name=remarks_update]').val($(this).data('remarks'));
   
 

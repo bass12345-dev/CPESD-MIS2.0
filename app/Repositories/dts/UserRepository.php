@@ -26,6 +26,12 @@ class UserRepository
         return DB::table($table)->where($where);
     }
 
+
+
+
+
+    
+
     
 
     

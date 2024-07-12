@@ -28,6 +28,17 @@ class CustomRepository
         return DB::table($table)->where($where)->update($data);
     }
 
+    //DELETE
+    public static function delete_item($table,$where){
+            return DB::table($table)->where($where)->delete();
+        }
+    
+
+    
+    
+    
+
+
 
 
 

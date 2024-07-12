@@ -8,6 +8,41 @@ use Illuminate\Support\Facades\DB;
 class DocumentRepository
 {
 
+
+         //User Query
+
+
+         public static function get_my_documents(){
+            $rows = DB::table('documents as documents')
+            ->leftJoin('document_types as document_types', 'document_types.type_id', '=', 'documents.doc_type')
+            ->leftJoin('users as users', 'users.user_id', '=', 'documents.u_id')
+            ->leftJoin('offices as offices', 'offices.office_id', '=', 'documents.origin')
+            ->select(   'documents.created as d_created', 
+                        'documents.doc_status as doc_status',
+                        'documents.tracking_number as tracking_number', 
+                        'documents.document_name as document_name', 
+                        'documents.document_id as document_id', 
+                        'documents.doc_type as doc_type', 
+                        'documents.document_description as document_description', 
+                        'documents.destination_type as destination_type',
+                        'documents.origin as origin_id',
+                        'document_types.type_name as type_name',
+                        'users.first_name as first_name', 
+                        'users.middle_name as middle_name', 
+                        'users.last_name as last_name', 
+                        'users.extension as extension',
+    
+                        'offices.office as origin',
+    
+    
+                        DB::Raw("CONCAT(users.first_name, ' ', users.middle_name , ' ', users.last_name,' ',users.extension) as name")
+                        )
+            ->where('u_id', session('_id'))
+            ->orderBy('documents.document_id', 'desc')
+            ->get();
+            return $rows;
+        }
+
     public static function get_document_data($tn){
         $row = DB::table('documents')
         ->where('tracking_number', $tn)

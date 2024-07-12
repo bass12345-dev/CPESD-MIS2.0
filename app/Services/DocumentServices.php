@@ -5,6 +5,7 @@ use App\Repositories\dts\CustomRepository;
 use App\Repositories\dts\DocumentRepository;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Facades\DB;
 class DocumentServices
 {   
     protected $documentRepository;
@@ -15,6 +16,7 @@ class DocumentServices
     private $history_table              = "history";
     private $documents_table            = 'documents';
     private $users_table                = "users";
+    private $outgoing_table             = 'outgoing_documents';
     public function __construct(DocumentRepository $documentRepository,CustomRepository $customRepository, ActionLogsService $actionLogService, UserService $userService)
     {
         $this->documentRepository   = $documentRepository;
@@ -22,6 +24,228 @@ class DocumentServices
         $this->actionLogService     = $actionLogService;
         $this->userService          = $userService;
         $this->now =  Carbon::now();
+    }
+
+
+    public function get_my_documents() {
+        $items = array();
+        $rows = $this->documentRepository->get_my_documents();
+        $i = 1;
+        foreach ($rows as $value => $key) {
+    
+                $delete_button = $this->customRepository->q_get_where($this->history_table, array('t_number' => $key->tracking_number))->count() > 1 ? true : false;
+                $status = $this->check_status($key->doc_status);
+    
+                $items[] = array(
+                    'number'            => $i++,
+                    'tracking_number'   => $key->tracking_number,
+                    'document_name'     => $key->document_name,
+                    'type_name'         => $key->type_name,
+                    'created'           => date('M d Y - h:i a', strtotime($key->d_created)),
+                    'a'                 => $delete_button,
+                    'document_id'       => $key->document_id,
+                    'is'                => $status,
+                    'doc_type'          => $key->doc_type,
+                    'description'       => $key->document_description,
+                    'destination_type'  => $key->destination_type,
+                    'doc_status'        => $key->doc_status,
+                    'name'              => $key->name,
+                    'document_type_name' => $key->type_name,
+                    'encoded_by'        => $this->userService->user_full_name($key),
+                    'origin'            => $key->origin == NULL ? '-' : $key->origin,
+                    'origin_id'         => $key->origin_id
+                );
+        }
+
+        return $items;
+    }
+
+
+    public function  add_document_process($request,$user_type){
+
+        $items = array(
+
+            'tracking_number'   => $request->input('tracking_number'),
+            'document_name'     => trim($request->input('document_name')),
+            'u_id'              => base64_decode($request->input('user_id')),
+            'offi_id'           => $request->input('office_id'),
+            'doc_type'          => $request->input('document_type'),
+            'document_description' => trim($request->input('description')),
+            'created'           => Carbon::now()->format('Y-m-d H:i:s'),
+            'doc_status'        => 'pending',
+            'destination_type'  => $request->input('type'),
+            'origin'            => $request->input('origin'),
+        );
+
+        $count = $this->customRepository->q_get_where($this->documents_table, array('tracking_number' => $items['tracking_number']))->count();
+
+        if ($count == 0) {
+
+            $add = $this->customRepository->insert_item($this->documents_table, $items);
+
+            if ($add) {
+
+                $row        = $this->document_data(array('document_id' => DB::getPdo()->lastInsertId()));
+
+                $items1 = array(
+                    't_number'          => $row->tracking_number,
+                    'user1'             => $row->u_id,
+                    'office1'           => $row->offi_id,
+                    'user2'             => $row->u_id,
+                    'office2'           => $row->offi_id,
+                    'status'            => 'received',
+                    'received_status'   => '1',
+                    'received_date'     => Carbon::now()->format('Y-m-d H:i:s'),
+                    'release_status'    => NULL,
+                    'to_receiver'       => 'no',
+                    'release_date'      => NULL,
+                );
+                $add1 = $this->customRepository->insert_item($this->history_table, $items1);
+ 
+                if ($add1) {
+                    $this->actionLogService->dts_add_action('Added Document No. ' . $row->tracking_number, $user_type, $row->document_id);
+                    $data = array('id' => $row->document_id, 'message' => 'Added Successfully', 'response' => true);
+                } else {
+
+                    $data = array('message' => 'Something Wrong', 'response' => false);
+                }
+            } else {
+
+                $data = array('message' => 'Something Wrong', 'response' => false);
+            }
+
+        } else {
+            $data = array('message' => 'Tracking Number is Existing', 'response' => false);
+        }
+
+        return $data;
+
+    }
+
+    public function  update_document_process($request,$user_type){
+
+        $id = $request->input('t_number');
+        $items = array(
+
+            'document_name' => $request->input('document_name'),
+            'doc_type' => $request->input('document_type'),
+            'document_description' => trim($request->input('description')),
+            'origin' => $request->input('origin')
+
+        );
+        $update = $this->customRepository->update_item($this->documents_table, array('tracking_number' => $id), $items);
+        if ($update) {
+            $query_row = $this->document_data(array('tracking_number' => $id));
+            $this->actionLogService->dts_add_action('Updated Document No. ' . $id, $user_type,$query_row->document_id);
+            $data = array('message' => 'updated Succesfully', 'response' => true);
+        } else {
+
+            $data = array('message' => 'Something Wrong/No Changes Apply ', 'response' => false);
+        }
+        return $data;
+    }
+
+
+    public function delete_document_process($id,$user_type){
+
+        $delete             = $this->document_data(array('document_id' => $id)); 
+        $tracking_number    = $delete->first()->tracking_number;
+
+        if ($delete->delete()) {
+            $this->customRepository->delete_item($this->history_table, array('t_number' => $tracking_number));
+            $this->customRepository->delete_item($this->outgoing_table, array('doc_id' => $id));
+            $this->actionLogService->dts_add_action('Deleted Document No. ' . $tracking_number,$user_type,$id);
+            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+        } else {
+
+            $data = array('message' => 'Error', 'response' => false);
+        }
+        return $data;
+    }
+
+
+    public function received_process($history_id,$tracking_number,$user_type){
+
+        $to_update = array(
+
+            'status' => 'received',
+            'received_status' => 1,
+            'received_date' => $this->now->format('Y-m-d H:i:s')
+        );
+
+        $r = $this->document_data(array('tracking_number' => $tracking_number));
+    
+        if ($r->doc_status != 'cancelled') {
+
+            $update_receive = $this->customRepository->update_item($this->history_table, array('history_id' => $history_id), $to_update);
+            if ($update_receive) {
+                $this->actionLogService->dts_add_action('Received Document No. ' . $tracking_number, $user_type, $r->document_id);
+                $data = array('message' => 'Received Succesfully', 'id' => $history_id, 'tracking_number' => $tracking_number, 'response' => true);
+            } else {
+                $data = array('message' => 'Something Wrong', 'response' => false);
+            }
+        } else {
+            $data = array('message' => 'This Document is cancelled', 'response' => false);
+        }
+        return $data;
+
+}
+
+
+    public function forward_process($remarks,$forward,$user_id,$history_id,$tracking_number,$user_type){
+
+        $forward_to         = $forward == 'fr' ? $this->get_receiver() : $forward;
+        $user_row           = $this->userService->user_data($user_id);
+        $forward_user_row   = $this->userService->user_data($forward_to);
+        $r                  = $this->document_data(array('tracking_number' => $tracking_number));
+        
+        if ($r->doc_status != 'cancelled') {
+
+            $update_release = $this->customRepository->update_item($this->history_table, array('history_id' => $history_id, 'received_status' => 1), array('release_status' => 1));
+
+            if ($update_release) {
+
+
+                $info = array(
+                    't_number'          => $tracking_number,
+                    'user1'             => $user_id,
+                    'office1'           => $user_row->off_id,
+                    'user2'             => $forward_to,
+                    'office2'           => $forward_user_row->off_id,
+                    'status'            => 'torec',
+                    'received_status'   => NULL,
+                    'received_date'     => NULL,
+                    'release_status'    => NULL,
+                    'to_receiver'       => $forward == 'fr' ? 'yes' : 'no',
+                    'release_date'      => Carbon::now()->format('Y-m-d H:i:s'),
+                    'remarks'           => $remarks
+
+                );
+
+
+                $add1 = $this->customRepository->insert_item($this->history_table, $info);
+
+                if ($add1) {
+                    $this->actionLogService->dts_add_action(
+                    'Forwarded Document No. ' . $tracking_number . ' to ' . UserService::user_full_name($forward_user_row),
+                      $user_type,$r->document_id
+                    );
+                    $data = array('message' => 'Forwarded Successfully', 'response' => true);
+                } else {
+
+                    $data = array('message' => 'Something Wrong', 'response' => false);
+                }
+            } else {
+
+                $data = array('message' => 'Something Wrong', 'response' => false);
+            }
+        }
+        else {
+            $data = array('message' => 'This Document is cancelled', 'response' => false);
+        }
+
+        return $data;
+
     }
 
 
@@ -119,11 +343,15 @@ class DocumentServices
         return $items->user_id;
     }
 
-    public function update_remarks($id,$remarks){
+    public function update_remarks($request,$user_type){
 
+        $id         = $request->input('history_id');
+        $remarks    = $request->input('remarks_update');
+        $document_id    = $request->input('remarks_document_id');
         $update_release = $this->customRepository->update_item($this->history_table, array('history_id' => $id), array('remarks' => $remarks));
-
         if ($update_release) {
+            $item = $this->document_data(array('document_id' => $document_id));
+            $this->actionLogService->dts_add_action('Updated Remarks to Document No. '.$item->tracking_number,$user_type,$document_id);
             $data = array('message' => 'Remarks Updated Successfully', 'response' => true);
         } else {
             $data = array('message' => 'Something Wrong | Remarks is not updated', 'response' => false);
@@ -132,8 +360,9 @@ class DocumentServices
         return $data;
     }
 
-    public function cancel_documents($items,$user_type){
+    public function cancel_documents($request,$user_type){
 
+        $items = $request->input('id');
         $id         = $items['id'];
         $reason     = $items['reason'];
         $message    = '';
@@ -145,10 +374,10 @@ class DocumentServices
                     'note'               => $reason
                 );
 
-                $check = $this->customRepository->q_get_where($this->documents_table,array('document_id' => $row))->first();
+                $check = $this->document_data(array('document_id' => $row));
                 if($check->doc_status != 'completed'){
                     $this->customRepository->update_item($this->documents_table, array('document_id' => $row), $items);
-                    $this->actionLogService->dts_add_action('Canceled Document No. '.$check->tracking_number,$user_type,$row);
+                    $this->actionLogService->dts_add_action('Cancelled Document No. '.$check->tracking_number,$user_type,$row);
                 }else {
                     array_push($arr, $check->document_id);
                 }
@@ -266,7 +495,7 @@ class DocumentServices
                 'history_id'                => $is_existing == 0 ? '' : $this->customRepository->q_get_where_order($this->history_table, $where, 'history_id', 'desc')->get()[0]->history_id,
                 'error'                     => $is_existing == 0 ? 'text-danger' : '',
                 'user_id'                   => $key->u_id,
-                'created_by'                => $key->first_name . ' ' . $key->middle_name . ' ' . $key->last_name . ' ' . $key->extension,
+                'created_by'                => $this->userService->user_full_name($key),
                 'is'                        => $status,
                 'history_status'            => $key->doc_status
             );
@@ -275,6 +504,15 @@ class DocumentServices
 
         return $data;
     }
+
+
+
+    private function document_data($where){
+       $item =  $this->customRepository->q_get_where($this->documents_table,$where)->first();
+       return $item;
+    }   
+
+ 
 
     public function check_status($doc_status)
     {

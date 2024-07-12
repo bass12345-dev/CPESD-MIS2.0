@@ -8,18 +8,22 @@ use Symfony\Component\HttpFoundation\IpUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\CustomModel;
+use App\Repositories\dts\CustomRepository;
+
 class UserService
 {
-    protected $userRepository;
-    protected $user_table = 'users';
-    private $log_in_history_table = 'logged_in_history';
+    protected   $userRepository;
+    protected   $user_table = 'users';
+    private     $log_in_history_table = 'logged_in_history';
+    protected   $customRepository;
     
     protected $request;
 
-    public function __construct(UserRepository $userRepository, Request $request)
+    public function __construct(UserRepository $userRepository, CustomRepository $customRepository,Request $request)
     {
-        $this->userRepository = $userRepository;
-        $this->request = $request;
+        $this->userRepository       = $userRepository;
+        $this->customRepository     = $customRepository;
+        $this->request              = $request;
     }
 
     //USER LOGIN PROCESS
@@ -149,6 +153,11 @@ class UserService
         return null;
     }
 
+
+    public  function user_data($user_id){
+        $user_row  = $this->customRepository->q_get_where($this->user_table, array('user_id' => $user_id))->first();
+        return $user_row;
+    }
 
     public static function user_full_name($row){
         $full_name =  $row->first_name . ' ' . $row->middle_name . ' ' . $row->last_name . ' ' . $row->extension;
